@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RP Bills</title>
+
+<script src="rp-data.js"></script>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  background:#111827;
+  font-family:Arial,sans-serif;
+  color:#20252b;
+}
+
+.app{
+  max-width:480px;
+  min-height:100vh;
+  margin:auto;
+  background:#f6f7f9;
+  padding-bottom:85px;
+}
+
+.header{
+  background:linear-gradient(145deg,#263b82,#18285e);
+  color:white;
+  padding:20px 17px 24px;
+  border-radius:0 0 28px 28px;
+}
+
+.top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.logo{
+  font-size:23px;
+  font-weight:900;
+}
+
+.historyBtn{
+  border:0;
+  background:#ffffff20;
+  color:white;
+  padding:10px 12px;
+  border-radius:13px;
+}
+
+.balanceLabel{
+  margin-top:22px;
+  font-size:11px;
+  opacity:.75;
+}
+
+.balance{
+  font-size:31px;
+  font-weight:900;
+  margin-top:4px;
+}
+
+.body{
+  padding:15px;
+}
+
+.section{
+  margin:17px 2px 10px;
+}
+
+.section h3{
+  margin:0;
+  font-size:17px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+.billCard{
+  background:white;
+  border:0;
+  border-radius:19px;
+  padding:17px 14px;
+  text-align:left;
+  box-shadow:0 3px 12px #0000000b;
+}
+
+.billIcon{
+  width:44px;
+  height:44px;
+  display:grid;
+  place-items:center;
+  border-radius:14px;
+  background:#eef2ff;
+  font-size:23px;
+  margin-bottom:12px;
+}
+
+.billName{
+  font-weight:800;
+  font-size:13px;
+}
+
+.billDesc{
+  color:#858d98;
+  font-size:10px;
+  margin-top:4px;
+}
+
+.recent{
+  background:white;
+  border-radius:20px;
+  padding:15px;
+  box-shadow:0 3px 12px #0000000b;
+}
+
+.row{
+  display:flex;
+  align-items:center;
+  gap:11px;
+  padding:13px 0;
+  border-bottom:1px solid #edf0f2;
+}
+
+.row:last-child{
+  border-bottom:0;
+}
+
+.rowIcon{
+  width:42px;
+  height:42px;
+  border-radius:13px;
+  background:#eef2ff;
+  display:grid;
+  place-items:center;
+  font-size:20px;
+}
+
+.rowMain{
+  flex:1;
+}
+
+.rowMain b{
+  font-size:13px;
+}
+
+.muted{
+  color:#858d98;
+  font-size:10px;
+  margin-top:4px;
+}
+
+.amount{
+  font-weight:800;
+  font-size:13px;
+}
+
+.modalBg{
+  position:fixed;
+  inset:0;
+  background:#0008;
+  display:none;
+  align-items:flex-end;
+  z-index:20;
+}
+
+.modal{
+  width:min(480px,100%);
+  max-height:90vh;
+  overflow:auto;
+  background:white;
+  border-radius:25px 25px 0 0;
+  padding:21px;
+}
+
+.close{
+  float:right;
+  border:0;
+  width:33px;
+  height:33px;
+  border-radius:50%;
+  background:#eef0f3;
+  font-size:18px;
+}
+
+.input{
+  width:100%;
+  padding:14px;
+  border:1px solid #dce1e7;
+  border-radius:13px;
+  font-size:15px;
+  margin:7px 0;
+}
+
+.select{
+  width:100%;
+  padding:14px;
+  border:1px solid #dce1e7;
+  border-radius:13px;
+  font-size:14px;
+  margin:7px 0;
+  background:white;
+}
+
+.primary{
+  width:100%;
+  border:0;
+  padding:14px;
+  border-radius:14px;
+  background:#263b82;
+  color:white;
+  font-weight:bold;
+  margin-top:9px;
+}
+
+.secondary{
+  width:100%;
+  border:0;
+  padding:14px;
+  border-radius:14px;
+  background:#eef0f3;
+  margin-top:8px;
+}
+
+.pay{
+  width:100%;
+  padding:14px;
+  border:1px solid #dce1e7;
+  border-radius:13px;
+  background:white;
+  text-align:left;
+  margin-top:8px;
+}
+
+.pay.selected{
+  border:2px solid #263b82;
+  background:#eef2ff;
+}
+
+.receipt{
+  background:#f7f8fa;
+  border-radius:15px;
+  padding:15px;
+  margin-top:12px;
+}
+
+.bottom{
+  position:fixed;
+  bottom:0;
+  left:50%;
+  transform:translateX(-50%);
+  width:min(480px,100%);
+  height:70px;
+  background:white;
+  border-top:1px solid #ddd;
+  display:flex;
+  z-index:5;
+}
+
+.bottom button{
+  flex:1;
+  border:0;
+  background:none;
+  color:#777;
+  font-size:10px;
+}
+
+.bottom span{
+  display:block;
+  font-size:21px;
+  margin-bottom:4px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<div class="header">
+
+<div class="top">
+
+<div class="logo">
+RP Bills
+</div>
+
+<button
+class="historyBtn"
+onclick="showHistory()">
+📜 History
+</button>
+
+</div>
+
+<div class="balanceLabel">
+Combined RP Wallet
+</div>
+
+<div class="balance" id="combined">
+₱0.00
+</div>
+
+</div>
+
+
+<div class="body">
+
+<div class="section">
+<h3>Pay a Bill</h3>
+</div>
+
+<div class="grid">
+
+<button
+class="billCard"
+onclick="openBill('Electricity')">
+
+<div class="billIcon">⚡</div>
+
+<div class="billName">
+Electricity
+</div>
+
+<div class="billDesc">
+Electric bill
+</div>
+
+</button>
+
+
+<button
+class="billCard"
+onclick="openBill('Water')">
+
+<div class="billIcon">💧</div>
+
+<div class="billName">
+Water
+</div>
+
+<div class="billDesc">
+Water utility
+</div>
+
+</button>
+
+
+<button
+class="billCard"
+onclick="openBill('Internet')">
+
+<div class="billIcon">🌐</div>
+
+<div class="billName">
+Internet
+</div>
+
+<div class="billDesc">
+Home internet
+</div>
+
+</button>
+
+
+<button
+class="billCard"
+onclick="openBill('Mobile')">
+
+<div class="billIcon">📱</div>
+
+<div class="billName">
+Mobile
+</div>
+
+<div class="billDesc">
+Postpaid / mobile
+</div>
+
+</button>
+
+
+<button
+class="billCard"
+onclick="openBill('Credit Card')">
+
+<div class="billIcon">💳</div>
+
+<div class="billName">
+Credit Card
+</div>
+
+<div class="billDesc">
+Card payment
+</div>
+
+</button>
+
+
+<button
+class="billCard"
+onclick="openBill('Rent')">
+
+<div class="billIcon">🏠</div>
+
+<div class="billName">
+Rent
+</div>
+
+<div class="billDesc">
+Monthly rent
+</div>
+
+</button>
+
+
+<button
+class="billCard"
+onclick="openBill('Insurance')">
+
+<div class="billIcon">🛡️</div>
+
+<div class="billName">
+Insurance
+</div>
+
+<div class="billDesc">
+Insurance payment
+</div>
+
+</button>
+
+
+<button
+class="billCard"
+onclick="openBill('Other')">
+
+<div class="billIcon">🧾</div>
+
+<div class="billName">
+Other
+</div>
+
+<div class="billDesc">
+Custom bill
+</div>
+
+</button>
+
+</div>
+
+
+<div class="section">
+<h3>Recent Payments</h3>
+</div>
+
+<div class="recent" id="recent">
+Loading...
+</div>
+
+</div>
+
+
+<div class="bottom">
+
+<button onclick="location.href='index.html'">
+<span>⌂</span>
+Home
+</button>
+
+<button onclick="openBill('Other')">
+<span>＋</span>
+Pay Bill
+</button>
+
+<button onclick="showHistory()">
+<span>📜</span>
+History
+</button>
+
+</div>
+
+</div>
+
+
+<div class="modalBg" id="modalBg">
+
+<div class="modal">
+
+<button
+class="close"
+onclick="closeModal()">
+×
+</button>
+
+<div id="modalContent"></div>
+
+</div>
+
+</div>
+
+
+<script>
+
+let selectedPayment=null;
+
+
+/* =========================
+HELPERS
+========================= */
+
+function peso(n){
+
+return new Intl.NumberFormat(
+"en-PH",
+{
+style:"currency",
+currency:"PHP"
+}
+).format(Number(n));
+
+}
+
+
+function esc(s){
+
+return String(s).replace(
+/[&<>"']/g,
+m=>({
+"&":"&amp;",
+"<":"&lt;",
+">":"&gt;",
+'"':"&quot;",
+"'":"&#039;"
+}[m])
+);
+
+}
+
+
+function openModal(html){
+
+document.getElementById(
+"modalContent"
+).innerHTML=html;
+
+document.getElementById(
+"modalBg"
+).style.display="flex";
+
+}
+
+
+function closeModal(){
+
+document.getElementById(
+"modalBg"
+).style.display="none";
+
+}
+
+
+/* =========================
+OPEN BILL
+========================= */
+
+function openBill(type){
+
+const providers={
+
+"Electricity":[
+"RP Electric Company",
+"Metro Power",
+"City Electric"
+],
+
+"Water":[
+"RP Water District",
+"Metro Water",
+"City Water"
+],
+
+"Internet":[
+"RP Fiber",
+"FastNet RP",
+"HomeConnect"
+],
+
+"Mobile":[
+"RP Mobile",
+"QuickTel",
+"Connect RP"
+],
+
+"Credit Card":[
+"RP Bank Card",
+"Master RP",
+"Visa RP"
+],
+
+"Rent":[
+"RP Property",
+"Apartment Rent",
+"House Rent"
+],
+
+"Insurance":[
+"RP Insurance",
+"SafeLife RP",
+"Secure RP"
+],
+
+"Other":[
+"Custom Bill",
+"School",
+"Subscription"
+]
+
+};
+
+const options=
+providers[type]||providers.Other;
+
+
+openModal(`
+
+<h2>${getIcon(type)} ${type}</h2>
+
+<p class="muted">
+Enter your billing information.
+</p>
+
+<label class="muted">
+Provider
+</label>
+
+<select
+id="provider"
+class="select">
+
+${options.map(
+x=>`<option>${x}</option>`
+).join("")}
+
+</select>
+
+<input
+id="account"
+class="input"
+placeholder="Account / Reference Number">
+
+<input
+id="amount"
+class="input"
+type="number"
+placeholder="Amount">
+
+<button
+class="primary"
+onclick="continuePayment('${esc(type)}')">
+
+Continue
+
+</button>
+
+<button
+class="secondary"
+onclick="closeModal()">
+
+Cancel
+
+</button>
+
+`);
+
+}
+
+
+function getIcon(type){
+
+return {
+
+"Electricity":"⚡",
+"Water":"💧",
+"Internet":"🌐",
+"Mobile":"📱",
+"Credit Card":"💳",
+"Rent":"🏠",
+"Insurance":"🛡️",
+"Other":"🧾"
+
+}[type]||"🧾";
+
+}
+
+
+/* =========================
+PAYMENT
+========================= */
+
+function continuePayment(type){
+
+const provider=
+document.getElementById(
+"provider"
+).value;
+
+const account=
+document.getElementById(
+"account"
+).value.trim();
+
+const amount=
+Number(
+document.getElementById(
+"amount"
+).value
+);
+
+
+if(!account){
+
+alert(
+"Enter your account/reference number."
+);
+
+return;
+
+}
+
+
+if(!amount || amount<=0){
+
+alert(
+"Enter a valid amount."
+);
+
+return;
+
+}
+
+
+selectedPayment=null;
+
+
+openModal(`
+
+<h2>💳 Payment</h2>
+
+<div class="receipt">
+
+<div>
+<b>Bill Type</b>
+<br>
+${getIcon(type)} ${esc(type)}
+</div>
+
+<br>
+
+<div>
+<b>Provider</b>
+<br>
+${esc(provider)}
+</div>
+
+<br>
+
+<div>
+<b>Account / Reference</b>
+<br>
+${esc(account)}
+</div>
+
+<br>
+
+<div>
+<b>Amount</b>
+<br>
+<strong style="font-size:21px">
+${peso(amount)}
+</strong>
+</div>
+
+</div>
+
+
+<h3>
+Choose payment method
+</h3>
+
+<button
+class="pay"
+onclick="selectPayment('gcash',this)">
+
+💙 GCash
+
+</button>
+
+<button
+class="pay"
+onclick="selectPayment('maribank',this)">
+
+🧡 MariBank
+
+</button>
+
+<button
+class="primary"
+onclick='payBill(
+${JSON.stringify({
+type:""+type,
+provider:""+provider,
+account:""+account,
+amount:amount
+})}
+)'>
+
+Pay Bill
+
+</button>
+
+`);
+
+}
+
+
+function selectPayment(account,el){
+
+selectedPayment=account;
+
+document
+.querySelectorAll(".pay")
+.forEach(
+x=>x.classList.remove("selected")
+);
+
+el.classList.add("selected");
+
+}
+
+
+/* =========================
+PAY BILL
+========================= */
+
+function payBill(bill){
+
+if(!selectedPayment){
+
+alert(
+"Select GCash or MariBank first."
+);
+
+return;
+
+}
+
+
+const result=
+payRP(
+selectedPayment,
+bill.amount,
+{
+name:
+bill.type+" Bill",
+
+description:
+bill.provider+
+" • "+
+bill.account,
+
+icon:
+getIcon(bill.type)
+
+}
+);
+
+
+if(!result.success){
+
+alert(result.message);
+return;
+
+}
+
+
+const data=loadRP();
+
+
+const payment={
+
+id:"BILL"+Date.now(),
+
+type:bill.type,
+
+provider:bill.provider,
+
+account:bill.account,
+
+amount:bill.amount,
+
+paymentMethod:selectedPayment,
+
+status:"Paid",
+
+date:new Date().toLocaleString("en-PH")
+
+};
+
+
+addBill(payment);
+
+
+openModal(`
+
+<h2>✅ Bill Paid</h2>
+
+<div class="receipt">
+
+<b>
+${getIcon(bill.type)}
+${esc(bill.type)}
+</b>
+
+<p>
+${esc(bill.provider)}
+</p>
+
+<p>
+Account:
+<strong>
+${esc(bill.account)}
+</strong>
+</p>
+
+<hr>
+
+<p>
+Amount Paid
+</p>
+
+<strong style="font-size:25px">
+${peso(bill.amount)}
+</strong>
+
+<p class="muted">
+Paid via ${
+selectedPayment==="gcash"
+?"GCash"
+:"MariBank"
+}
+</p>
+
+<p class="muted">
+Reference:
+${payment.id}
+</p>
+
+</div>
+
+<button
+class="primary"
+onclick="closeModal()">
+
+Done
+
+</button>
+
+`);
+
+render();
+
+}
+
+
+/* =========================
+HISTORY
+========================= */
+
+function showHistory(){
+
+const data=loadRP();
+
+let html="<h2>📜 Bill History</h2>";
+
+
+if(!data.bills.length){
+
+html+=`
+
+<p class="muted">
+No bill payments yet.
+</p>
+
+`;
+
+}else{
+
+html+=
+data.bills.map(
+b=>`
+
+<div class="row">
+
+<div class="rowIcon">
+${getIcon(b.type)}
+</div>
+
+<div class="rowMain">
+
+<b>
+${esc(b.type)}
+</b>
+
+<div class="muted">
+${esc(b.provider)}
+<br>
+Account: ${esc(b.account)}
+<br>
+${esc(b.date)}
+</div>
+
+</div>
+
+<div class="amount">
+${peso(b.amount)}
+</div>
+
+</div>
+
+`
+).join("");
+
+}
+
+
+openModal(html);
+
+}
+
+
+/* =========================
+RENDER
+========================= */
+
+function render(){
+
+const data=loadRP();
+
+const combined=
+Number(data.gcash.balance)+
+Number(data.maribank.balance);
+
+document.getElementById(
+"combined"
+).textContent=
+peso(combined);
+
+
+const box=
+document.getElementById(
+"recent"
+);
+
+
+if(!data.bills.length){
+
+box.innerHTML=`
+
+<p class="muted">
+No bill payments yet.
+</p>
+
+`;
+
+return;
+
+}
+
+
+box.innerHTML=
+data.bills
+.slice(0,8)
+.map(
+b=>`
+
+<div class="row">
+
+<div class="rowIcon">
+${getIcon(b.type)}
+</div>
+
+<div class="rowMain">
+
+<b>
+${esc(b.type)}
+</b>
+
+<div class="muted">
+${esc(b.provider)}
+<br>
+Paid via ${
+b.paymentMethod==="gcash"
+?"GCash"
+:"MariBank"
+}
+</div>
+
+</div>
+
+<div class="amount">
+${peso(b.amount)}
+</div>
+
+</div>
+
+`
+).join("");
+
+}
+
+
+render();
+
+</script>
+
+</body>
+  </html>
