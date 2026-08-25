@@ -1,200 +1,823 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 
-  <title>RP Phone</title>
+<title>RP Life Hub</title>
 
-  <script src="rp-data.js"></script>
+<script src="rp-data.js"></script>
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<style>
+*{box-sizing:border-box}
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #111;
-    }
+body{
+  margin:0;
+  background:#111827;
+  font-family:Arial,sans-serif;
+  color:#20252b;
+}
 
-    .phone {
-      max-width: 480px;
-      min-height: 100vh;
-      margin: auto;
-      background: #f5f5f5;
-    }
+.app{
+  max-width:480px;
+  min-height:100vh;
+  margin:auto;
+  background:#f6f7f9;
+  padding-bottom:85px;
+}
 
-    .status {
-      background: #111;
-      color: white;
-      padding: 8px 15px;
-      font-size: 12px;
-      display: flex;
-      justify-content: space-between;
-    }
+.header{
+  color:white;
+  padding:22px 17px 25px;
+  background:
+    linear-gradient(145deg,#18233f,#334d83);
+  border-radius:0 0 30px 30px;
+}
 
-    header {
-      background: #111;
-      color: white;
-      padding: 20px;
-    }
+.greeting{
+  font-size:12px;
+  opacity:.75;
+}
 
-    header h1 {
-      margin: 0;
-    }
+.title{
+  font-size:25px;
+  font-weight:900;
+  margin-top:4px;
+}
 
-    .content {
-      padding: 20px;
-    }
+.wallet{
+  background:#ffffff18;
+  border:1px solid #ffffff20;
+  border-radius:20px;
+  padding:16px;
+  margin-top:18px;
+}
 
-    .wallet {
-      background: white;
-      padding: 20px;
-      border-radius: 20px;
-      margin-bottom: 20px;
-      box-shadow: 0 3px 10px #0002;
-    }
+.walletLabel{
+  font-size:10px;
+  opacity:.7;
+}
 
-    .wallet-title {
-      color: #777;
-      font-size: 13px;
-    }
+.total{
+  font-size:29px;
+  font-weight:900;
+  margin-top:5px;
+}
 
-    .balance {
-      font-size: 30px;
-      font-weight: bold;
-      margin-top: 8px;
-    }
+.wallets{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-top:13px;
+}
 
-    .apps {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-    }
+.walletBox{
+  background:#00000018;
+  padding:11px;
+  border-radius:13px;
+}
 
-    .app {
-      border: none;
-      background: white;
-      border-radius: 18px;
-      padding: 18px 5px;
-      font-size: 13px;
-      box-shadow: 0 2px 8px #0002;
-    }
+.walletBox small{
+  display:block;
+  opacity:.65;
+  font-size:9px;
+}
 
-    .icon {
-      display: block;
-      font-size: 32px;
-      margin-bottom: 8px;
-    }
+.walletBox b{
+  display:block;
+  margin-top:4px;
+  font-size:13px;
+}
 
-    .app:active {
-      transform: scale(.97);
-    }
-  </style>
+.body{
+  padding:15px;
+}
+
+.section{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin:17px 2px 10px;
+}
+
+.section h3{
+  margin:0;
+  font-size:17px;
+}
+
+.apps{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+.appCard{
+  border:0;
+  background:white;
+  border-radius:19px;
+  padding:17px 14px;
+  text-align:left;
+  box-shadow:0 3px 12px #0000000b;
+}
+
+.icon{
+  width:48px;
+  height:48px;
+  display:grid;
+  place-items:center;
+  border-radius:15px;
+  background:#eef1f6;
+  font-size:25px;
+  margin-bottom:12px;
+}
+
+.appName{
+  font-weight:900;
+  font-size:14px;
+}
+
+.appDesc{
+  color:#858d98;
+  font-size:10px;
+  margin-top:5px;
+}
+
+.activity{
+  background:white;
+  border-radius:20px;
+  padding:15px;
+  box-shadow:0 3px 12px #0000000b;
+}
+
+.activityRow{
+  display:flex;
+  gap:11px;
+  align-items:center;
+  padding:12px 0;
+  border-bottom:1px solid #edf0f2;
+}
+
+.activityRow:last-child{
+  border-bottom:0;
+}
+
+.activityIcon{
+  width:40px;
+  height:40px;
+  border-radius:12px;
+  display:grid;
+  place-items:center;
+  background:#f0f2f5;
+  font-size:19px;
+}
+
+.activityMain{
+  flex:1;
+}
+
+.activityMain b{
+  font-size:12px;
+}
+
+.activityMain small{
+  display:block;
+  color:#8b929c;
+  font-size:9px;
+  margin-top:4px;
+}
+
+.money{
+  font-size:12px;
+  font-weight:800;
+}
+
+.reset{
+  width:100%;
+  border:0;
+  padding:14px;
+  border-radius:14px;
+  background:#fff;
+  color:#d93030;
+  font-weight:bold;
+  margin-top:12px;
+}
+
+.modalBg{
+  position:fixed;
+  inset:0;
+  background:#0008;
+  display:none;
+  align-items:flex-end;
+  z-index:20;
+}
+
+.modal{
+  width:min(480px,100%);
+  background:white;
+  border-radius:25px 25px 0 0;
+  padding:20px;
+}
+
+.modal button{
+  width:100%;
+  padding:13px;
+  border:0;
+  border-radius:13px;
+  margin-top:8px;
+}
+
+.danger{
+  background:#d93030;
+  color:white;
+}
+
+.cancel{
+  background:#eee;
+}
+
+.bottom{
+  position:fixed;
+  bottom:0;
+  left:50%;
+  transform:translateX(-50%);
+  width:min(480px,100%);
+  height:70px;
+  background:white;
+  border-top:1px solid #ddd;
+  display:flex;
+}
+
+.bottom button{
+  flex:1;
+  border:0;
+  background:none;
+  color:#777;
+  font-size:10px;
+}
+
+.bottom span{
+  display:block;
+  font-size:21px;
+  margin-bottom:4px;
+}
+</style>
 </head>
 
 <body>
 
-<div class="phone">
+<div class="app">
 
-  <div class="status">
-    <span>12:00</span>
-    <span>📶 4G 🔋 100%</span>
-  </div>
+<div class="header">
 
-  <header>
-    <h1>📱 RP Phone</h1>
-    <small>Roleplay Banking & Shopping</small>
-  </header>
+<div class="greeting">
+RP LIFE SIMULATION
+</div>
 
-  <div class="content">
+<div class="title">
+Welcome back 👋
+</div>
 
-    <div class="wallet">
-      <div class="wallet-title">
-        RP TOTAL BALANCE
-      </div>
+<div class="wallet">
 
-      <div class="balance" id="totalBalance">
-        ₱0.00
-      </div>
+<div class="walletLabel">
+TOTAL AVAILABLE MONEY
+</div>
 
-      <small id="walletDetails">
-        Loading...
-      </small>
-    </div>
+<div class="total" id="total">
+₱0.00
+</div>
 
-    <h2>Apps</h2>
+<div class="wallets">
 
-    <div class="apps">
+<div class="walletBox">
+<small>💙 GCash</small>
+<b id="gcash">₱0.00</b>
+</div>
 
-      <button class="app" onclick="openApp('gcash.html')">
-        <span class="icon">💙</span>
-        GCash
-      </button>
-
-      <button class="app" onclick="openApp('maribank.html')">
-        <span class="icon">🧡</span>
-        MariBank
-      </button>
-
-      <button class="app" onclick="openApp('foodpanda.html')">
-        <span class="icon">🍔</span>
-        Foodpanda
-      </button>
-
-      <button class="app" onclick="openApp('shopee.html')">
-        <span class="icon">🛍️</span>
-        Shopee
-      </button>
-
-      <button class="app" onclick="openApp('bills.html')">
-        <span class="icon">🧾</span>
-        Bills
-      </button>
-
-      <button class="app" onclick="openApp('settings.html')">
-        <span class="icon">⚙️</span>
-        Settings
-      </button>
-
-    </div>
-
-  </div>
+<div class="walletBox">
+<small>🧡 MariBank</small>
+<b id="maribank">₱0.00</b>
+</div>
 
 </div>
 
+</div>
+
+</div>
+
+
+<div class="body">
+
+<div class="section">
+<h3>RP Apps</h3>
+</div>
+
+<div class="apps">
+
+<button
+class="appCard"
+onclick="location.href='gcash.html'">
+
+<div class="icon">💙</div>
+
+<div class="appName">
+GCash
+</div>
+
+<div class="appDesc">
+Wallet & transactions
+</div>
+
+</button>
+
+
+<button
+class="appCard"
+onclick="location.href='maribank.html'">
+
+<div class="icon">🧡</div>
+
+<div class="appName">
+MariBank
+</div>
+
+<div class="appDesc">
+Banking & transfers
+</div>
+
+</button>
+
+
+<button
+class="appCard"
+onclick="location.href='foodpanda.html'">
+
+<div class="icon">🍔</div>
+
+<div class="appName">
+FoodDash
+</div>
+
+<div class="appDesc">
+Order food
+</div>
+
+</button>
+
+
+<button
+class="appCard"
+onclick="location.href='shopee.html'">
+
+<div class="icon">🛍️</div>
+
+<div class="appName">
+ShopHub
+</div>
+
+<div class="appDesc">
+Shop anything
+</div>
+
+</button>
+
+
+<button
+class="appCard"
+onclick="location.href='bills.html'">
+
+<div class="icon">🧾</div>
+
+<div class="appName">
+RP Bills
+</div>
+
+<div class="appDesc">
+Pay your bills
+</div>
+
+</button>
+
+</div>
+
+
+<div class="section">
+<h3>Recent Activity</h3>
+
+<button
+onclick="refresh()"
+style="
+border:0;
+background:none;
+color:#5269a3;
+font-size:11px">
+
+Refresh
+
+</button>
+
+</div>
+
+
+<div class="activity" id="activity">
+Loading...
+</div>
+
+
+<div class="section">
+<h3>RP Controls</h3>
+</div>
+
+<button
+class="reset"
+onclick="confirmReset()">
+
+🔄 Reset All RP Data
+
+</button>
+
+</div>
+
+
+<div class="bottom">
+
+<button onclick="refresh()">
+<span>⌂</span>
+Home
+</button>
+
+<button onclick="location.href='gcash.html'">
+<span>💰</span>
+Wallet
+</button>
+
+<button onclick="showActivity()">
+<span>📜</span>
+Activity
+</button>
+
+</div>
+
+</div>
+
+
+<div class="modalBg" id="modalBg">
+
+<div class="modal">
+
+<h2>⚠️ Reset RP?</h2>
+
+<p style="color:#777;font-size:13px">
+This will delete the current RP balances,
+transactions, orders and bill history.
+This cannot be undone.
+</p>
+
+<button
+class="danger"
+onclick="resetEverything()">
+
+Yes, Reset Everything
+
+</button>
+
+<button
+class="cancel"
+onclick="closeModal()">
+
+Cancel
+
+</button>
+
+</div>
+
+</div>
+
+
 <script>
 
-function peso(amount) {
-  return new Intl.NumberFormat("en-PH", {
-    style: "currency",
-    currency: "PHP"
-  }).format(amount);
+function peso(n){
+
+return new Intl.NumberFormat(
+"en-PH",
+{
+style:"currency",
+currency:"PHP"
+}
+).format(Number(n)||0);
+
 }
 
-function openApp(page) {
-  window.location.href = page;
+
+function getData(){
+
+return loadRP();
+
 }
 
-function updateBalance() {
 
-  const data = loadRP();
+function refresh(){
 
-  const total =
-    data.gcash.balance +
-    data.maribank.balance;
+const data=getData();
 
-  document.getElementById("totalBalance").textContent =
-    peso(total);
+const gcash=
+Number(data.gcash.balance)||0;
 
-  document.getElementById("walletDetails").textContent =
-    "💙 GCash " + peso(data.gcash.balance) +
-    " · 🧡 MariBank " + peso(data.maribank.balance);
+const mari=
+Number(data.maribank.balance)||0;
+
+document.getElementById(
+"gcash"
+).textContent=peso(gcash);
+
+document.getElementById(
+"maribank"
+).textContent=peso(mari);
+
+document.getElementById(
+"total"
+).textContent=peso(gcash+mari);
+
+renderActivity(data);
+
 }
 
-updateBalance();
+
+function renderActivity(data){
+
+const list=[];
+
+
+/* Wallet transactions */
+
+(data.gcash.transactions||[])
+.forEach(t=>{
+
+list.push({
+
+date:t.date||"",
+
+icon:"💙",
+
+name:t.name||"GCash Transaction",
+
+description:t.description||"",
+
+amount:Number(t.amount)||0,
+
+type:t.type||"transaction"
+
+});
+
+});
+
+
+(data.maribank.transactions||[])
+.forEach(t=>{
+
+list.push({
+
+date:t.date||"",
+
+icon:"🧡",
+
+name:t.name||"MariBank Transaction",
+
+description:t.description||"",
+
+amount:Number(t.amount)||0,
+
+type:t.type||"transaction"
+
+});
+
+});
+
+
+/* Food orders */
+
+(data.foodpandaOrders||[])
+.forEach(o=>{
+
+list.push({
+
+date:o.date||"",
+
+icon:"🍔",
+
+name:"FoodDash Order",
+
+description:o.restaurant||"Food order",
+
+amount:Number(o.total)||0,
+
+type:"order"
+
+});
+
+});
+
+
+/* Shop orders */
+
+(data.shopeeOrders||[])
+.forEach(o=>{
+
+list.push({
+
+date:o.date||"",
+
+icon:"🛍️",
+
+name:"ShopHub Purchase",
+
+description:
+(o.items||[])
+.map(x=>x.name)
+.join(", "),
+
+amount:Number(o.total)||0,
+
+type:"order"
+
+});
+
+});
+
+
+/* Bills */
+
+(data.bills||[])
+.forEach(b=>{
+
+list.push({
+
+date:b.date||"",
+
+icon:"🧾",
+
+name:b.type+" Bill",
+
+description:b.provider||"Bill payment",
+
+amount:Number(b.amount)||0,
+
+type:"bill"
+
+});
+
+});
+
+
+list.sort(
+(a,b)=>
+new Date(b.date)-
+new Date(a.date)
+);
+
+
+const box=
+document.getElementById(
+"activity"
+);
+
+
+if(!list.length){
+
+box.innerHTML=`
+
+<div style="
+text-align:center;
+padding:18px;
+color:#888;
+font-size:12px">
+
+No RP activity yet.
+
+</div>
+
+`;
+
+return;
+
+}
+
+
+box.innerHTML=
+list.slice(0,12)
+.map(x=>`
+
+<div class="activityRow">
+
+<div class="activityIcon">
+${x.icon}
+</div>
+
+<div class="activityMain">
+
+<b>
+${escapeHTML(x.name)}
+</b>
+
+<small>
+${escapeHTML(x.description)}
+<br>
+${escapeHTML(x.date)}
+</small>
+
+</div>
+
+<div class="money">
+${peso(x.amount)}
+</div>
+
+</div>
+
+`).join("");
+
+}
+
+
+function escapeHTML(text){
+
+return String(text)
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
+
+}
+
+
+function showActivity(){
+
+refresh();
+
+window.scrollTo({
+top:document.body.scrollHeight,
+behavior:"smooth"
+});
+
+}
+
+
+function confirmReset(){
+
+document.getElementById(
+"modalBg"
+).style.display="flex";
+
+}
+
+
+function closeModal(){
+
+document.getElementById(
+"modalBg"
+).style.display="none";
+
+}
+
+
+function resetEverything(){
+
+/*
+Use the reset function from rp-data.js.
+*/
+
+if(typeof resetRP==="function"){
+
+resetRP();
+
+}else{
+
+/*
+Fallback for older rp-data.js.
+*/
+
+localStorage.removeItem(
+"rpData"
+);
+
+localStorage.removeItem(
+"rp-data"
+);
+
+}
+
+closeModal();
+
+refresh();
+
+alert(
+"RP data has been reset."
+);
+
+}
+
+
+refresh();
 
 </script>
 
