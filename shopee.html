@@ -1,154 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ShopHub RP</title>
-<script src="rp-data.js"></script>
-
-<style>
-*{box-sizing:border-box}
-body{margin:0;background:#111827;font-family:Arial,sans-serif;color:#222}
-.app{max-width:480px;min-height:100vh;margin:auto;background:#f7f7f7;padding-bottom:80px}
-.header{background:linear-gradient(145deg,#ff5b18,#ed3210);color:white;padding:18px;border-radius:0 0 27px 27px}
-.top{display:flex;align-items:center;justify-content:space-between}
-.logo{font-size:24px;font-weight:900}
-.cart{border:0;background:#ffffff22;color:white;border-radius:13px;padding:10px 13px;font-size:18px}
-.search{width:100%;margin-top:15px;padding:14px;border:0;border-radius:14px;outline:none;font-size:14px}
-.body{padding:14px}
-.categories{display:flex;gap:8px;overflow:auto}
-.cat{white-space:nowrap;border:0;background:white;padding:10px 14px;border-radius:20px}
-.cat.active{background:#ff4b17;color:white}
-.banner{margin-top:13px;background:#fff0e8;padding:17px;border-radius:18px}
-.banner b{font-size:19px}
-.banner small{display:block;color:#777;margin-top:5px}
-.section{display:flex;justify-content:space-between;align-items:center;margin:17px 2px 10px}
-.section h3{margin:0;font-size:17px}
-.products{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.product{background:white;border-radius:17px;overflow:hidden;box-shadow:0 2px 9px #0000000c}
-.pic{height:130px;background:#f0f1f3;display:grid;place-items:center;font-size:55px}
-.info{padding:11px}
-.name{font-weight:bold;font-size:13px;min-height:32px}
-.price{color:#ed4215;font-size:16px;font-weight:900;margin-top:7px}
-.rating{font-size:10px;color:#d99400;margin-top:5px}
-.sold{font-size:9px;color:#888;margin-top:3px}
-.add{width:100%;border:0;background:#ff4b17;color:white;padding:10px;border-radius:10px;margin-top:8px;font-weight:bold}
-.bottom{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(480px,100%);height:70px;background:white;border-top:1px solid #ddd;display:flex;z-index:5}
-.bottom button{flex:1;border:0;background:none;color:#777;font-size:10px}
-.bottom span{display:block;font-size:21px;margin-bottom:4px}
-.modalBg{position:fixed;inset:0;background:#0008;display:none;align-items:flex-end;z-index:20}
-.modal{width:min(480px,100%);max-height:90vh;overflow:auto;background:white;border-radius:25px 25px 0 0;padding:20px}
-.close{float:right;border:0;width:32px;height:32px;border-radius:50%;background:#eee;font-size:18px}
-.cartRow{display:flex;gap:10px;padding:13px 0;border-bottom:1px solid #eee}
-.cartMain{flex:1}
-.qty{display:flex;gap:8px;align-items:center;margin-top:7px}
-.qty button{border:0;width:28px;height:28px;border-radius:8px;background:#eee}
-.primary{width:100%;border:0;padding:14px;border-radius:13px;background:#ff4b17;color:white;font-weight:bold;margin-top:10px}
-.secondary{width:100%;border:0;padding:13px;border-radius:13px;background:#eee;margin-top:8px}
-.pay{width:100%;padding:14px;border:1px solid #ddd;border-radius:13px;background:white;text-align:left;margin-top:8px}
-.pay.selected{border:2px solid #ff4b17;background:#fff1ec}
-.review{padding:11px 0;border-bottom:1px solid #eee;font-size:12px}
-</style>
-</head>
-
-<body>
-
-<div class="app">
-
-<div class="header">
-
-<div class="top">
-<div class="logo">🛍️ ShopHub</div>
-
-<button class="cart" onclick="openCart()">
-🛒 <span id="cartCount">0</span>
-</button>
-</div>
-
-<input
-id="search"
-class="search"
-placeholder="Search anything..."
-oninput="render()">
-
-</div>
-
-<div class="body">
-
-<div class="categories">
-
-<button class="cat active" onclick="category='All';setCat(this)">
-All
-</button>
-
-<button class="cat" onclick="category='Electronics';setCat(this)">
-📱 Electronics
-</button>
-
-<button class="cat" onclick="category='Home';setCat(this)">
-🏠 Home
-</button>
-
-<button class="cat" onclick="category='Fashion';setCat(this)">
-👕 Fashion
-</button>
-
-<button class="cat" onclick="category='Beauty';setCat(this)">
-💄 Beauty
-</button>
-
-<button class="cat" onclick="category='Food';setCat(this)">
-🍪 Food
-</button>
-
-</div>
-
-<div class="banner">
-<b>🔥 RP Mega Sale</b>
-<small>Thousands of simulated products • Free RP shipping</small>
-</div>
-
-<div class="section">
-<h3>Products For You</h3>
-<span id="count" style="font-size:10px;color:#888"></span>
-</div>
-
-<div class="products" id="products"></div>
-
-</div>
-
-<div class="bottom">
-
-<button onclick="location.href='index.html'">
-<span>⌂</span>Home
-</button>
-
-<button onclick="showOrders()">
-<span>📦</span>Orders
-</button>
-
-<button onclick="openCart()">
-<span>🛒</span>Cart
-</button>
-
-</div>
-
-</div>
-
-
-<div class="modalBg" id="modalBg">
-
-<div class="modal">
-
-<button class="close" onclick="closeModal()">×</button>
-
-<div id="modalContent"></div>
-
-</div>
-
-</div>
-
-
 <script>
 
 let category="All";
@@ -156,7 +5,9 @@ let cart=[];
 let selectedPayment=null;
 
 
-/* ---------- PRODUCTS ---------- */
+/* =========================================
+   BASE CATALOG
+========================================= */
 
 const catalog=[
 
@@ -205,10 +56,9 @@ const catalog=[
 ];
 
 
-/*
-Create multiple RP listings
-from each base product.
-*/
+/* =========================================
+   CREATE BASE PRODUCTS
+========================================= */
 
 let products=[];
 
@@ -227,7 +77,7 @@ versions.forEach((v,n)=>{
 
 products.push({
 
-id:i+"-"+n,
+id:"catalog-"+i+"-"+n,
 
 name:p[0]+v,
 
@@ -237,7 +87,7 @@ price:p[2]+n*137,
 
 emoji:p[3],
 
-rating:(4.3+(i+n)%7/10).toFixed(1),
+rating:(4.3+((i+n)%7)/10).toFixed(1),
 
 sold:100+(i*173)+(n*431),
 
@@ -256,126 +106,152 @@ reviews:[
 });
 
 
-/* ---------- HELPERS ---------- */
+/* =========================================
+   HELPERS
+========================================= */
 
 function peso(n){
 
 return new Intl.NumberFormat(
 "en-PH",
-{style:"currency",currency:"PHP"}
-).format(n);
+{
+style:"currency",
+currency:"PHP"
+}
+).format(Number(n)||0);
 
 }
+
 
 function esc(s){
 
 return String(s).replace(
 /[&<>"']/g,
 m=>({
+
 "&":"&amp;",
 "<":"&lt;",
 ">":"&gt;",
 '"':"&quot;",
 "'":"&#039;"
+
 }[m])
 );
 
 }
 
 
-/* ---------- SEARCH ---------- */
+/* =========================================
+   EMOJI DETECTOR
+   Works even with nonsense.
+========================================= */
 
-function render(){
+function getEmoji(q){
 
-const q=document
-.getElementById("search")
-.value
-.toLowerCase()
-.trim();
+const x=q.toLowerCase();
 
-let result=products.filter(p=>{
+const map=[
 
-const catOK=
-category==="All" ||
-p.category===category;
+[["phone","iphone","android","case"],"📱"],
+[["laptop","computer","pc"],"💻"],
+[["keyboard"],"⌨️"],
+[["mouse"],"🖱️"],
+[["headphone","earbud","airpod"],"🎧"],
+[["speaker"],"🔊"],
+[["camera"],"📷"],
+[["watch"],"⌚"],
+[["charger","cable"],"🔌"],
+[["battery","powerbank"],"🔋"],
 
-const text=
-(p.name+" "+p.category)
-.toLowerCase();
+[["vacuum","cleaner","clean"],"🧹"],
+[["chair","seat"],"🪑"],
+[["fan"],"🌀"],
+[["lamp","light"],"💡"],
+[["air fryer","fryer"],"🍟"],
+[["rice"],"🍚"],
 
-return catOK &&
-(!q || text.includes(q));
+[["shirt","tshirt"],"👕"],
+[["hoodie","jacket"],"🧥"],
+[["pants"],"👖"],
+[["shoe","sneaker"],"👟"],
+[["bag","backpack"],"🎒"],
+[["cap","hat"],"🧢"],
 
-});
+[["makeup","lip"],"💄"],
+[["perfume"],"🌸"],
+[["cream","lotion"],"🧴"],
+[["hair"],"💨"],
 
+[["food","cookie","snack"],"🍪"],
+[["coffee"],"☕"],
+[["tea","milk tea"],"🧋"],
+[["noodle","ramen"],"🍜"],
+[["candy"],"🍬"],
+[["pizza"],"🍕"],
+[["burger"],"🍔"]
 
-/*
-Automatic product generation
-for unknown searches.
-*/
+];
 
-if(q && result.length===0){
+for(const entry of map){
 
-result=generate(q);
+for(const word of entry[0]){
+
+if(x.includes(word)){
+return entry[1];
+}
 
 }
 
-document.getElementById(
-"count"
-).textContent=result.length+" items";
+}
 
-document.getElementById(
-"products"
-).innerHTML=
-result.map(productCard).join("");
+return "🛍️";
 
 }
 
+
+/* =========================================
+   GENERATE ANY SEARCH
+========================================= */
 
 function generate(q){
 
-const iconMap={
-phone:"📱",
-case:"📱",
-vacuum:"🧹",
-laptop:"💻",
-computer:"💻",
-keyboard:"⌨️",
-mouse:"🖱️",
-chair:"🪑",
-shoes:"👟",
-shirt:"👕",
-bag:"🎒",
-camera:"📷",
-watch:"⌚",
-fan:"🌀",
-speaker:"🔊",
-headphone:"🎧",
-makeup:"💄",
-bottle:"🍼",
-default:"🛍️"
-};
+/*
+IMPORTANT:
 
-let emoji=iconMap.default;
+No validation.
 
-for(const k in iconMap){
+No "does product exist?"
 
-if(q.includes(k)){
-emoji=iconMap[k];
-break;
-}
+No exact-match requirement.
 
-}
+ANY text becomes a product.
+*/
 
-const title=
-q.charAt(0).toUpperCase()+
-q.slice(1);
+const clean=q.trim() || "Mystery";
 
-return Array.from({length:18},(_,i)=>({
 
-id:"search-"+q+"-"+i,
+/*
+Make the search look like a product name.
+*/
 
-name:title+" "+[
+const title=clean
+.split(/\s+/)
+.map(word=>
+word.charAt(0).toUpperCase()+
+word.slice(1)
+)
+.join(" ");
+
+
+const emoji=getEmoji(clean);
+
+
+/*
+Different product suffixes.
+*/
+
+const suffixes=[
+
 "Premium",
 "Official Store",
 "Pro",
@@ -391,33 +267,267 @@ name:title+" "+[
 "Ultra",
 "Standard",
 "Special",
-"Limited",
+"Limited Edition",
 "Popular",
-"New"
-][i],
+"New",
+"Original",
+"Advanced",
+"Essential",
+"Smart",
+"Exclusive",
+"Premium Edition",
+"Super",
+"Elite",
+"V2",
+"V3",
+"Performance",
+"Signature"
 
-category:"Search",
+];
 
-price:199+(i*173),
 
-emoji:emoji,
+/*
+Different descriptions.
+*/
 
-rating:(4.3+(i%7)/10).toFixed(1),
+const descriptions=[
 
-sold:150+i*421,
+"Popular RP marketplace item.",
+"Highly rated RP seller listing.",
+"New arrival in the RP marketplace.",
+"Trending item with many RP buyers.",
+"Premium quality simulated listing.",
+"Popular choice among RP shoppers.",
+"Limited RP marketplace edition.",
+"Best-selling simulated product.",
+"Value-for-money RP listing.",
+"Recommended by RP buyers."
 
-reviews:[
-"Exactly what I expected.",
-"Good quality.",
-"Fast shipping.",
-"Very nice product.",
-"Recommended seller."
-]
+];
 
-}));
+
+/*
+Generate 30 PRODUCTS.
+
+Even nonsense gets products.
+*/
+
+return Array.from(
+{length:30},
+(_,i)=>{
+
+/*
+Deterministic-ish price based
+on the search text and index.
+*/
+
+let hash=0;
+
+for(let c of clean){
+
+hash=
+((hash<<5)-hash)+
+c.charCodeAt(0);
+
+hash|=0;
 
 }
 
+const base=
+Math.abs(hash)%1800;
+
+const price=
+99+
+((base+i*173)%9900);
+
+
+/*
+Different ratings.
+*/
+
+const rating=
+(4.1+((i*7)%9)/10)
+.toFixed(1);
+
+
+/*
+Different sold numbers.
+*/
+
+const sold=
+127+
+((base+i*431)%48000);
+
+
+return{
+
+id:
+"generated-"+
+encodeURIComponent(clean)+
+"-"+
+i,
+
+name:
+title+
+" "+
+suffixes[i],
+
+category:
+"Search",
+
+price:price,
+
+emoji:emoji,
+
+rating:rating,
+
+sold:sold,
+
+reviews:[
+
+descriptions[i%descriptions.length],
+
+"Item arrived safely and looks great.",
+
+"Good value for the price.",
+
+"Fast RP shipping. Recommended!",
+
+"Would definitely buy again."
+
+]
+
+};
+
+});
+
+}
+
+
+/* =========================================
+   RENDER
+========================================= */
+
+function render(){
+
+const q=
+document
+.getElementById("search")
+.value
+.toLowerCase()
+.trim();
+
+
+let result=[];
+
+
+/*
+=========================================
+NO SEARCH
+=========================================
+*/
+
+if(!q){
+
+result=
+products.filter(p=>
+
+category==="All" ||
+p.category===category
+
+);
+
+}
+
+
+/*
+=========================================
+ANY SEARCH
+=========================================
+*/
+
+else{
+
+/*
+First show matching real catalog items.
+*/
+
+const matches=
+products.filter(p=>{
+
+const text=
+(
+p.name+
+" "+
+p.category
+).toLowerCase();
+
+return text.includes(q);
+
+});
+
+
+/*
+Then ALWAYS generate 30 products.
+
+This is the important part.
+*/
+
+const generated=
+generate(q);
+
+
+/*
+Matching catalog first,
+generated results after.
+*/
+
+result=[
+...matches,
+...generated
+];
+
+
+/*
+If user typed nonsense,
+generated still exists.
+*/
+
+}
+
+
+/*
+=========================================
+COUNT
+=========================================
+*/
+
+document.getElementById(
+"count"
+).textContent=
+result.length+
+" items";
+
+
+/*
+=========================================
+DISPLAY
+=========================================
+*/
+
+document.getElementById(
+"products"
+).innerHTML=
+result
+.map(productCard)
+.join("");
+
+}
+
+
+/* =========================================
+   PRODUCT CARD
+========================================= */
 
 function productCard(p){
 
@@ -444,15 +554,21 @@ ${esc(p.name)}
 </div>
 
 <div class="price">
+
 ${peso(p.price)}
+
 </div>
 
 <div class="rating">
+
 ⭐ ${p.rating}
+
 </div>
 
 <div class="sold">
-${p.sold.toLocaleString()} sold
+
+${Number(p.sold).toLocaleString()} sold
+
 </div>
 
 <button
@@ -472,14 +588,19 @@ Add to Cart
 }
 
 
-/* ---------- PRODUCT PAGE ---------- */
+/* =========================================
+   PRODUCT DETAILS
+========================================= */
 
 function viewProduct(p){
 
 openModal(`
 
 <h2>
-${p.emoji} ${esc(p.name)}
+
+${p.emoji}
+${esc(p.name)}
+
 </h2>
 
 <div style="
@@ -492,27 +613,50 @@ ${peso(p.price)}
 </div>
 
 <p>
+
 ⭐ ${p.rating}
+
 &nbsp; • &nbsp;
-${p.sold.toLocaleString()} sold
+
+${Number(p.sold).toLocaleString()} sold
+
 </p>
 
-<p style="font-size:12px;color:#777">
+<div style="
+background:#fff4ed;
+padding:14px;
+border-radius:14px;
+font-size:12px">
 
-🚚 Free RP shipping<br>
-🛡️ RP Buyer Protection<br>
+🚚 Free RP shipping
+
+<br>
+
+🛡️ RP Buyer Protection
+
+<br>
+
 📦 Estimated delivery: 2–5 days
 
-</p>
+<br>
 
-<h3>Customer Reviews</h3>
+💳 GCash / MariBank available at checkout
+
+</div>
+
+
+<h3>
+Customer Reviews
+</h3>
 
 ${p.reviews.map(
 (r,i)=>`
 
 <div class="review">
 
-⭐ ${(4+(i%2)*.5).toFixed(1)}
+⭐ ${
+(4+(i%2)*.5).toFixed(1)
+}
 
 <br>
 
@@ -520,14 +664,19 @@ ${p.reviews.map(
 
 <br>
 
-<span style="color:#999;font-size:10px">
+<span style="
+color:#999;
+font-size:10px">
+
 Verified RP buyer
+
 </span>
 
 </div>
 
 `
 ).join("")}
+
 
 <button
 class="primary"
@@ -542,12 +691,15 @@ onclick='addToCart(${JSON.stringify(p)});closeModal()'>
 }
 
 
-/* ---------- CART ---------- */
+/* =========================================
+   CART
+========================================= */
 
 function addToCart(p){
 
 const found=
 cart.find(x=>x.id===p.id);
+
 
 if(found){
 
@@ -556,8 +708,11 @@ found.qty++;
 }else{
 
 cart.push({
+
 ...p,
+
 qty:1
+
 });
 
 }
@@ -572,7 +727,10 @@ function updateCart(){
 document.getElementById(
 "cartCount"
 ).textContent=
-cart.reduce((a,x)=>a+x.qty,0);
+cart.reduce(
+(a,x)=>a+x.qty,
+0
+);
 
 }
 
@@ -580,11 +738,17 @@ cart.reduce((a,x)=>a+x.qty,0);
 function subtotal(){
 
 return cart.reduce(
-(a,x)=>a+x.price*x.qty,0
+(a,x)=>
+a+(x.price*x.qty),
+0
 );
 
 }
 
+
+/* =========================================
+   CART PAGE
+========================================= */
 
 function openCart(){
 
@@ -595,7 +759,9 @@ openModal(`
 <h2>🛒 Cart</h2>
 
 <p style="color:#888">
+
 Your cart is empty.
+
 </p>
 
 `);
@@ -604,20 +770,28 @@ return;
 
 }
 
-let html="<h2>🛒 Cart</h2>";
 
-html+=cart.map(
+let html=
+"<h2>🛒 Cart</h2>";
+
+
+html+=
+cart.map(
 (p,i)=>`
 
 <div class="cartRow">
 
 <div style="font-size:30px">
+
 ${p.emoji}
+
 </div>
 
 <div class="cartMain">
 
-<b>${esc(p.name)}</b>
+<b>
+${esc(p.name)}
+</b>
 
 <div>
 ${peso(p.price)}
@@ -625,14 +799,22 @@ ${peso(p.price)}
 
 <div class="qty">
 
-<button onclick="qty(${i},-1)">
+<button
+onclick="qty(${i},-1)">
+
 −
+
 </button>
 
-<b>${p.qty}</b>
+<b>
+${p.qty}
+</b>
 
-<button onclick="qty(${i},1)">
+<button
+onclick="qty(${i},1)">
+
 +
+
 </button>
 
 </div>
@@ -640,7 +822,11 @@ ${peso(p.price)}
 </div>
 
 <b>
-${peso(p.price*p.qty)}
+
+${peso(
+p.price*p.qty
+)}
+
 </b>
 
 </div>
@@ -648,9 +834,18 @@ ${peso(p.price*p.qty)}
 `
 ).join("");
 
-const sub=subtotal();
-const shipping=sub>=1000?0:49;
-const total=sub+shipping;
+
+const sub=
+subtotal();
+
+const shipping=
+sub>=1000
+?0
+:49;
+
+const total=
+sub+shipping;
+
 
 html+=`
 
@@ -660,20 +855,38 @@ html+=`
 display:flex;
 justify-content:space-between">
 
-<span>Subtotal</span>
-<b>${peso(sub)}</b>
+<span>
+Subtotal
+</span>
+
+<b>
+${peso(sub)}
+</b>
 
 </div>
+
 
 <div style="
 display:flex;
 justify-content:space-between;
 margin-top:7px">
 
-<span>Shipping</span>
-<b>${shipping?peso(shipping):"FREE"}</b>
+<span>
+Shipping
+</span>
+
+<b>
+
+${
+shipping
+?peso(shipping)
+:"FREE"
+}
+
+</b>
 
 </div>
+
 
 <div style="
 display:flex;
@@ -681,10 +894,16 @@ justify-content:space-between;
 font-size:19px;
 margin-top:12px">
 
-<b>Total</b>
-<b>${peso(total)}</b>
+<b>
+Total
+</b>
+
+<b>
+${peso(total)}
+</b>
 
 </div>
+
 
 <button
 class="primary"
@@ -696,6 +915,7 @@ Checkout
 
 `;
 
+
 openModal(html);
 
 }
@@ -705,28 +925,48 @@ function qty(i,n){
 
 cart[i].qty+=n;
 
-if(cart[i].qty<=0)
+
+if(cart[i].qty<=0){
+
 cart.splice(i,1);
 
+}
+
+
 updateCart();
+
 openCart();
 
 }
 
 
-/* ---------- CHECKOUT ---------- */
+/* =========================================
+   CHECKOUT
+========================================= */
 
 function checkout(){
 
-const sub=subtotal();
-const shipping=sub>=1000?0:49;
-const total=sub+shipping;
+const sub=
+subtotal();
+
+const shipping=
+sub>=1000
+?0
+:49;
+
+const total=
+sub+shipping;
+
 
 selectedPayment=null;
 
+
 openModal(`
 
-<h2>Checkout</h2>
+<h2>
+Checkout
+</h2>
+
 
 <div style="
 background:#f6f7f8;
@@ -739,16 +979,26 @@ ${peso(sub)}
 <br>
 
 Shipping:
-${shipping?peso(shipping):"FREE"}
+${
+shipping
+?peso(shipping)
+:"FREE"
+}
 
 <hr>
 
-<b>Total:
-${peso(total)}</b>
+<b>
+Total:
+${peso(total)}
+</b>
 
 </div>
 
-<h3>Payment</h3>
+
+<h3>
+Payment
+</h3>
+
 
 <button
 class="pay"
@@ -758,6 +1008,7 @@ onclick="selectPay('gcash',this)">
 
 </button>
 
+
 <button
 class="pay"
 onclick="selectPay('maribank',this)">
@@ -765,6 +1016,7 @@ onclick="selectPay('maribank',this)">
 🧡 MariBank
 
 </button>
+
 
 <button
 class="primary"
@@ -779,22 +1031,31 @@ onclick="placeOrder()">
 }
 
 
-function selectPay(type,el){
+function selectPay(
+type,
+el
+){
 
-selectedPayment=type;
+selectedPayment=
+type;
+
 
 document
 .querySelectorAll(".pay")
-.forEach(x=>
+.forEach(
+x=>
 x.classList.remove("selected")
 );
+
 
 el.classList.add("selected");
 
 }
 
 
-/* ---------- PAYMENT ---------- */
+/* =========================================
+   PAYMENT
+========================================= */
 
 function placeOrder(){
 
@@ -808,96 +1069,132 @@ return;
 
 }
 
-const sub=subtotal();
-const shipping=sub>=1000?0:49;
-const total=sub+shipping;
+
+const sub=
+subtotal();
+
+const shipping=
+sub>=1000
+?0
+:49;
+
+const total=
+sub+shipping;
 
 
 /*
-Uses the SAME payment system
-as GCash/MariBank/Bills/FoodDash.
+REAL RP WALLET TRANSACTION
 */
 
-const result=payRP(
+const result=
+payRP(
 selectedPayment,
 total,
 {
-name:"ShopHub Purchase",
-description:cart.map(
-x=>x.qty+"× "+x.name
+
+name:
+"ShopHub Purchase",
+
+description:
+cart.map(
+x=>
+x.qty+
+"× "+
+x.name
 ).join(", "),
+
 icon:"🛍️"
-}
-);
+
+});
 
 
 if(!result.success){
 
-alert(result.message);
+alert(
+result.message
+);
+
 return;
 
 }
 
 
+/*
+SAVE ORDER
+*/
+
 const order={
 
-id:"SHOP"+Date.now(),
+id:
+"SHOP"+
+Date.now(),
 
-items:cart.map(x=>({
+items:
+cart.map(
+x=>({
+
 name:x.name,
+
 qty:x.qty,
+
 price:x.price
-})),
+
+})
+
+),
 
 subtotal:sub,
+
 shipping:shipping,
+
 total:total,
 
-payment:selectedPayment,
+payment:
+selectedPayment,
 
-status:"To Ship",
+status:
+"To Ship",
 
-date:new Date().toLocaleString("en-PH")
+date:
+new Date()
+.toLocaleString("en-PH")
 
 };
 
 
-if(typeof addShopeeOrder==="function"){
+/*
+Use shared RP memory.
+*/
 
 addShopeeOrder(order);
 
-}else{
 
 /*
-Fallback if old rp-data.js
-doesn't have order helper.
+EMPTY CART
 */
 
-const data=loadRP();
-
-if(!data.shopeeOrders)
-data.shopeeOrders=[];
-
-data.shopeeOrders.unshift(order);
-
-localStorage.setItem(
-"rpData",
-JSON.stringify(data)
-);
-
-}
-
-
 cart=[];
+
 updateCart();
+
+
+/*
+SUCCESS
+*/
 
 openModal(`
 
-<h2>🎉 Order Placed!</h2>
+<h2>
+🎉 Order Placed!
+</h2>
+
 
 <p>
+
 Your ShopHub order is confirmed.
+
 </p>
+
 
 <div style="
 background:#f6f7f8;
@@ -905,30 +1202,41 @@ padding:14px;
 border-radius:14px">
 
 Order:
-<b>${order.id}</b>
+<b>
+${order.id}
+</b>
 
 <br><br>
 
 Paid:
-<b>${peso(total)}</b>
+<b>
+${peso(total)}
+</b>
 
 <br>
 
 Payment:
 <b>
-${selectedPayment==="gcash"
+
+${
+selectedPayment==="gcash"
 ?"GCash"
-:"MariBank"}
+:"MariBank"
+}
+
 </b>
 
 <br><br>
 
 Status:
 <b style="color:#ed4215">
+
 To Ship
+
 </b>
 
 </div>
+
 
 <button
 class="primary"
@@ -943,29 +1251,39 @@ Done
 }
 
 
-/* ---------- ORDERS ---------- */
+/* =========================================
+   ORDERS
+========================================= */
 
 function showOrders(){
 
-const data=loadRP();
+const data=
+loadRP();
 
-const orders=data.shopeeOrders||[];
+const orders=
+data.shopeeOrders||[];
 
-let html="<h2>📦 ShopHub Orders</h2>";
+
+let html=
+"<h2>📦 ShopHub Orders</h2>";
+
 
 if(!orders.length){
 
 html+=`
 
 <p style="color:#888">
+
 No ShopHub orders yet.
+
 </p>
 
 `;
 
 }else{
 
-html+=orders.map(
+html+=
+orders.map(
 o=>`
 
 <div style="
@@ -973,7 +1291,7 @@ padding:14px 0;
 border-bottom:1px solid #eee">
 
 <b>
-${o.id}
+${esc(o.id)}
 </b>
 
 <div style="
@@ -982,13 +1300,23 @@ color:#777;
 margin-top:5px">
 
 ${o.items.map(
-x=>x.qty+"× "+x.name
+x=>
+x.qty+
+"× "+
+esc(x.name)
 ).join(", ")}
 
 </div>
 
-<div style="margin-top:7px">
-<strong>${peso(o.total)}</strong>
+<div style="
+margin-top:7px">
+
+<strong>
+
+${peso(o.total)}
+
+</strong>
+
 </div>
 
 <div style="
@@ -996,7 +1324,7 @@ font-size:10px;
 color:#ed4215;
 margin-top:5px">
 
-${o.status}
+${esc(o.status)}
 
 </div>
 
@@ -1012,7 +1340,7 @@ o.payment==="gcash"
 
 <br>
 
-${o.date}
+${esc(o.date)}
 
 </div>
 
@@ -1023,18 +1351,22 @@ ${o.date}
 
 }
 
+
 openModal(html);
 
 }
 
 
-/* ---------- UI ---------- */
+/* =========================================
+   CATEGORY
+========================================= */
 
 function setCat(el){
 
 document
 .querySelectorAll(".cat")
-.forEach(x=>
+.forEach(
+x=>
 x.classList.remove("active")
 );
 
@@ -1044,6 +1376,10 @@ render();
 
 }
 
+
+/* =========================================
+   MODAL
+========================================= */
 
 function openModal(html){
 
@@ -1066,9 +1402,11 @@ document.getElementById(
 
 }
 
+
+/* =========================================
+   START
+========================================= */
+
 render();
 
-</script>
-
-</body>
-  </html>
+  </script>
