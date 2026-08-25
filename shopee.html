@@ -1,4 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ShopHub RP</title>
+
+<script src="rp-data.js"></script>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  background:#111827;
+  font-family:Arial,sans-serif;
+  color:#222;
+}
+
+.app{
+  max-width:480px;
+  min-height:100vh;
+  margin:auto;
+  background:#f7f7f7;
+  padding-bottom:82px;
+}
+
+.header{
+  background:linear-gradient(145deg,#ff641f,#ee3210);
+  color:white;
+  padding:18px 16px 22px;
+  border-radius:0 0 28px 28px;
+}
+
+.top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.logo{
+  font-size:23px;
+  font-weight:900;
+}
+
+.cart{
+  border:0;
+  background:#ffffff22;
+  color:white;
+  border-radius:14px;
+  padding:10px 13px;
+  font-size:18px;
+}
+
+.search{
+  width:100%;
+  margin-top:15px;
+  padding:14px;
+  border:0;
+  border-radius:15px;
+  outline:none;
+  font-size:14px;
+}
+
+.body{
+  padding:14px;
+}
+
+.categories{
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  padding-bottom:3px;
+}
+
+.cat{
+  white-space:nowrap;
+  border:0;
+  background:white;
+  padding:10px 14px;
+  border-radius:20px;
+}
+
+.cat.active{
+  background:#ff4b17;
+  color:white;
+}
+
+.banner{
+  margin-top:14px;
+  background:#fff0e8;
+  padding:17px;
+  border-radius:18px;
+}
+
+.banner b{
+  font-size:19px;
+}
+
+.banner small{
+  display:block;
+  color:#777;
+  margin-top:5px;
+}
+
+.section{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin:18px 2px 11px;
+}
+
+.section h3{
+  margin:0;
+  font-size:17px;
+}
+
+.products{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:11px;
+}
+
+.product{
+  background:white;
+  border-radius:17px;
+  overflow:hidden;
+  box-shadow:0 2px 9px #0000000c;
+}
+
+.pic{
+  height:135px;
+  background:#f0f1f3;
+  display:grid;
+  place-items:center;
+  font-size:55px;
+  cursor:pointer;
+}
+
+.info{
+  padding:11px;
+}
+
+.name{
+  font-weight:bold;
+  font-size:13px;
+  min-height:34px;
+  cursor:pointer;
+}
+
+.price{
+  color:#ed4215;
+  font-size:16px;
+  font-weight:900;
+  margin-top:7px;
+}
+
+.rating{
+  font-size:10px;
+  color:#d99400;
+  margin-top:5px;
+}
+
+.sold{
+  font-size:9px;
+  color:#888;
+  margin-top:3px;
+}
+
+.add{
+  width:100%;
+  border:0;
+  background:#ff4b17;
+  color:white;
+  padding:10px;
+  border-radius:10px;
+  margin-top:8px;
+  font-weight:bold;
+}
+
+.bottom{
+  position:fixed;
+  bottom:0;
+  left:50%;
+  transform:translateX(-50%);
+  width:min(480px,100%);
+  height:70px;
+  background:white;
+  border-top:1px solid #ddd;
+  display:flex;
+  z-index:10;
+}
+
+.bottom button{
+  flex:1;
+  border:0;
+  background:none;
+  color:#777;
+  font-size:10px;
+}
+
+.bottom span{
+  display:block;
+  font-size:21px;
+  margin-bottom:4px;
+}
+
+.modalBg{
+  position:fixed;
+  inset:0;
+  background:#0008;
+  display:none;
+  align-items:flex-end;
+  z-index:50;
+}
+
+.modal{
+  width:min(480px,100%);
+  max-height:92vh;
+  overflow:auto;
+  background:white;
+  border-radius:25px 25px 0 0;
+  padding:20px;
+}
+
+.close{
+  float:right;
+  border:0;
+  width:32px;
+  height:32px;
+  border-radius:50%;
+  background:#eee;
+  font-size:18px;
+}
+
+.cartRow{
+  display:flex;
+  gap:10px;
+  padding:13px 0;
+  border-bottom:1px solid #eee;
+}
+
+.cartMain{
+  flex:1;
+}
+
+.qty{
+  display:flex;
+  gap:8px;
+  align-items:center;
+  margin-top:7px;
+}
+
+.qty button{
+  border:0;
+  width:29px;
+  height:29px;
+  border-radius:8px;
+  background:#eee;
+}
+
+.primary{
+  width:100%;
+  border:0;
+  padding:14px;
+  border-radius:13px;
+  background:#ff4b17;
+  color:white;
+  font-weight:bold;
+  margin-top:11px;
+}
+
+.pay{
+  width:100%;
+  padding:14px;
+  border:1px solid #ddd;
+  border-radius:13px;
+  background:white;
+  text-align:left;
+  margin-top:8px;
+}
+
+.pay.selected{
+  border:2px solid #ff4b17;
+  background:#fff1ec;
+}
+
+.review{
+  padding:11px 0;
+  border-bottom:1px solid #eee;
+  font-size:12px;
+}
+
+.empty{
+  grid-column:1/-1;
+  background:white;
+  border-radius:18px;
+  padding:30px 15px;
+  text-align:center;
+  color:#888;
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <div class="header">
+
+    <div class="top">
+
+      <div class="logo">
+        🛍️ ShopHub
+      </div>
+
+      <button class="cart" onclick="openCart()">
+        🛒 <span id="cartCount">0</span>
+      </button>
+
+    </div>
+
+    <input
+      id="search"
+      class="search"
+      placeholder="Search anything..."
+      oninput="render()"
+    >
+
+  </div>
+
+
+  <div class="body">
+
+    <div class="categories">
+
+      <button class="cat active"
+        onclick="setCategory('All',this)">
+        All
+      </button>
+
+      <button class="cat"
+        onclick="setCategory('Electronics',this)">
+        📱 Electronics
+      </button>
+
+      <button class="cat"
+        onclick="setCategory('Home',this)">
+        🏠 Home
+      </button>
+
+      <button class="cat"
+        onclick="setCategory('Fashion',this)">
+        👕 Fashion
+      </button>
+
+      <button class="cat"
+        onclick="setCategory('Beauty',this)">
+        💄 Beauty
+      </button>
+
+      <button class="cat"
+        onclick="setCategory('Food',this)">
+        🍪 Food
+      </button>
+
+    </div>
+
+
+    <div class="banner">
+      <b>🔥 RP Mega Sale</b>
+      <small>
+        Thousands of simulated products • GCash / MariBank checkout
+      </small>
+    </div>
+
+
+    <div class="section">
+
+      <h3>
+        Products For You
+      </h3>
+
+      <span
+        id="count"
+        style="font-size:10px;color:#888">
+      </span>
+
+    </div>
+
+
+    <div
+      class="products"
+      id="products">
+    </div>
+
+  </div>
+
+
+  <div class="bottom">
+
+    <button onclick="location.href='index.html'">
+      <span>⌂</span>
+      Home
+    </button>
+
+    <button onclick="showOrders()">
+      <span>📦</span>
+      Orders
+    </button>
+
+    <button onclick="openCart()">
+      <span>🛒</span>
+      Cart
+    </button>
+
+  </div>
+
+</div>
+
+
+<div
+  class="modalBg"
+  id="modalBg">
+
+  <div class="modal">
+
+    <button
+      class="close"
+      onclick="closeModal()">
+      ×
+    </button>
+
+    <div id="modalContent"></div>
+
+  </div>
+
+</div>
+
+
 <script>
+
+/* =========================================
+   STATE
+========================================= */
 
 let category="All";
 let cart=[];
@@ -6,7 +450,7 @@ let selectedPayment=null;
 
 
 /* =========================================
-   BASE CATALOG
+   BASE PRODUCTS
 ========================================= */
 
 const catalog=[
@@ -56,11 +500,12 @@ const catalog=[
 ];
 
 
-/* =========================================
-   CREATE BASE PRODUCTS
-========================================= */
-
 let products=[];
+
+
+/* =========================================
+   CREATE CATALOG VARIANTS
+========================================= */
 
 catalog.forEach((p,i)=>{
 
@@ -107,7 +552,7 @@ reviews:[
 
 
 /* =========================================
-   HELPERS
+   PESO
 ========================================= */
 
 function peso(n){
@@ -123,18 +568,20 @@ currency:"PHP"
 }
 
 
+/* =========================================
+   ESCAPE TEXT
+========================================= */
+
 function esc(s){
 
 return String(s).replace(
 /[&<>"']/g,
 m=>({
-
 "&":"&amp;",
 "<":"&lt;",
 ">":"&gt;",
 '"':"&quot;",
 "'":"&#039;"
-
 }[m])
 );
 
@@ -142,8 +589,7 @@ m=>({
 
 
 /* =========================================
-   EMOJI DETECTOR
-   Works even with nonsense.
+   EMOJI GENERATOR
 ========================================= */
 
 function getEmoji(q){
@@ -210,45 +656,21 @@ return "🛍️";
 
 
 /* =========================================
-   GENERATE ANY SEARCH
+   GENERATE ANYTHING
 ========================================= */
 
 function generate(q){
 
-/*
-IMPORTANT:
-
-No validation.
-
-No "does product exist?"
-
-No exact-match requirement.
-
-ANY text becomes a product.
-*/
-
-const clean=q.trim() || "Mystery";
-
-
-/*
-Make the search look like a product name.
-*/
+const clean=q.trim() || "Mystery Product";
 
 const title=clean
 .split(/\s+/)
 .map(word=>
-word.charAt(0).toUpperCase()+
-word.slice(1)
+word.charAt(0).toUpperCase()+word.slice(1)
 )
 .join(" ");
 
-
 const emoji=getEmoji(clean);
-
-
-/*
-Different product suffixes.
-*/
 
 const suffixes=[
 
@@ -285,11 +707,6 @@ const suffixes=[
 
 ];
 
-
-/*
-Different descriptions.
-*/
-
 const descriptions=[
 
 "Popular RP marketplace item.",
@@ -306,58 +723,29 @@ const descriptions=[
 ];
 
 
-/*
-Generate 30 PRODUCTS.
-
-Even nonsense gets products.
-*/
-
 return Array.from(
 {length:30},
 (_,i)=>{
 
-/*
-Deterministic-ish price based
-on the search text and index.
-*/
-
 let hash=0;
 
-for(let c of clean){
+for(const c of clean){
 
-hash=
-((hash<<5)-hash)+
-c.charCodeAt(0);
-
+hash=((hash<<5)-hash)+c.charCodeAt(0);
 hash|=0;
 
 }
 
-const base=
-Math.abs(hash)%1800;
+const base=Math.abs(hash)%1800;
 
 const price=
-99+
-((base+i*173)%9900);
-
-
-/*
-Different ratings.
-*/
+99+((base+i*173)%9900);
 
 const rating=
-(4.1+((i*7)%9)/10)
-.toFixed(1);
-
-
-/*
-Different sold numbers.
-*/
+(4.1+((i*7)%9)/10).toFixed(1);
 
 const sold=
-127+
-((base+i*431)%48000);
-
+127+((base+i*431)%48000);
 
 return{
 
@@ -368,12 +756,9 @@ encodeURIComponent(clean)+
 i,
 
 name:
-title+
-" "+
-suffixes[i],
+title+" "+suffixes[i],
 
-category:
-"Search",
+category:"Search",
 
 price:price,
 
@@ -410,27 +795,21 @@ descriptions[i%descriptions.length],
 
 function render(){
 
-const q=
-document
-.getElementById("search")
-.value
-.toLowerCase()
-.trim();
+const input=
+document.getElementById("search");
 
+const q=input
+?input.value.toLowerCase().trim()
+:"";
 
 let result=[];
 
 
-/*
-=========================================
-NO SEARCH
-=========================================
-*/
+/* NO SEARCH */
 
 if(!q){
 
-result=
-products.filter(p=>
+result=products.filter(p=>
 
 category==="All" ||
 p.category===category
@@ -440,87 +819,42 @@ p.category===category
 }
 
 
-/*
-=========================================
-ANY SEARCH
-=========================================
-*/
+/* SEARCH */
 
 else{
-
-/*
-First show matching real catalog items.
-*/
 
 const matches=
 products.filter(p=>{
 
 const text=
-(
-p.name+
-" "+
-p.category
-).toLowerCase();
+(p.name+" "+p.category)
+.toLowerCase();
 
 return text.includes(q);
 
 });
 
-
-/*
-Then ALWAYS generate 30 products.
-
-This is the important part.
-*/
-
-const generated=
-generate(q);
-
-
-/*
-Matching catalog first,
-generated results after.
-*/
+const generated=generate(q);
 
 result=[
 ...matches,
 ...generated
 ];
 
-
-/*
-If user typed nonsense,
-generated still exists.
-*/
-
 }
 
 
-/*
-=========================================
-COUNT
-=========================================
-*/
-
-document.getElementById(
-"count"
-).textContent=
-result.length+
-" items";
+document.getElementById("count")
+.textContent=
+result.length+" items";
 
 
-/*
-=========================================
-DISPLAY
-=========================================
-*/
+const box=
+document.getElementById("products");
 
-document.getElementById(
-"products"
-).innerHTML=
-result
-.map(productCard)
-.join("");
+
+box.innerHTML=
+result.map(productCard).join("");
 
 }
 
@@ -531,13 +865,18 @@ result
 
 function productCard(p){
 
+const data=
+encodeURIComponent(
+JSON.stringify(p)
+);
+
 return `
 
 <div class="product">
 
 <div
 class="pic"
-onclick='viewProduct(${JSON.stringify(p)})'>
+onclick="viewProductEncoded('${data}')">
 
 ${p.emoji}
 
@@ -547,33 +886,27 @@ ${p.emoji}
 
 <div
 class="name"
-onclick='viewProduct(${JSON.stringify(p)})'>
+onclick="viewProductEncoded('${data}')">
 
 ${esc(p.name)}
 
 </div>
 
 <div class="price">
-
 ${peso(p.price)}
-
 </div>
 
 <div class="rating">
-
 ⭐ ${p.rating}
-
 </div>
 
 <div class="sold">
-
 ${Number(p.sold).toLocaleString()} sold
-
 </div>
 
 <button
 class="add"
-onclick='addToCart(${JSON.stringify(p)})'>
+onclick="addEncoded('${data}')">
 
 Add to Cart
 
@@ -589,6 +922,37 @@ Add to Cart
 
 
 /* =========================================
+   ENCODED PRODUCT FUNCTIONS
+========================================= */
+
+function decodeProduct(data){
+
+return JSON.parse(
+decodeURIComponent(data)
+);
+
+}
+
+
+function addEncoded(data){
+
+addToCart(
+decodeProduct(data)
+);
+
+}
+
+
+function viewProductEncoded(data){
+
+viewProduct(
+decodeProduct(data)
+);
+
+}
+
+
+/* =========================================
    PRODUCT DETAILS
 ========================================= */
 
@@ -597,10 +961,7 @@ function viewProduct(p){
 openModal(`
 
 <h2>
-
-${p.emoji}
-${esc(p.name)}
-
+${p.emoji} ${esc(p.name)}
 </h2>
 
 <div style="
@@ -613,13 +974,9 @@ ${peso(p.price)}
 </div>
 
 <p>
-
 ⭐ ${p.rating}
-
 &nbsp; • &nbsp;
-
 ${Number(p.sold).toLocaleString()} sold
-
 </p>
 
 <div style="
@@ -630,39 +987,35 @@ font-size:12px">
 
 🚚 Free RP shipping
 
-<br>
+<br><br>
 
 🛡️ RP Buyer Protection
 
-<br>
+<br><br>
 
 📦 Estimated delivery: 2–5 days
 
-<br>
+<br><br>
 
-💳 GCash / MariBank available at checkout
+💳 GCash / MariBank available
 
 </div>
-
 
 <h3>
 Customer Reviews
 </h3>
 
-${p.reviews.map(
-(r,i)=>`
+${p.reviews.map((r,i)=>`
 
 <div class="review">
 
-⭐ ${
-(4+(i%2)*.5).toFixed(1)
-}
+⭐ ${(4+(i%2)*.5).toFixed(1)}
 
-<br>
+<br><br>
 
 "${esc(r)}"
 
-<br>
+<br><br>
 
 <span style="
 color:#999;
@@ -674,19 +1027,26 @@ Verified RP buyer
 
 </div>
 
-`
-).join("")}
-
+`).join("")}
 
 <button
 class="primary"
-onclick='addToCart(${JSON.stringify(p)});closeModal()'>
+onclick="addEncodedAndClose('${encodeURIComponent(JSON.stringify(p))}')">
 
 🛒 Add to Cart
 
 </button>
 
 `);
+
+}
+
+
+function addEncodedAndClose(data){
+
+addEncoded(data);
+
+closeModal();
 
 }
 
@@ -700,7 +1060,6 @@ function addToCart(p){
 const found=
 cart.find(x=>x.id===p.id);
 
-
 if(found){
 
 found.qty++;
@@ -708,11 +1067,8 @@ found.qty++;
 }else{
 
 cart.push({
-
 ...p,
-
 qty:1
-
 });
 
 }
@@ -724,9 +1080,8 @@ updateCart();
 
 function updateCart(){
 
-document.getElementById(
-"cartCount"
-).textContent=
+document.getElementById("cartCount")
+.textContent=
 cart.reduce(
 (a,x)=>a+x.qty,
 0
@@ -739,7 +1094,7 @@ function subtotal(){
 
 return cart.reduce(
 (a,x)=>
-a+(x.price*x.qty),
+a+(Number(x.price)*x.qty),
 0
 );
 
@@ -747,7 +1102,7 @@ a+(x.price*x.qty),
 
 
 /* =========================================
-   CART PAGE
+   CART MODAL
 ========================================= */
 
 function openCart(){
@@ -756,12 +1111,10 @@ if(!cart.length){
 
 openModal(`
 
-<h2>🛒 Cart</h2>
+<h2>🛒 Your Cart</h2>
 
 <p style="color:#888">
-
 Your cart is empty.
-
 </p>
 
 `);
@@ -772,19 +1125,15 @@ return;
 
 
 let html=
-"<h2>🛒 Cart</h2>";
+"<h2>🛒 Your Cart</h2>";
 
 
-html+=
-cart.map(
-(p,i)=>`
+html+=cart.map((p,i)=>`
 
 <div class="cartRow">
 
 <div style="font-size:30px">
-
 ${p.emoji}
-
 </div>
 
 <div class="cartMain">
@@ -793,28 +1142,22 @@ ${p.emoji}
 ${esc(p.name)}
 </b>
 
-<div>
+<div style="margin-top:5px">
 ${peso(p.price)}
 </div>
 
 <div class="qty">
 
-<button
-onclick="qty(${i},-1)">
-
+<button onclick="changeQty(${i},-1)">
 −
-
 </button>
 
 <b>
 ${p.qty}
 </b>
 
-<button
-onclick="qty(${i},1)">
-
+<button onclick="changeQty(${i},1)">
 +
-
 </button>
 
 </div>
@@ -822,26 +1165,18 @@ onclick="qty(${i},1)">
 </div>
 
 <b>
-
-${peso(
-p.price*p.qty
-)}
-
+${peso(p.price*p.qty)}
 </b>
 
 </div>
 
-`
-).join("");
+`).join("");
 
 
-const sub=
-subtotal();
+const sub=subtotal();
 
 const shipping=
-sub>=1000
-?0
-:49;
+sub>=1000?0:49;
 
 const total=
 sub+shipping;
@@ -865,34 +1200,26 @@ ${peso(sub)}
 
 </div>
 
-
 <div style="
 display:flex;
 justify-content:space-between;
-margin-top:7px">
+margin-top:8px">
 
 <span>
 Shipping
 </span>
 
 <b>
-
-${
-shipping
-?peso(shipping)
-:"FREE"
-}
-
+${shipping?peso(shipping):"FREE"}
 </b>
 
 </div>
-
 
 <div style="
 display:flex;
 justify-content:space-between;
 font-size:19px;
-margin-top:12px">
+margin-top:14px">
 
 <b>
 Total
@@ -904,7 +1231,6 @@ ${peso(total)}
 
 </div>
 
-
 <button
 class="primary"
 onclick="checkout()">
@@ -915,23 +1241,22 @@ Checkout
 
 `;
 
-
 openModal(html);
 
 }
 
 
-function qty(i,n){
+function changeQty(index,amount){
 
-cart[i].qty+=n;
+if(!cart[index])return;
 
+cart[index].qty+=amount;
 
-if(cart[i].qty<=0){
+if(cart[index].qty<=0){
 
-cart.splice(i,1);
+cart.splice(index,1);
 
 }
-
 
 updateCart();
 
@@ -946,17 +1271,20 @@ openCart();
 
 function checkout(){
 
-const sub=
-subtotal();
+if(!cart.length){
+
+openCart();
+return;
+
+}
+
+const sub=subtotal();
 
 const shipping=
-sub>=1000
-?0
-:49;
+sub>=1000?0:49;
 
 const total=
 sub+shipping;
-
 
 selectedPayment=null;
 
@@ -967,7 +1295,6 @@ openModal(`
 Checkout
 </h2>
 
-
 <div style="
 background:#f6f7f8;
 padding:14px;
@@ -976,14 +1303,10 @@ border-radius:14px">
 Subtotal:
 ${peso(sub)}
 
-<br>
+<br><br>
 
 Shipping:
-${
-shipping
-?peso(shipping)
-:"FREE"
-}
+${shipping?peso(shipping):"FREE"}
 
 <hr>
 
@@ -994,11 +1317,9 @@ ${peso(total)}
 
 </div>
 
-
 <h3>
-Payment
+Payment Method
 </h3>
-
 
 <button
 class="pay"
@@ -1008,7 +1329,6 @@ onclick="selectPay('gcash',this)">
 
 </button>
 
-
 <button
 class="pay"
 onclick="selectPay('maribank',this)">
@@ -1016,7 +1336,6 @@ onclick="selectPay('maribank',this)">
 🧡 MariBank
 
 </button>
-
 
 <button
 class="primary"
@@ -1031,22 +1350,15 @@ onclick="placeOrder()">
 }
 
 
-function selectPay(
-type,
-el
-){
+function selectPay(type,el){
 
-selectedPayment=
-type;
-
+selectedPayment=type;
 
 document
 .querySelectorAll(".pay")
-.forEach(
-x=>
+.forEach(x=>
 x.classList.remove("selected")
 );
-
 
 el.classList.add("selected");
 
@@ -1054,7 +1366,7 @@ el.classList.add("selected");
 
 
 /* =========================================
-   PAYMENT
+   PLACE ORDER
 ========================================= */
 
 function placeOrder(){
@@ -1069,49 +1381,30 @@ return;
 
 }
 
+if(!cart.length){
 
-const sub=
-subtotal();
+alert("Your cart is empty.");
+
+return;
+
+}
+
+
+const sub=subtotal();
 
 const shipping=
-sub>=1000
-?0
-:49;
+sub>=1000?0:49;
 
 const total=
 sub+shipping;
 
 
-/*
-REAL RP WALLET TRANSACTION
-*/
+/* CHECK SHARED RP WALLET */
 
-const result=
-payRP(
-selectedPayment,
-total,
-{
-
-name:
-"ShopHub Purchase",
-
-description:
-cart.map(
-x=>
-x.qty+
-"× "+
-x.name
-).join(", "),
-
-icon:"🛍️"
-
-});
-
-
-if(!result.success){
+if(typeof payRP!=="function"){
 
 alert(
-result.message
+"rp-data.js is not loading. Make sure rp-data.js is in the same folder."
 );
 
 return;
@@ -1119,19 +1412,41 @@ return;
 }
 
 
-/*
-SAVE ORDER
-*/
+const result=
+payRP(
+selectedPayment,
+total,
+{
+name:"ShopHub Purchase",
+
+description:
+cart.map(x=>
+x.qty+"× "+x.name
+).join(", "),
+
+icon:"🛍️"
+
+}
+);
+
+
+if(!result.success){
+
+alert(result.message);
+
+return;
+
+}
+
+
+/* CREATE ORDER */
 
 const order={
 
-id:
-"SHOP"+
-Date.now(),
+id:"SHOP"+Date.now(),
 
 items:
-cart.map(
-x=>({
+cart.map(x=>({
 
 name:x.name,
 
@@ -1139,9 +1454,7 @@ qty:x.qty,
 
 price:x.price
 
-})
-
-),
+})),
 
 subtotal:sub,
 
@@ -1149,11 +1462,9 @@ shipping:shipping,
 
 total:total,
 
-payment:
-selectedPayment,
+payment:selectedPayment,
 
-status:
-"To Ship",
+status:"To Ship",
 
 date:
 new Date()
@@ -1162,25 +1473,43 @@ new Date()
 };
 
 
-/*
-Use shared RP memory.
-*/
+/* SAVE TO SHARED MEMORY */
+
+if(typeof addShopeeOrder==="function"){
 
 addShopeeOrder(order);
 
+}else{
 
-/*
-EMPTY CART
-*/
+const data=loadRP();
+
+if(!data.shopeeOrders){
+
+data.shopeeOrders=[];
+
+}
+
+data.shopeeOrders.unshift(order);
+
+saveRP(data);
+
+}
+
+
+/* CLEAR CART */
 
 cart=[];
 
 updateCart();
 
 
-/*
-SUCCESS
-*/
+/* SUCCESS */
+
+const paidVia=
+selectedPayment==="gcash"
+?"GCash"
+:"MariBank";
+
 
 openModal(`
 
@@ -1188,13 +1517,9 @@ openModal(`
 🎉 Order Placed!
 </h2>
 
-
 <p>
-
 Your ShopHub order is confirmed.
-
 </p>
-
 
 <div style="
 background:#f6f7f8;
@@ -1217,26 +1542,17 @@ ${peso(total)}
 
 Payment:
 <b>
-
-${
-selectedPayment==="gcash"
-?"GCash"
-:"MariBank"
-}
-
+${paidVia}
 </b>
 
 <br><br>
 
 Status:
 <b style="color:#ed4215">
-
 To Ship
-
 </b>
 
 </div>
-
 
 <button
 class="primary"
@@ -1257,8 +1573,17 @@ Done
 
 function showOrders(){
 
-const data=
-loadRP();
+if(typeof loadRP!=="function"){
+
+alert(
+"rp-data.js is not loading."
+);
+
+return;
+
+}
+
+const data=loadRP();
 
 const orders=
 data.shopeeOrders||[];
@@ -1282,9 +1607,7 @@ No ShopHub orders yet.
 
 }else{
 
-html+=
-orders.map(
-o=>`
+html+=orders.map(o=>`
 
 <div style="
 padding:14px 0;
@@ -1297,24 +1620,18 @@ ${esc(o.id)}
 <div style="
 font-size:11px;
 color:#777;
-margin-top:5px">
+margin-top:6px">
 
-${o.items.map(
-x=>
-x.qty+
-"× "+
-esc(x.name)
+${(o.items||[]).map(x=>
+x.qty+"× "+esc(x.name)
 ).join(", ")}
 
 </div>
 
-<div style="
-margin-top:7px">
+<div style="margin-top:8px">
 
 <strong>
-
 ${peso(o.total)}
-
 </strong>
 
 </div>
@@ -1324,13 +1641,14 @@ font-size:10px;
 color:#ed4215;
 margin-top:5px">
 
-${esc(o.status)}
+${esc(o.status||"Processing")}
 
 </div>
 
 <div style="
 font-size:10px;
-color:#999">
+color:#999;
+margin-top:5px">
 
 Paid via ${
 o.payment==="gcash"
@@ -1340,14 +1658,13 @@ o.payment==="gcash"
 
 <br>
 
-${esc(o.date)}
+${esc(o.date||"")}
 
 </div>
 
 </div>
 
-`
-).join("");
+`).join("");
 
 }
 
@@ -1361,12 +1678,13 @@ openModal(html);
    CATEGORY
 ========================================= */
 
-function setCat(el){
+function setCategory(cat,el){
+
+category=cat;
 
 document
 .querySelectorAll(".cat")
-.forEach(
-x=>
+.forEach(x=>
 x.classList.remove("active")
 );
 
@@ -1408,5 +1726,9 @@ document.getElementById(
 ========================================= */
 
 render();
+updateCart();
 
-  </script>
+</script>
+
+</body>
+</html>
