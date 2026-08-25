@@ -1,447 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-
-<title>FoodDash RP</title>
-
-<script src="rp-data.js"></script>
-
-<style>
-*{box-sizing:border-box}
-
-body{
-  margin:0;
-  background:#111827;
-  font-family:Arial,sans-serif;
-  color:#18202a;
-}
-
-.app{
-  max-width:480px;
-  min-height:100vh;
-  margin:auto;
-  background:#f7f8fa;
-  padding-bottom:85px;
-}
-
-.header{
-  background:linear-gradient(145deg,#ff315b,#e91e48);
-  color:white;
-  padding:18px 17px 22px;
-  border-radius:0 0 28px 28px;
-}
-
-.top{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-
-.logo{
-  font-size:22px;
-  font-weight:900;
-}
-
-.cartBtn{
-  border:0;
-  background:#ffffff22;
-  color:white;
-  border-radius:14px;
-  padding:9px 12px;
-  font-size:18px;
-}
-
-.location{
-  margin-top:18px;
-  font-size:12px;
-  opacity:.9;
-}
-
-.search{
-  width:100%;
-  margin-top:10px;
-  border:0;
-  border-radius:15px;
-  padding:14px;
-  font-size:14px;
-  outline:none;
-}
-
-.body{
-  padding:15px;
-}
-
-.categories{
-  display:flex;
-  gap:8px;
-  overflow-x:auto;
-  padding-bottom:5px;
-}
-
-.cat{
-  white-space:nowrap;
-  border:0;
-  background:white;
-  padding:10px 14px;
-  border-radius:20px;
-  box-shadow:0 2px 7px #0000000c;
-}
-
-.cat.active{
-  background:#ff315b;
-  color:white;
-}
-
-.section{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin:17px 2px 10px;
-}
-
-.section h3{
-  margin:0;
-  font-size:17px;
-}
-
-.restaurant{
-  background:white;
-  border-radius:20px;
-  margin-bottom:13px;
-  overflow:hidden;
-  box-shadow:0 3px 12px #0000000b;
-}
-
-.restImage{
-  height:125px;
-  background:linear-gradient(135deg,#ffcf70,#ff7a59);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:55px;
-}
-
-.restBody{
-  padding:13px;
-}
-
-.restTop{
-  display:flex;
-  justify-content:space-between;
-}
-
-.restName{
-  font-weight:800;
-  font-size:16px;
-}
-
-.rating{
-  font-size:12px;
-  color:#e59600;
-}
-
-.meta{
-  color:#7c8490;
-  font-size:11px;
-  margin-top:5px;
-}
-
-.menuBtn{
-  width:100%;
-  border:0;
-  background:#fff0f3;
-  color:#e91e48;
-  padding:11px;
-  border-radius:12px;
-  margin-top:11px;
-  font-weight:bold;
-}
-
-.menu{
-  display:none;
-  padding:0 13px 13px;
-}
-
-.item{
-  display:flex;
-  gap:10px;
-  padding:12px 0;
-  border-top:1px solid #edf0f3;
-}
-
-.itemEmoji{
-  width:48px;
-  height:48px;
-  border-radius:13px;
-  background:#fff3e8;
-  display:grid;
-  place-items:center;
-  font-size:26px;
-}
-
-.itemMain{
-  flex:1;
-}
-
-.itemName{
-  font-weight:bold;
-  font-size:13px;
-}
-
-.itemDesc{
-  color:#818995;
-  font-size:10px;
-  margin-top:4px;
-}
-
-.itemPrice{
-  margin-top:5px;
-  font-weight:800;
-  font-size:13px;
-}
-
-.add{
-  align-self:center;
-  border:0;
-  background:#ff315b;
-  color:white;
-  border-radius:11px;
-  width:34px;
-  height:34px;
-  font-size:20px;
-}
-
-.bottom{
-  position:fixed;
-  bottom:0;
-  left:50%;
-  transform:translateX(-50%);
-  width:min(480px,100%);
-  height:72px;
-  background:white;
-  border-top:1px solid #e4e8ed;
-  display:flex;
-  z-index:10;
-}
-
-.bottom button{
-  flex:1;
-  border:0;
-  background:none;
-  font-size:10px;
-  color:#7c8490;
-}
-
-.bottom span{
-  display:block;
-  font-size:21px;
-  margin-bottom:3px;
-}
-
-.modalBg{
-  position:fixed;
-  inset:0;
-  background:#0008;
-  display:none;
-  align-items:flex-end;
-  z-index:30;
-}
-
-.modal{
-  width:min(480px,100%);
-  max-height:90vh;
-  overflow:auto;
-  background:white;
-  border-radius:25px 25px 0 0;
-  padding:20px;
-}
-
-.close{
-  float:right;
-  border:0;
-  width:32px;
-  height:32px;
-  border-radius:50%;
-  background:#eef1f4;
-}
-
-.cartRow{
-  display:flex;
-  gap:10px;
-  padding:13px 0;
-  border-bottom:1px solid #eee;
-}
-
-.cartInfo{
-  flex:1;
-}
-
-.qty{
-  display:flex;
-  gap:8px;
-  align-items:center;
-  margin-top:7px;
-}
-
-.qty button{
-  border:0;
-  width:28px;
-  height:28px;
-  border-radius:8px;
-  background:#f0f2f5;
-}
-
-.checkout{
-  width:100%;
-  border:0;
-  padding:15px;
-  border-radius:14px;
-  background:#ff315b;
-  color:white;
-  font-weight:bold;
-  margin-top:12px;
-}
-
-.payment{
-  display:grid;
-  gap:8px;
-  margin:12px 0;
-}
-
-.pay{
-  border:1px solid #ddd;
-  padding:13px;
-  border-radius:13px;
-  background:white;
-  text-align:left;
-}
-
-.pay.selected{
-  border:2px solid #ff315b;
-  background:#fff3f5;
-}
-</style>
-</head>
-
-<body>
-
-<div class="app">
-
-<div class="header">
-
-<div class="top">
-
-<div class="logo">
-FoodDash
-</div>
-
-<button class="cartBtn"
-onclick="openCart()">
-🛒 <span id="cartCount">0</span>
-</button>
-
-</div>
-
-<div class="location">
-📍 RP Home
-</div>
-
-<input
-id="search"
-class="search"
-placeholder="Search food, restaurants..."
-oninput="searchFood()">
-
-</div>
-
-
-<div class="body">
-
-<div class="categories">
-
-<button class="cat active"
-onclick="filterCategory('All',this)">
-All
-</button>
-
-<button class="cat"
-onclick="filterCategory('Burgers',this)">
-🍔 Burgers
-</button>
-
-<button class="cat"
-onclick="filterCategory('Pizza',this)">
-🍕 Pizza
-</button>
-
-<button class="cat"
-onclick="filterCategory('Chicken',this)">
-🍗 Chicken
-</button>
-
-<button class="cat"
-onclick="filterCategory('Asian',this)">
-🍜 Asian
-</button>
-
-<button class="cat"
-onclick="filterCategory('Dessert',this)">
-🍰 Dessert
-</button>
-
-</div>
-
-
-<div class="section">
-<h3>Restaurants near you</h3>
-</div>
-
-<div id="restaurants"></div>
-
-</div>
-
-
-<div class="bottom">
-
-<button onclick="location.href='index.html'">
-<span>⌂</span>
-Home
-</button>
-
-<button onclick="showOrders()">
-<span>📦</span>
-Orders
-</button>
-
-<button onclick="openCart()">
-<span>🛒</span>
-Cart
-</button>
-
-</div>
-
-</div>
-
-
-<div class="modalBg"
-id="modalBg">
-
-<div class="modal">
-
-<button class="close"
-onclick="closeModal()">
-×
-</button>
-
-<div id="modalContent"></div>
-
-</div>
-
-</div>
-
-
 <script>
 
 const restaurants=[
@@ -523,10 +79,13 @@ items:[
 
 ];
 
-
 let currentCategory="All";
 let cart=[];
 
+
+/* =========================
+HELPERS
+========================= */
 
 function peso(n){
 
@@ -536,53 +95,285 @@ return new Intl.NumberFormat(
 style:"currency",
 currency:"PHP"
 }
-).format(n);
+).format(Number(n)||0);
 
 }
 
 
-function renderRestaurants(){
+function esc(text){
+
+return String(text)
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================
+AUTOMATIC RESTAURANT GENERATOR
+========================= */
+
+function generateRestaurants(query){
+
+const q=
+query.trim() ||
+"Food";
+
+const title=
+q
+.split(/\s+/)
+.map(x=>
+x.charAt(0).toUpperCase()+x.slice(1)
+)
+.join(" ");
+
+
+/* choose suitable emoji */
+
+let emoji="🍽️";
+
+const lower=q.toLowerCase();
+
+if(
+lower.includes("burger") ||
+lower.includes("mc") ||
+lower.includes("fast")
+) emoji="🍔";
+
+else if(
+lower.includes("pizza")
+) emoji="🍕";
+
+else if(
+lower.includes("chicken") ||
+lower.includes("fried")
+) emoji="🍗";
+
+else if(
+lower.includes("ramen") ||
+lower.includes("noodle") ||
+lower.includes("japan") ||
+lower.includes("asian")
+) emoji="🍜";
+
+else if(
+lower.includes("cake") ||
+lower.includes("dessert") ||
+lower.includes("ice cream") ||
+lower.includes("sweet")
+) emoji="🍰";
+
+else if(
+lower.includes("coffee") ||
+lower.includes("cafe")
+) emoji="☕";
+
+else if(
+lower.includes("milk tea") ||
+lower.includes("boba")
+) emoji="🧋";
+
+
+const restaurantNames=[
+`${title} House`,
+`${title} Kitchen`,
+`${title} Express`,
+`${title} Corner`,
+`${title} Hub`,
+`${title} Station`,
+`${title} Cafe`,
+`${title} Restaurant`,
+`${title} Grill`,
+`${title} Bistro`,
+`${title} Eats`,
+`${title} Place`
+];
+
+
+const menuNames=[
+`${title} Special`,
+`${title} Meal`,
+`Classic ${title}`,
+`Premium ${title}`,
+`Loaded ${title}`,
+`Family ${title}`,
+`Regular ${title}`,
+`Large ${title}`,
+`Combo ${title}`,
+`Signature ${title}`
+];
+
+
+return restaurantNames.map(
+(name,i)=>{
+
+const items=[];
+
+for(let x=0;x<5;x++){
+
+items.push([
+
+menuNames[
+(x+i)%menuNames.length
+],
+
+`Freshly prepared ${lower} meal. RP-generated menu item.`,
+
+99+
+((i*71+x*53)%700),
+
+emoji
+
+]);
+
+}
+
+
+return {
+
+name:name,
+
+emoji:emoji,
+
+category:"Search",
+
+rating:(4.3+((i%6)*0.1))
+.toFixed(1),
+
+time:
+(15+(i%5)*5)+
+"–"+
+(25+(i%5)*5)+
+" min",
+
+delivery:
+29+(i%4)*10,
+
+items:items
+
+};
+
+});
+
+}
+
+
+/* =========================
+GET SEARCH RESULTS
+========================= */
+
+function getRestaurants(){
 
 const query=
-document.getElementById("search")
+document
+.getElementById("search")
 .value
-.toLowerCase();
+.toLowerCase()
+.trim();
+
+
+/*
+If there is no search:
+use the normal restaurants.
+*/
+
+if(!query){
+
+return restaurants.filter(r=>
+
+currentCategory==="All" ||
+r.category===currentCategory
+
+);
+
+}
+
+
+/*
+First search the built-in restaurants.
+*/
+
+const exact=
+restaurants.filter(r=>{
+
+const text=(
+r.name+
+" "+
+r.category+
+" "+
+r.items
+.map(x=>x[0])
+.join(" ")
+).toLowerCase();
+
+return text.includes(query);
+
+});
+
+
+/*
+If search finds something:
+show those plus generated
+restaurants.
+
+If nothing matches:
+generate everything.
+*/
+
+const generated=
+generateRestaurants(query);
+
+return [
+...exact,
+...generated
+];
+
+}
+
+
+/* =========================
+RENDER
+========================= */
+
+function renderRestaurants(){
 
 const box=
 document.getElementById(
 "restaurants"
 );
 
-const filtered=
-restaurants.filter(r=>{
-
-const categoryOK=
-currentCategory==="All" ||
-r.category===currentCategory;
-
-const text=
-(
-r.name+
-" "+
-r.category+
-" "+
-r.items.map(x=>x[0]).join(" ")
-).toLowerCase();
-
-return categoryOK &&
-text.includes(query);
-
-});
+const results=
+getRestaurants();
 
 
 box.innerHTML=
-filtered.map(
-(r,index)=>`
+results.map(
+(r,index)=>{
+
+/*
+Generated restaurants aren't
+inside the original array.
+
+So store them temporarily.
+*/
+
+const id=
+"result-"+index;
+
+window.currentResults=
+results;
+
+return `
 
 <div class="restaurant">
 
 <div class="restImage">
+
 ${r.emoji}
+
 </div>
 
 <div class="restBody">
@@ -590,22 +381,33 @@ ${r.emoji}
 <div class="restTop">
 
 <div class="restName">
-${r.name}
+
+${esc(r.name)}
+
 </div>
 
 <div class="rating">
+
 ⭐ ${r.rating}
+
 </div>
 
 </div>
 
 <div class="meta">
-${r.category} • ${r.time} • Delivery ${peso(r.delivery)}
+
+${esc(r.category)}
+•
+${r.time}
+•
+Delivery
+${peso(r.delivery)}
+
 </div>
 
 <button
 class="menuBtn"
-onclick="toggleMenu(${restaurants.indexOf(r)})">
+onclick="toggleMenu('${id}')">
 
 View Menu
 
@@ -613,9 +415,10 @@ View Menu
 
 </div>
 
+
 <div
 class="menu"
-id="menu-${restaurants.indexOf(r)}">
+id="menu-${id}">
 
 ${r.items.map(
 (item,itemIndex)=>`
@@ -623,31 +426,36 @@ ${r.items.map(
 <div class="item">
 
 <div class="itemEmoji">
+
 ${item[3]}
+
 </div>
 
 <div class="itemMain">
 
 <div class="itemName">
-${item[0]}
+
+${esc(item[0])}
+
 </div>
 
 <div class="itemDesc">
-${item[1]}
+
+${esc(item[1])}
+
 </div>
 
 <div class="itemPrice">
+
 ${peso(item[2])}
+
 </div>
 
 </div>
 
 <button
 class="add"
-onclick="addToCart(
-${restaurants.indexOf(r)},
-${itemIndex}
-)">
+onclick="addGeneratedToCart(${index},${itemIndex})">
 
 +
 
@@ -662,11 +470,12 @@ ${itemIndex}
 
 </div>
 
-`
-).join("");
+`;
+
+}).join("");
 
 
-if(!filtered.length){
+if(!results.length){
 
 box.innerHTML=`
 
@@ -677,12 +486,15 @@ border-radius:20px;
 text-align:center">
 
 <h3>
-No exact match
+🍽️ Finding food...
 </h3>
 
-<p style="color:#888;font-size:12px">
+<p style="
+color:#888;
+font-size:12px">
 
-Try another food or restaurant.
+Try searching for a food,
+restaurant, cuisine or drink.
 
 </p>
 
@@ -695,12 +507,18 @@ Try another food or restaurant.
 }
 
 
-function toggleMenu(index){
+/* =========================
+MENU
+========================= */
+
+function toggleMenu(id){
 
 const menu=
 document.getElementById(
-"menu-"+index
+"menu-"+id
 );
+
+if(!menu)return;
 
 menu.style.display=
 menu.style.display==="block"
@@ -710,19 +528,34 @@ menu.style.display==="block"
 }
 
 
-function addToCart(r,i){
+/* =========================
+ADD GENERATED / NORMAL FOOD
+========================= */
+
+function addGeneratedToCart(
+restaurantIndex,
+itemIndex
+){
 
 const restaurant=
-restaurants[r];
+window.currentResults[
+restaurantIndex
+];
 
 const item=
-restaurant.items[i];
+restaurant.items[
+itemIndex
+];
+
 
 const existing=
-cart.find(
-x=>x.restaurant===restaurant.name &&
+cart.find(x=>
+
+x.restaurant===restaurant.name &&
 x.name===item[0]
+
 );
+
 
 if(existing){
 
@@ -738,13 +571,15 @@ name:item[0],
 
 description:item[1],
 
-price:item[2],
+price:Number(item[2]),
 
 emoji:item[3],
 
 qty:1,
 
-delivery:restaurant.delivery
+delivery:Number(
+restaurant.delivery
+)
 
 });
 
@@ -755,12 +590,16 @@ updateCart();
 }
 
 
+/* =========================
+CART
+========================= */
+
 function updateCart(){
 
-let count=0;
-
-cart.forEach(
-x=>count+=x.qty
+const count=
+cart.reduce(
+(sum,x)=>sum+x.qty,
+0
 );
 
 document.getElementById(
@@ -802,7 +641,9 @@ openModal(`
 <h2>🛒 Your Cart</h2>
 
 <p style="color:#888">
+
 Your cart is empty.
+
 </p>
 
 `);
@@ -815,6 +656,7 @@ return;
 let html=`
 
 <h2>🛒 Your Cart</h2>
+
 `;
 
 
@@ -824,35 +666,49 @@ html+=cart.map(
 <div class="cartRow">
 
 <div style="font-size:28px">
+
 ${item.emoji}
+
 </div>
 
 <div class="cartInfo">
 
 <b>
-${item.name}
+${esc(item.name)}
 </b>
 
-<div style="font-size:11px;color:#888">
-${item.restaurant}
+<div style="
+font-size:11px;
+color:#888">
+
+${esc(item.restaurant)}
+
 </div>
 
 <div style="margin-top:5px">
+
 ${peso(item.price)}
+
 </div>
 
 <div class="qty">
 
 <button
 onclick="changeQty(${index},-1)">
+
 −
+
 </button>
 
-<b>${item.qty}</b>
+<b>
+${item.qty}
+</b>
 
 <button
 onclick="changeQty(${index},1)">
+
 +
+
 </button>
 
 </div>
@@ -860,7 +716,9 @@ onclick="changeQty(${index},1)">
 </div>
 
 <div>
+
 ${peso(item.price*item.qty)}
+
 </div>
 
 </div>
@@ -881,15 +739,17 @@ subtotal+delivery;
 
 html+=`
 
-<div style="
-margin-top:15px">
+<div style="margin-top:15px">
 
 <div style="
 display:flex;
 justify-content:space-between">
 
 <span>Subtotal</span>
-<b>${peso(subtotal)}</b>
+
+<b>
+${peso(subtotal)}
+</b>
 
 </div>
 
@@ -899,7 +759,10 @@ justify-content:space-between;
 margin-top:8px">
 
 <span>Delivery</span>
-<b>${peso(delivery)}</b>
+
+<b>
+${peso(delivery)}
+</b>
 
 </div>
 
@@ -911,7 +774,10 @@ justify-content:space-between;
 font-size:18px">
 
 <b>Total</b>
-<b>${peso(total)}</b>
+
+<b>
+${peso(total)}
+</b>
 
 </div>
 
@@ -949,6 +815,10 @@ openCart();
 }
 
 
+/* =========================
+CHECKOUT
+========================= */
+
 function checkout(){
 
 const subtotal=
@@ -961,16 +831,40 @@ const total=
 subtotal+delivery;
 
 
+window.selectedPayment=null;
+
+
 openModal(`
 
-<h2>Checkout</h2>
+<h2>
+Checkout
+</h2>
 
-<p>
+<div style="
+background:#f7f8fa;
+padding:14px;
+border-radius:14px">
+
+Subtotal:
+${peso(subtotal)}
+
+<br><br>
+
+Delivery:
+${peso(delivery)}
+
+<hr>
+
+<b>
 Total:
-<strong>${peso(total)}</strong>
-</p>
+${peso(total)}
+</b>
 
-<h3>Payment method</h3>
+</div>
+
+<h3>
+Payment Method
+</h3>
 
 <div class="payment">
 
@@ -1002,14 +896,16 @@ Place Order
 
 `);
 
-window.selectedPayment=null;
-
 }
 
 
-function selectPayment(account,button){
+function selectPayment(
+account,
+button
+){
 
-window.selectedPayment=account;
+window.selectedPayment=
+account;
 
 document
 .querySelectorAll(".pay")
@@ -1021,6 +917,10 @@ button.classList.add("selected");
 
 }
 
+
+/* =========================
+PLACE ORDER
+========================= */
 
 function placeOrder(){
 
@@ -1051,11 +951,17 @@ window.selectedPayment,
 total,
 {
 name:"FoodDash Order",
+
 description:
 cart.map(
-x=>x.qty+"× "+x.name
+x=>
+x.qty+
+"× "+
+x.name
 ).join(", "),
+
 icon:"🍔"
+
 }
 );
 
@@ -1063,6 +969,7 @@ icon:"🍔"
 if(!payment.success){
 
 alert(payment.message);
+
 return;
 
 }
@@ -1077,9 +984,13 @@ cart[0].restaurant,
 
 items:
 cart.map(x=>({
+
 name:x.name,
+
 qty:x.qty,
+
 price:x.price
+
 })),
 
 subtotal:subtotal,
@@ -1093,39 +1004,100 @@ window.selectedPayment,
 
 status:"Preparing",
 
-date:new Date().toLocaleString("en-PH")
+date:
+new Date()
+.toLocaleString("en-PH")
 
 };
 
 
+if(typeof addFoodpandaOrder==="function"){
+
 addFoodpandaOrder(order);
+
+}else{
+
+/*
+Fallback for older rp-data.js.
+*/
+
+const data=
+loadRP();
+
+if(!data.foodpandaOrders)
+data.foodpandaOrders=[];
+
+data.foodpandaOrders.unshift(
+order
+);
+
+localStorage.setItem(
+"rpData",
+JSON.stringify(data)
+);
+
+}
+
 
 cart=[];
 
 updateCart();
 
+
 openModal(`
 
-<h2>🎉 Order placed!</h2>
+<h2>
+🎉 Order Placed!
+</h2>
 
 <p>
-Your order has been sent to
-<strong>${order.restaurant}</strong>.
+
+Your order from
+
+<strong>
+${esc(order.restaurant)}
+</strong>
+
+has been placed.
+
 </p>
 
-<p>
-Total paid:
-<strong>${peso(total)}</strong>
-</p>
+<div style="
+background:#f7f8fa;
+padding:14px;
+border-radius:14px">
 
-<p style="color:#777">
+Order:
+<strong>
+${order.id}
+</strong>
+
+<br><br>
+
+Total:
+<strong>
+${peso(total)}
+</strong>
+
+<br><br>
+
 Payment:
+<strong>
 ${
 window.selectedPayment==="gcash"
 ?"GCash"
 :"MariBank"
 }
-</p>
+</strong>
+
+<br><br>
+
+Status:
+<strong>
+Preparing
+</strong>
+
+</div>
 
 <button
 class="checkout"
@@ -1140,27 +1112,37 @@ Done
 }
 
 
+/* =========================
+ORDERS
+========================= */
+
 function showOrders(){
 
 const data=
 loadRP();
 
+const orders=
+data.foodpandaOrders||[];
+
 let html=
 "<h2>📦 Your Orders</h2>";
 
-if(!data.foodpandaOrders.length){
+
+if(!orders.length){
 
 html+=`
+
 <p style="color:#888">
+
 No orders yet.
+
 </p>
+
 `;
 
 }else{
 
-html+=
-data.foodpandaOrders
-.map(
+html+=orders.map(
 o=>`
 
 <div style="
@@ -1168,7 +1150,7 @@ padding:14px 0;
 border-bottom:1px solid #eee">
 
 <b>
-${o.restaurant}
+${esc(o.restaurant)}
 </b>
 
 <div style="
@@ -1177,7 +1159,10 @@ color:#888;
 margin-top:5px">
 
 ${o.items.map(
-x=>x.qty+"× "+x.name
+x=>
+x.qty+
+"× "+
+esc(x.name)
 ).join(", ")}
 
 </div>
@@ -1196,7 +1181,7 @@ font-size:11px;
 color:#e91e48;
 margin-top:5px">
 
-${o.status}
+${esc(o.status)}
 
 </div>
 
@@ -1205,7 +1190,7 @@ font-size:10px;
 color:#999;
 margin-top:3px">
 
-${o.date}
+${esc(o.date)}
 
 </div>
 
@@ -1221,16 +1206,45 @@ openModal(html);
 }
 
 
+/* =========================
+SEARCH
+========================= */
+
 function searchFood(){
+
+/*
+Every keystroke reruns the
+generator.
+
+Examples:
+
+burger
+pizza
+ramen
+sushi
+coffee
+milk tea
+jollibee
+vacuum
+random food
+*/
 
 renderRestaurants();
 
 }
 
 
-function filterCategory(category,button){
+/* =========================
+CATEGORY
+========================= */
 
-currentCategory=category;
+function filterCategory(
+category,
+button
+){
+
+currentCategory=
+category;
 
 document
 .querySelectorAll(".cat")
@@ -1244,6 +1258,10 @@ renderRestaurants();
 
 }
 
+
+/* =========================
+MODAL
+========================= */
 
 function openModal(html){
 
@@ -1267,9 +1285,10 @@ document.getElementById(
 }
 
 
+/* =========================
+START
+========================= */
+
 renderRestaurants();
 
-</script>
-
-</body>
-  </html>
+  </script>
