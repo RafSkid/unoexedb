@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>RP Phone</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #111;
+    }
+
+    .phone {
+      max-width: 480px;
+      min-height: 100vh;
+      margin: auto;
+      background: #f5f5f5;
+    }
+
+    .status {
+      background: #111;
+      color: white;
+      padding: 8px 15px;
+      font-size: 12px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    header {
+      background: #111;
+      color: white;
+      padding: 20px;
+    }
+
+    header h1 {
+      margin: 0;
+    }
+
+    .content {
+      padding: 20px;
+    }
+
+    .wallet {
+      background: white;
+      padding: 20px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 3px 10px #0002;
+    }
+
+    .wallet-title {
+      color: #777;
+      font-size: 13px;
+    }
+
+    .balance {
+      font-size: 30px;
+      font-weight: bold;
+      margin-top: 8px;
+    }
+
+    .apps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .app {
+      border: none;
+      background: white;
+      border-radius: 18px;
+      padding: 18px 5px;
+      font-size: 13px;
+      box-shadow: 0 2px 8px #0002;
+    }
+
+    .icon {
+      display: block;
+      font-size: 32px;
+      margin-bottom: 8px;
+    }
+
+    .coming {
+      opacity: .5;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="phone">
+
+  <div class="status">
+    <span>12:00</span>
+    <span>📶 4G 🔋 100%</span>
+  </div>
+
+  <header>
+    <h1>📱 RP Phone</h1>
+    <small>Roleplay Banking & Shopping</small>
+  </header>
+
+  <div class="content">
+
+    <div class="wallet">
+      <div class="wallet-title">
+        RP TOTAL BALANCE
+      </div>
+
+      <div class="balance">
+        ₱15,571.25
+      </div>
+
+      <small>
+        💙 GCash · 🧡 MariBank
+      </small>
+    </div>
+
+    <h2>Apps</h2>
+
+    <div class="apps">
+
+      <button class="app" onclick="openApp('gcash.html')">
+        <span class="icon">💙</span>
+        GCash
+      </button>
+
+      <button class="app" onclick="openApp('maribank.html')">
+        <span class="icon">🧡</span>
+        MariBank
+      </button>
+
+      <button class="app" onclick="openApp('foodpanda.html')">
+        <span class="icon">🍔</span>
+        Foodpanda
+      </button>
+
+      <button class="app" onclick="openApp('shopee.html')">
+        <span class="icon">🛍️</span>
+        Shopee
+      </button>
+
+      <button class="app" onclick="openApp('bills.html')">
+        <span class="icon">🧾</span>
+        Bills
+      </button>
+
+      <button class="app coming">
+        ⚙️
+        <span class="icon">⚙️</span>
+        Settings
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+
+function openApp(page) {
+  window.location.href = page;
+}
+
+</script>
+
+</body>
+        </html>
