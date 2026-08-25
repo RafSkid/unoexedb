@@ -2,8 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>MariBank RP</title>
 
 <script src="rp-data.js"></script>
@@ -13,25 +12,22 @@
 
 body{
   margin:0;
-  background:#101820;
+  background:#111827;
   font-family:Arial,sans-serif;
-  color:#18202a;
 }
 
 .app{
   max-width:480px;
   min-height:100vh;
   margin:auto;
-  background:#f6f7f8;
-  padding-bottom:82px;
+  background:#f6f7f9;
+  padding-bottom:90px;
 }
 
-/* HEADER */
-
 .hero{
-  background:linear-gradient(145deg,#ff7a00,#e85200);
+  background:linear-gradient(145deg,#ff7800,#e94f00);
   color:white;
-  padding:18px 18px 28px;
+  padding:20px;
   border-radius:0 0 30px 30px;
 }
 
@@ -42,7 +38,7 @@ body{
 }
 
 .logo{
-  font-size:21px;
+  font-size:22px;
   font-weight:800;
 }
 
@@ -50,26 +46,24 @@ body{
   font-size:24px;
 }
 
-.welcome{
+.greeting{
   margin-top:24px;
   font-size:13px;
   opacity:.85;
 }
 
 .balance{
-  font-size:36px;
+  font-size:38px;
   font-weight:800;
   margin:5px 0 20px;
 }
 
 .account{
-  background:#ffffff1b;
-  padding:12px 14px;
+  background:#ffffff20;
+  padding:13px 15px;
   border-radius:15px;
   font-size:12px;
 }
-
-/* QUICK ACTIONS */
 
 .actions{
   display:grid;
@@ -80,21 +74,19 @@ body{
 
 .action{
   border:0;
-  background:#fff;
+  background:white;
   border-radius:17px;
-  padding:13px 4px;
+  padding:12px 3px;
   font-size:10px;
-  box-shadow:0 2px 8px #0000000d;
+  box-shadow:0 2px 9px #0000000d;
   cursor:pointer;
 }
 
 .action span{
   display:block;
   font-size:22px;
-  margin-bottom:6px;
+  margin-bottom:5px;
 }
-
-/* BODY */
 
 .body{
   padding:16px;
@@ -104,7 +96,7 @@ body{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  margin:8px 2px 10px;
+  margin:12px 2px;
 }
 
 .section h3{
@@ -112,12 +104,11 @@ body{
   font-size:17px;
 }
 
-.see{
-  color:#ed6200;
+.link{
+  color:#e95b00;
   font-size:12px;
+  cursor:pointer;
 }
-
-/* CARDS */
 
 .cards{
   display:grid;
@@ -126,13 +117,13 @@ body{
 }
 
 .card{
-  background:#fff;
+  background:white;
   border-radius:19px;
   padding:16px;
-  box-shadow:0 2px 10px #0000000c;
+  box-shadow:0 3px 12px #0000000b;
 }
 
-.card-icon{
+.icon{
   width:40px;
   height:40px;
   border-radius:13px;
@@ -140,27 +131,25 @@ body{
   display:grid;
   place-items:center;
   font-size:21px;
-  margin-bottom:13px;
+  margin-bottom:12px;
 }
 
-.card-title{
-  font-size:12px;
-  color:#737b85;
+.label{
+  color:#7c8490;
+  font-size:11px;
 }
 
-.card-value{
+.value{
   font-size:18px;
   font-weight:800;
   margin-top:4px;
 }
 
-/* TRANSACTIONS */
-
-.transaction-card{
-  background:#fff;
+.transactions{
+  background:white;
   border-radius:20px;
   padding:15px;
-  box-shadow:0 2px 10px #0000000c;
+  box-shadow:0 3px 12px #0000000b;
 }
 
 .tx{
@@ -194,7 +183,7 @@ body{
 }
 
 .muted{
-  color:#858d98;
+  color:#818995;
   font-size:11px;
   margin-top:4px;
 }
@@ -212,8 +201,6 @@ body{
   color:#129568;
 }
 
-/* BOTTOM */
-
 .nav{
   position:fixed;
   bottom:0;
@@ -222,31 +209,29 @@ body{
   width:min(480px,100%);
   height:72px;
   background:white;
-  border-top:1px solid #e5e8ec;
+  border-top:1px solid #e4e8ec;
   display:flex;
-  z-index:10;
+  z-index:5;
 }
 
 .nav button{
   flex:1;
   border:0;
   background:none;
-  color:#818894;
+  color:#7c8490;
   font-size:10px;
 }
 
-.nav button.active{
-  color:#e85b00;
-  font-weight:700;
+.nav .active{
+  color:#e95b00;
+  font-weight:bold;
 }
 
 .nav span{
   display:block;
   font-size:22px;
-  margin-bottom:3px;
+  margin-bottom:4px;
 }
-
-/* MODAL */
 
 .sheet{
   position:fixed;
@@ -262,7 +247,7 @@ body{
   margin:auto;
   background:white;
   border-radius:26px 26px 0 0;
-  padding:20px;
+  padding:22px;
   max-height:85vh;
   overflow:auto;
 }
@@ -276,6 +261,35 @@ body{
   background:#f0f2f4;
   font-size:18px;
 }
+
+.input{
+  width:100%;
+  padding:14px;
+  border:1px solid #dce1e7;
+  border-radius:13px;
+  font-size:16px;
+  margin:7px 0;
+}
+
+.primary{
+  width:100%;
+  border:0;
+  padding:14px;
+  border-radius:14px;
+  background:#ed5b00;
+  color:white;
+  font-weight:bold;
+  margin-top:8px;
+}
+
+.secondary{
+  width:100%;
+  border:0;
+  padding:14px;
+  border-radius:14px;
+  background:#eef1f4;
+  margin-top:8px;
+}
 </style>
 </head>
 
@@ -283,546 +297,634 @@ body{
 
 <div class="app">
 
-  <!-- HEADER -->
+<section class="hero">
 
-  <section class="hero">
+<div class="top">
+<div class="logo">MariBank</div>
+<div class="menu">•••</div>
+</div>
 
-    <div class="top">
+<div class="greeting">
+Good day, RP User
+</div>
 
-      <div class="logo">
-        MariBank
-      </div>
+<div class="balance" id="balance">
+₱0.00
+</div>
 
-      <div class="menu">
-        ⋯
-      </div>
+<div class="account">
+Savings Account
+<br>
+RP ACCOUNT •••• 4821
+</div>
 
-    </div>
+</section>
 
-    <div class="welcome">
-      Good day, RP user
-    </div>
 
-    <div class="balance" id="balance">
-      ₱0.00
-    </div>
+<div class="body">
 
-    <div class="account">
-      Savings Account
-      <br>
-      <span>RP ACCOUNT •••• 4821</span>
-    </div>
+<div class="actions">
 
-  </section>
+<button class="action" onclick="cashIn()">
+<span>＋</span>
+Cash In
+</button>
 
+<button class="action" onclick="cashOut()">
+<span>↘</span>
+Cash Out
+</button>
 
-  <!-- QUICK ACTIONS -->
+<button class="action" onclick="transfer()">
+<span>↗</span>
+Transfer
+</button>
 
-  <div class="body">
-
-    <div class="actions">
-
-      <button class="action"
-              onclick="demo('Transfer Money')">
-
-        <span>↗</span>
-        Transfer
-
-      </button>
-
-      <button class="action"
-              onclick="demo('Receive Money')">
-
-        <span>↓</span>
-        Receive
-
-      </button>
-
-      <button class="action"
-              onclick="demo('Pay Bills')">
-
-        <span>🧾</span>
-        Bills
-
-      </button>
-
-      <button class="action"
-              onclick="showHistory()">
-
-        <span>↺</span>
-        History
-
-      </button>
-
-    </div>
-
-
-    <!-- MONEY OVERVIEW -->
-
-    <div class="section"
-         style="margin-top:25px">
-
-      <h3>
-        My money
-      </h3>
-
-      <span class="see">
-        Overview
-      </span>
-
-    </div>
-
-
-    <div class="cards">
-
-      <div class="card">
-
-        <div class="card-icon">
-          💰
-        </div>
-
-        <div class="card-title">
-          Available
-        </div>
-
-        <div class="card-value"
-             id="available">
-
-          ₱0.00
-
-        </div>
-
-      </div>
-
-
-      <div class="card">
-
-        <div class="card-icon">
-          📊
-        </div>
-
-        <div class="card-title">
-          Transactions
-        </div>
-
-        <div class="card-value"
-             id="txCount">
-
-          0
-
-        </div>
-
-      </div>
-
-    </div>
-
-
-    <!-- RECENT -->
-
-    <div class="section"
-         style="margin-top:25px">
-
-      <h3>
-        Recent activity
-      </h3>
-
-      <span class="see"
-            onclick="showHistory()">
-
-        See all
-
-      </span>
-
-    </div>
-
-
-    <div class="transaction-card"
-         id="transactions">
-
-      Loading...
-
-    </div>
-
-  </div>
-
-
-  <!-- NAV -->
-
-  <div class="nav">
-
-    <button class="active"
-            onclick="location.reload()">
-
-      <span>⌂</span>
-      Home
-
-    </button>
-
-    <button onclick="demo('Transfer')">
-
-      <span>↗</span>
-      Transfer
-
-    </button>
-
-    <button onclick="showHistory()">
-
-      <span>↺</span>
-      History
-
-    </button>
-
-    <button onclick="location.href='index.html'">
-
-      <span>▣</span>
-      Apps
-
-    </button>
-
-  </div>
+<button class="action" onclick="receiveUI()">
+<span>↓</span>
+Receive
+</button>
 
 </div>
 
 
-<!-- MODAL -->
+<div class="section" style="margin-top:25px">
+<h3>My Money</h3>
+<span class="link">Overview</span>
+</div>
 
-<div class="sheet"
-     id="sheet">
 
-  <div class="modal">
+<div class="cards">
 
-    <button class="close"
-            onclick="closeSheet()">
+<div class="card">
+<div class="icon">💰</div>
+<div class="label">Available Balance</div>
+<div class="value" id="available">₱0.00</div>
+</div>
 
-      ×
+<div class="card">
+<div class="icon">📊</div>
+<div class="label">Transactions</div>
+<div class="value" id="count">0</div>
+</div>
 
-    </button>
+</div>
 
-    <div id="modalContent"></div>
 
-  </div>
+<div class="section" style="margin-top:25px">
+
+<h3>Recent Activity</h3>
+
+<span class="link"
+onclick="historyUI()">
+See all
+</span>
+
+</div>
+
+
+<div class="transactions"
+id="transactions">
+Loading...
+</div>
+
+</div>
+
+
+<div class="nav">
+
+<button class="active"
+onclick="location.reload()">
+<span>⌂</span>
+Home
+</button>
+
+<button onclick="transfer()">
+<span>↗</span>
+Transfer
+</button>
+
+<button onclick="historyUI()">
+<span>↺</span>
+History
+</button>
+
+<button onclick="location.href='index.html'">
+<span>▣</span>
+Apps
+</button>
+
+</div>
+
+</div>
+
+
+<div class="sheet" id="sheet">
+
+<div class="modal">
+
+<button class="close"
+onclick="closeModal()">
+×
+</button>
+
+<div id="modalContent"></div>
+
+</div>
 
 </div>
 
 
 <script>
 
-function peso(amount){
+function peso(n){
 
-  return new Intl.NumberFormat(
-    "en-PH",
-    {
-      style:"currency",
-      currency:"PHP"
-    }
-  ).format(amount);
+return new Intl.NumberFormat(
+"en-PH",
+{
+style:"currency",
+currency:"PHP"
+}
+).format(Number(n));
 
 }
 
 
-function esc(value){
+function esc(s){
 
-  return String(value)
-    .replace(
-      /[&<>"']/g,
-      function(char){
-
-        return {
-          "&":"&amp;",
-          "<":"&lt;",
-          ">":"&gt;",
-          '"':"&quot;",
-          "'":"&#039;"
-        }[char];
-
-      }
-    );
+return String(s).replace(
+/[&<>"']/g,
+m=>({
+"&":"&amp;",
+"<":"&lt;",
+">":"&gt;",
+'"':"&quot;",
+"'":"&#039;"
+}[m])
+);
 
 }
 
+
+function openModal(html){
+
+document.getElementById(
+"modalContent"
+).innerHTML=html;
+
+document.getElementById(
+"sheet"
+).style.display="flex";
+
+}
+
+
+function closeModal(){
+
+document.getElementById(
+"sheet"
+).style.display="none";
+
+}
+
+
+/* CASH IN */
+
+function cashIn(){
+
+openModal(`
+
+<h2>💰 Cash In</h2>
+
+<p class="muted">
+Add money to your MariBank RP account.
+</p>
+
+<input
+id="amount"
+class="input"
+type="number"
+placeholder="Amount">
+
+<button
+class="primary"
+onclick="doCashIn()">
+Add Money
+</button>
+
+<button
+class="secondary"
+onclick="closeModal()">
+Cancel
+</button>
+
+`);
+
+}
+
+
+function doCashIn(){
+
+const amount=
+Number(
+document.getElementById("amount").value
+);
+
+const result=
+addMoney(
+"maribank",
+amount,
+"Cash In"
+);
+
+if(!result.success){
+
+alert(result.message);
+return;
+
+}
+
+closeModal();
+render();
+
+}
+
+
+/* CASH OUT */
+
+function cashOut(){
+
+openModal(`
+
+<h2>💸 Cash Out</h2>
+
+<p class="muted">
+Remove money from your MariBank RP account.
+</p>
+
+<input
+id="amount"
+class="input"
+type="number"
+placeholder="Amount">
+
+<button
+class="primary"
+onclick="doCashOut()">
+Cash Out
+</button>
+
+<button
+class="secondary"
+onclick="closeModal()">
+Cancel
+</button>
+
+`);
+
+}
+
+
+function doCashOut(){
+
+const amount=
+Number(
+document.getElementById("amount").value
+);
+
+const result=
+removeMoney(
+"maribank",
+amount
+);
+
+if(!result.success){
+
+alert(result.message);
+return;
+
+}
+
+closeModal();
+render();
+
+}
+
+
+/* TRANSFER */
+
+function transfer(){
+
+openModal(`
+
+<h2>↗ Transfer Money</h2>
+
+<input
+id="recipient"
+class="input"
+placeholder="Recipient name">
+
+<input
+id="amount"
+class="input"
+type="number"
+placeholder="Amount">
+
+<button
+class="primary"
+onclick="doTransfer()">
+Transfer
+</button>
+
+<button
+class="secondary"
+onclick="closeModal()">
+Cancel
+</button>
+
+`);
+
+}
+
+
+function doTransfer(){
+
+const recipient=
+document.getElementById(
+"recipient"
+).value.trim();
+
+const amount=
+Number(
+document.getElementById("amount").value
+);
+
+if(!recipient){
+
+alert("Enter recipient name.");
+return;
+
+}
+
+const result=
+payRP(
+"maribank",
+amount,
+{
+name:"Bank Transfer",
+description:"To "+recipient,
+icon:"↗"
+}
+);
+
+if(!result.success){
+
+alert(result.message);
+return;
+
+}
+
+closeModal();
+render();
+
+}
+
+
+/* RECEIVE */
+
+function receiveUI(){
+
+openModal(`
+
+<h2>↓ Receive Money</h2>
+
+<input
+id="sender"
+class="input"
+placeholder="Sender name">
+
+<input
+id="amount"
+class="input"
+type="number"
+placeholder="Amount">
+
+<button
+class="primary"
+onclick="doReceive()">
+Receive
+</button>
+
+<button
+class="secondary"
+onclick="closeModal()">
+Cancel
+</button>
+
+`);
+
+}
+
+
+function doReceive(){
+
+const sender=
+document.getElementById(
+"sender"
+).value.trim();
+
+const amount=
+Number(
+document.getElementById("amount").value
+);
+
+if(!sender){
+
+alert("Enter sender name.");
+return;
+
+}
+
+const result=
+receiveMoney(
+"maribank",
+amount,
+"Received from "+sender
+);
+
+if(!result.success){
+
+alert(result.message);
+return;
+
+}
+
+closeModal();
+render();
+
+}
+
+
+/* HISTORY */
+
+function historyUI(){
+
+const data=loadRP();
+
+let html=
+"<h2>📜 MariBank History</h2>";
+
+if(!data.maribank.transactions.length){
+
+html+=`
+<p class="muted">
+No transactions yet.
+</p>
+`;
+
+}else{
+
+html+=
+data.maribank.transactions
+.map(tx=>`
+
+<div class="tx">
+
+<div class="txicon">
+${tx.icon||"💳"}
+</div>
+
+<div class="txmain">
+
+<b>
+${esc(tx.name)}
+</b>
+
+<div class="muted">
+${esc(tx.description||"")}
+<br>
+${esc(tx.date||"")}
+</div>
+
+</div>
+
+<div class="amount ${
+Number(tx.amount)<0
+?"out":"in"
+}">
+
+${
+Number(tx.amount)<0
+?"−":"+"
+}
+
+${peso(Math.abs(tx.amount))}
+
+</div>
+
+</div>
+
+`).join("");
+
+}
+
+openModal(html);
+
+}
+
+
+/* RENDER */
 
 function render(){
 
-  const data = loadRP();
+const data=loadRP();
 
-  const balance =
-    Number(data.maribank.balance);
+const balance=
+Number(data.maribank.balance);
 
+document.getElementById(
+"balance"
+).textContent=
+peso(balance);
 
-  document.getElementById(
-    "balance"
-  ).textContent =
-    peso(balance);
+document.getElementById(
+"available"
+).textContent=
+peso(balance);
 
-
-  document.getElementById(
-    "available"
-  ).textContent =
-    peso(balance);
-
-
-  document.getElementById(
-    "txCount"
-  ).textContent =
-    data.maribank.transactions.length;
+document.getElementById(
+"count"
+).textContent=
+data.maribank.transactions.length;
 
 
-  const box =
-    document.getElementById(
-      "transactions"
-    );
+const box=
+document.getElementById(
+"transactions"
+);
 
 
-  if(
-    !data.maribank.transactions.length
-  ){
+if(!data.maribank.transactions.length){
 
-    box.innerHTML = `
+box.innerHTML=`
+<p class="muted">
+No transactions yet.
+</p>
+`;
 
-      <div class="muted"
-           style="padding:10px">
-
-        No transactions yet.
-
-        <br>
-
-        Your RP banking activity
-        will appear here.
-
-      </div>
-
-    `;
-
-    return;
-
-  }
-
-
-  box.innerHTML =
-    data.maribank.transactions
-    .slice(0,8)
-    .map(function(tx){
-
-      const amount =
-        Number(tx.amount);
-
-
-      return `
-
-        <div class="tx">
-
-          <div class="txicon">
-
-            ${tx.icon || "💳"}
-
-          </div>
-
-
-          <div class="txmain">
-
-            <b>
-              ${esc(
-                tx.name ||
-                "Transaction"
-              )}
-            </b>
-
-            <div class="muted">
-
-              ${esc(
-                tx.description ||
-                "RP transaction"
-              )}
-
-              <br>
-
-              ${esc(
-                tx.date || ""
-              )}
-
-            </div>
-
-          </div>
-
-
-          <div class="amount ${
-            amount < 0
-              ? "out"
-              : "in"
-          }">
-
-            ${
-              amount < 0
-                ? "−"
-                : "+"
-            }
-
-            ${peso(
-              Math.abs(amount)
-            )}
-
-          </div>
-
-        </div>
-
-      `;
-
-    })
-    .join("");
+return;
 
 }
 
 
-function demo(name){
+box.innerHTML=
+data.maribank.transactions
+.slice(0,8)
+.map(tx=>`
 
-  document.getElementById(
-    "modalContent"
-  ).innerHTML = `
+<div class="tx">
 
-    <h2>
-      ${name}
-    </h2>
+<div class="txicon">
+${tx.icon||"💳"}
+</div>
 
-    <p style="color:#777">
+<div class="txmain">
 
-      This is an RP feature.
+<b>
+${esc(tx.name)}
+</b>
 
-      We'll connect this service
-      to the shared banking system
-      as we build the next apps.
+<div class="muted">
+${esc(tx.description||"")}
+<br>
+${esc(tx.date||"")}
+</div>
 
-    </p>
+</div>
 
-  `;
+<div class="amount ${
+Number(tx.amount)<0
+?"out":"in"
+}">
 
-
-  document.getElementById(
-    "sheet"
-  ).style.display =
-    "flex";
-
+${
+Number(tx.amount)<0
+?"−":"+"
 }
 
+${peso(Math.abs(tx.amount))}
 
-function showHistory(){
+</div>
 
-  const data = loadRP();
+</div>
 
-  let html =
-    "<h2>MariBank history</h2>";
-
-
-  if(
-    !data.maribank.transactions.length
-  ){
-
-    html +=
-      '<p class="muted">No transactions yet.</p>';
-
-  }
-
-  else{
-
-    html +=
-      data.maribank.transactions
-      .map(function(tx){
-
-        const amount =
-          Number(tx.amount);
-
-
-        return `
-
-          <div class="tx">
-
-            <div class="txicon">
-
-              ${tx.icon || "💳"}
-
-            </div>
-
-
-            <div class="txmain">
-
-              <b>
-                ${esc(
-                  tx.name ||
-                  "Transaction"
-                )}
-              </b>
-
-              <div class="muted">
-
-                ${esc(
-                  tx.description || ""
-                )}
-
-                <br>
-
-                ${esc(
-                  tx.date || ""
-                )}
-
-              </div>
-
-            </div>
-
-
-            <div class="amount ${
-              amount < 0
-                ? "out"
-                : "in"
-            }">
-
-              ${
-                amount < 0
-                  ? "−"
-                  : "+"
-              }
-
-              ${peso(
-                Math.abs(amount)
-              )}
-
-            </div>
-
-          </div>
-
-        `;
-
-      })
-      .join("");
-
-  }
-
-
-  document.getElementById(
-    "modalContent"
-  ).innerHTML =
-    html;
-
-
-  document.getElementById(
-    "sheet"
-  ).style.display =
-    "flex";
+`).join("");
 
 }
-
-
-function closeSheet(){
-
-  document.getElementById(
-    "sheet"
-  ).style.display =
-    "none";
-
-}
-
 
 render();
 
 </script>
 
 </body>
-</html>
+  </html>
