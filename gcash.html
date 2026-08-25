@@ -1,264 +1,262 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport"
+      content="width=device-width,initial-scale=1">
 
 <title>GCash RP</title>
 
 <script src="rp-data.js"></script>
 
 <style>
+
 *{
-  box-sizing:border-box;
+    box-sizing:border-box;
 }
 
 body{
-  margin:0;
-  background:#eef2f7;
-  font-family:Arial,sans-serif;
-  color:#172033;
+    margin:0;
+    background:#111827;
+    font-family:Arial,sans-serif;
 }
 
 .app{
-  max-width:480px;
-  min-height:100vh;
-  margin:auto;
-  background:#f7f9fc;
-  position:relative;
-  padding-bottom:78px;
+    max-width:480px;
+    min-height:100vh;
+    margin:auto;
+    background:#f5f8fc;
+    padding-bottom:90px;
 }
 
-/* TOP */
+.hero{
+    background:linear-gradient(145deg,#0878ed,#0056c7);
+    color:white;
+    padding:20px;
+    border-radius:0 0 30px 30px;
+}
 
 .top{
-  background:linear-gradient(145deg,#0878ed,#0057c9);
-  color:white;
-  padding:18px 18px 24px;
-  border-radius:0 0 28px 28px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
 }
 
-.topline{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
+.logo{
+    font-size:22px;
+    font-weight:800;
 }
 
-.brand{
-  font-size:20px;
-  font-weight:800;
-}
-
-.dots{
-  font-size:22px;
+.menu{
+    font-size:25px;
 }
 
 .greeting{
-  margin-top:22px;
-  font-size:13px;
-  opacity:.85;
+    margin-top:24px;
+    opacity:.8;
+    font-size:13px;
 }
 
-.bal{
-  font-size:36px;
-  font-weight:800;
-  margin:5px 0 18px;
+.balance{
+    font-size:38px;
+    font-weight:800;
+    margin:5px 0 22px;
 }
-
-/* ACTIONS */
 
 .actions{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:9px;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:8px;
 }
 
 .action{
-  border:0;
-  background:#ffffff1c;
-  color:#fff;
-  border-radius:15px;
-  padding:10px 4px;
-  font-size:11px;
+    border:0;
+    background:#ffffff22;
+    color:white;
+    border-radius:16px;
+    padding:12px 4px;
+    font-size:10px;
 }
 
-.action b{
-  display:block;
-  font-size:21px;
-  margin-bottom:5px;
+.action span{
+    display:block;
+    font-size:22px;
+    margin-bottom:5px;
 }
-
-/* BODY */
 
 .body{
-  padding:16px;
+    padding:16px;
 }
 
 .section{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin:8px 2px 10px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin:10px 2px;
 }
 
 .section h3{
-  margin:0;
-  font-size:17px;
+    margin:0;
 }
 
-.see{
-  color:#0878ed;
-  font-size:12px;
-  cursor:pointer;
+.link{
+    color:#0878ed;
+    font-size:12px;
 }
-
-/* SERVICES */
-
-.grid{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:9px;
-}
-
-.service{
-  background:#fff;
-  border:0;
-  border-radius:16px;
-  padding:12px 4px;
-  box-shadow:0 2px 8px #15233a0d;
-  font-size:10px;
-  cursor:pointer;
-}
-
-.service span{
-  display:block;
-  font-size:23px;
-  margin-bottom:6px;
-}
-
-/* TRANSACTIONS */
 
 .card{
-  background:#fff;
-  border-radius:20px;
-  padding:15px;
-  box-shadow:0 2px 10px #15233a0d;
+    background:white;
+    border-radius:20px;
+    padding:16px;
+    box-shadow:0 3px 12px #0000000b;
+    margin-bottom:15px;
 }
 
 .tx{
-  display:flex;
-  align-items:center;
-  gap:11px;
-  padding:12px 0;
-  border-bottom:1px solid #edf0f4;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:13px 0;
+    border-bottom:1px solid #edf0f4;
 }
 
 .tx:last-child{
-  border-bottom:0;
+    border:0;
 }
 
 .txicon{
-  width:42px;
-  height:42px;
-  border-radius:13px;
-  background:#edf5ff;
-  display:grid;
-  place-items:center;
-  font-size:20px;
+    width:42px;
+    height:42px;
+    border-radius:14px;
+    background:#edf5ff;
+    display:grid;
+    place-items:center;
+    font-size:20px;
 }
 
 .txmain{
-  flex:1;
+    flex:1;
 }
 
 .txmain b{
-  font-size:13px;
+    font-size:13px;
 }
 
 .muted{
-  font-size:11px;
-  color:#7b8494;
-  margin-top:3px;
+    color:#808998;
+    font-size:11px;
+    margin-top:4px;
 }
 
 .amount{
-  font-size:13px;
-  font-weight:800;
+    font-weight:800;
+    font-size:13px;
 }
 
 .out{
-  color:#e24b4b;
+    color:#e24c4c;
 }
 
 .in{
-  color:#129568;
+    color:#159568;
 }
 
-/* BOTTOM NAV */
-
 .nav{
-  position:fixed;
-  bottom:0;
-  left:50%;
-  transform:translateX(-50%);
-  width:min(480px,100%);
-  height:70px;
-  background:#fff;
-  border-top:1px solid #e6e9ee;
-  display:flex;
-  z-index:10;
+    position:fixed;
+    bottom:0;
+    left:50%;
+    transform:translateX(-50%);
+    width:min(480px,100%);
+    height:72px;
+    background:white;
+    border-top:1px solid #e4e8ee;
+    display:flex;
+    z-index:5;
 }
 
 .nav button{
-  flex:1;
-  border:0;
-  background:none;
-  font-size:10px;
-  color:#7c8490;
-  cursor:pointer;
-}
-
-.nav button.active{
-  color:#0878ed;
-  font-weight:700;
+    flex:1;
+    border:0;
+    background:none;
+    color:#7c8490;
+    font-size:10px;
 }
 
 .nav span{
-  display:block;
-  font-size:22px;
-  margin-bottom:3px;
+    display:block;
+    font-size:22px;
+    margin-bottom:4px;
 }
 
-/* MODAL */
+.nav .active{
+    color:#0878ed;
+    font-weight:bold;
+}
 
 .sheet{
-  position:fixed;
-  inset:0;
-  background:#0007;
-  display:none;
-  align-items:flex-end;
-  z-index:20;
+    position:fixed;
+    inset:0;
+    background:#0008;
+    display:none;
+    align-items:flex-end;
+    z-index:20;
 }
 
 .modal{
-  background:#fff;
-  width:min(480px,100%);
-  margin:auto;
-  border-radius:25px 25px 0 0;
-  padding:20px;
-  max-height:85vh;
-  overflow:auto;
+    width:min(480px,100%);
+    margin:auto;
+    background:white;
+    border-radius:25px 25px 0 0;
+    padding:22px;
+    max-height:85vh;
+    overflow:auto;
+}
+
+.modal h2{
+    margin-top:0;
+}
+
+.input{
+    width:100%;
+    padding:14px;
+    border:1px solid #dce1e8;
+    border-radius:13px;
+    font-size:16px;
+    margin:8px 0;
+}
+
+.primary{
+    width:100%;
+    padding:14px;
+    border:0;
+    border-radius:14px;
+    background:#0878ed;
+    color:white;
+    font-weight:bold;
+    margin-top:8px;
+}
+
+.secondary{
+    width:100%;
+    padding:14px;
+    border:0;
+    border-radius:14px;
+    background:#eef1f5;
+    color:#333;
+    margin-top:8px;
 }
 
 .close{
-  float:right;
-  border:0;
-  background:#f0f2f5;
-  border-radius:50%;
-  width:32px;
-  height:32px;
-  font-size:18px;
+    float:right;
+    border:0;
+    background:#eef1f5;
+    width:32px;
+    height:32px;
+    border-radius:50%;
+    font-size:18px;
 }
+
 </style>
 </head>
 
@@ -266,237 +264,173 @@ body{
 
 <div class="app">
 
-  <!-- HEADER -->
-
-  <section class="top">
-
-    <div class="topline">
-
-      <div class="brand">
-        GCash
-      </div>
-
-      <div class="dots">
-        ⋯
-      </div>
-
-    </div>
-
-    <div class="greeting">
-      Good day, RP user
-    </div>
-
-    <div class="bal" id="balance">
-      ₱0.00
-    </div>
-
-    <div class="actions">
-
-      <button class="action" onclick="demo('Send Money')">
-        <b>↗</b>
-        Send
-      </button>
-
-      <button class="action" onclick="demo('Request Money')">
-        <b>↓</b>
-        Request
-      </button>
-
-      <button class="action" onclick="demo('Load')">
-        <b>▣</b>
-        Load
-      </button>
-
-      <button class="action" onclick="history()">
-        <b>↺</b>
-        History
-      </button>
-
-    </div>
-
-  </section>
-
-
-  <div class="body">
-
-    <!-- SERVICES -->
-
-    <div class="section">
-
-      <h3>
-        Services
-      </h3>
-
-      <span class="see">
-        See all
-      </span>
-
-    </div>
-
-
-    <div class="grid">
-
-      <button class="service"
-              onclick="demo('Bills')">
-
-        <span>🧾</span>
-        Bills
-
-      </button>
-
-
-      <button class="service"
-              onclick="demo('Buy Load')">
-
-        <span>📱</span>
-        Load
-
-      </button>
-
-
-      <button class="service"
-              onclick="demo('Shopping')">
-
-        <span>🛍️</span>
-        Shopping
-
-      </button>
-
-
-      <button class="service"
-              onclick="demo('Food')">
-
-        <span>🍔</span>
-        Food
-
-      </button>
-
-
-      <button class="service"
-              onclick="demo('Transport')">
-
-        <span>🚗</span>
-        Transport
-
-      </button>
-
-
-      <button class="service"
-              onclick="demo('Subscriptions')">
-
-        <span>🎬</span>
-        Subscriptions
-
-      </button>
-
-
-      <button class="service"
-              onclick="demo('Rewards')">
-
-        <span>🎁</span>
-        Rewards
-
-      </button>
-
-
-      <button class="service"
-              onclick="demo('More')">
-
-        <span>＋</span>
-        More
-
-      </button>
-
-    </div>
-
-
-    <!-- TRANSACTIONS -->
-
-    <div class="section"
-         style="margin-top:25px">
-
-      <h3>
-        Recent transactions
-      </h3>
-
-      <span class="see"
-            onclick="history()">
-
-        See all
-
-      </span>
-
-    </div>
-
-
-    <div class="card"
-         id="transactions">
-
-      Loading...
-
-    </div>
-
-  </div>
-
-
-  <!-- BOTTOM NAV -->
-
-  <div class="nav">
-
-    <button class="active"
-            onclick="location.reload()">
-
-      <span>⌂</span>
-      Home
-
-    </button>
-
-
-    <button onclick="demo('Send Money')">
-
-      <span>↗</span>
-      Send
-
-    </button>
-
-
-    <button onclick="history()">
-
-      <span>↺</span>
-      History
-
-    </button>
-
-
-    <button onclick="location.href='index.html'">
-
-      <span>▣</span>
-      Apps
-
-    </button>
-
-  </div>
+<section class="hero">
+
+<div class="top">
+
+<div class="logo">
+GCash
+</div>
+
+<div class="menu">
+•••
+</div>
+
+</div>
+
+<div class="greeting">
+Good day, RP User
+</div>
+
+<div class="balance"
+     id="balance">
+₱0.00
+</div>
+
+<div class="actions">
+
+<button class="action"
+onclick="cashIn()">
+<span>＋</span>
+Cash In
+</button>
+
+<button class="action"
+onclick="cashOut()">
+<span>↘</span>
+Cash Out
+</button>
+
+<button class="action"
+onclick="sendMoney()">
+<span>↗</span>
+Send
+</button>
+
+<button class="action"
+onclick="receiveMoneyUI()">
+<span>↓</span>
+Receive
+</button>
+
+</div>
+
+</section>
+
+
+<div class="body">
+
+<div class="section">
+<h3>Quick Services</h3>
+</div>
+
+<div class="card">
+
+<div class="tx">
+<div class="txicon">🧾</div>
+<div class="txmain">
+<b>Pay Bills</b>
+<div class="muted">
+Bills & payments
+</div>
+</div>
+</div>
+
+<div class="tx">
+<div class="txicon">📱</div>
+<div class="txmain">
+<b>Buy Load</b>
+<div class="muted">
+Mobile load
+</div>
+</div>
+</div>
+
+<div class="tx">
+<div class="txicon">🛍️</div>
+<div class="txmain">
+<b>Shopping</b>
+<div class="muted">
+RP shopping payments
+</div>
+</div>
+</div>
 
 </div>
 
 
-<!-- MODAL -->
+<div class="section">
+
+<h3>
+Recent Transactions
+</h3>
+
+<span class="link"
+onclick="historyUI()">
+See all
+</span>
+
+</div>
+
+
+<div class="card"
+id="transactions">
+Loading...
+</div>
+
+</div>
+
+
+<div class="nav">
+
+<button class="active"
+onclick="location.reload()">
+
+<span>⌂</span>
+Home
+
+</button>
+
+<button onclick="sendMoney()">
+
+<span>↗</span>
+Send
+
+</button>
+
+<button onclick="historyUI()">
+
+<span>↺</span>
+History
+
+</button>
+
+<button onclick="location.href='index.html'">
+
+<span>▣</span>
+Apps
+
+</button>
+
+</div>
+
+</div>
+
 
 <div class="sheet"
-     id="sheet">
+id="sheet">
 
-  <div class="modal">
+<div class="modal">
 
-    <button class="close"
-            onclick="closeSheet()">
+<button class="close"
+onclick="closeModal()">
+×
+</button>
 
-      ×
+<div id="modalContent">
+</div>
 
-    </button>
-
-    <div id="modalContent"></div>
-
-  </div>
+</div>
 
 </div>
 
@@ -505,291 +439,490 @@ body{
 
 function peso(n){
 
-  return new Intl.NumberFormat(
-    "en-PH",
-    {
-      style:"currency",
-      currency:"PHP"
-    }
-  ).format(n);
-
+return new Intl.NumberFormat(
+"en-PH",
+{
+style:"currency",
+currency:"PHP"
 }
-
-
-function render(){
-
-  const data = loadRP();
-
-  document.getElementById("balance")
-    .textContent =
-    peso(data.gcash.balance);
-
-
-  const box =
-    document.getElementById(
-      "transactions"
-    );
-
-
-  if(
-    !data.gcash.transactions.length
-  ){
-
-    box.innerHTML = `
-      <div class="muted"
-           style="padding:10px">
-
-        No transactions yet.
-
-        <br>
-
-        Your RP activity will appear here.
-
-      </div>
-    `;
-
-    return;
-
-  }
-
-
-  box.innerHTML =
-    data.gcash.transactions
-    .slice(0,8)
-    .map(function(t){
-
-      const amount =
-        Number(t.amount);
-
-
-      return `
-
-        <div class="tx">
-
-          <div class="txicon">
-
-            ${t.icon || "💳"}
-
-          </div>
-
-
-          <div class="txmain">
-
-            <b>
-              ${esc(
-                t.name ||
-                "Transaction"
-              )}
-            </b>
-
-            <div class="muted">
-
-              ${esc(
-                t.description ||
-                "RP transaction"
-              )}
-
-              <br>
-
-              ${esc(
-                t.date || ""
-              )}
-
-            </div>
-
-          </div>
-
-
-          <div class="amount ${
-            amount < 0
-              ? "out"
-              : "in"
-          }">
-
-            ${
-              amount < 0
-                ? "−"
-                : "+"
-            }
-
-            ${peso(
-              Math.abs(amount)
-            )}
-
-          </div>
-
-        </div>
-
-      `;
-
-    })
-    .join("");
+).format(Number(n));
 
 }
 
 
 function esc(s){
 
-  return String(s)
-    .replace(
-      /[&<>"']/g,
-      function(m){
-
-        return {
-          "&":"&amp;",
-          "<":"&lt;",
-          ">":"&gt;",
-          '"':"&quot;",
-          "'":"&#039;"
-        }[m];
-
-      }
-    );
+return String(s).replace(
+/[&<>"']/g,
+m=>({
+"&":"&amp;",
+"<":"&lt;",
+">":"&gt;",
+'"':"&quot;",
+"'":"&#039;"
+}[m])
+);
 
 }
 
 
-function demo(name){
+function openModal(html){
 
-  document.getElementById(
-    "modalContent"
-  ).innerHTML = `
+document.getElementById(
+"modalContent"
+).innerHTML=html;
 
-    <h2>
-      ${name}
-    </h2>
-
-    <p style="color:#777">
-
-      This is an RP feature.
-
-      We'll connect this service
-      to the shared GCash/MariBank
-      system as we build the apps.
-
-    </p>
-
-  `;
-
-
-  document.getElementById(
-    "sheet"
-  ).style.display =
-    "flex";
+document.getElementById(
+"sheet"
+).style.display="flex";
 
 }
 
 
-function history(){
+function closeModal(){
 
-  const data = loadRP();
-
-
-  let html =
-    "<h2>Transaction history</h2>";
-
-
-  if(
-    !data.gcash.transactions.length
-  ){
-
-    html +=
-      '<p class="muted">No transactions yet.</p>';
-
-  }else{
-
-    html +=
-      data.gcash.transactions
-      .map(function(t){
-
-        const amount =
-          Number(t.amount);
-
-
-        return `
-
-          <div class="tx">
-
-            <div class="txicon">
-
-              ${t.icon || "💳"}
-
-            </div>
-
-
-            <div class="txmain">
-
-              <b>
-                ${esc(
-                  t.name ||
-                  "Transaction"
-                )}
-              </b>
-
-              <div class="muted">
-
-                ${esc(
-                  t.description || ""
-                )}
-
-                <br>
-
-                ${esc(
-                  t.date || ""
-                )}
-
-              </div>
-
-            </div>
-
-
-            <div class="amount ${
-              amount < 0
-                ? "out"
-                : "in"
-            }">
-
-              ${
-                amount < 0
-                  ? "−"
-                  : "+"
-              }
-
-              ${peso(
-                Math.abs(amount)
-              )}
-
-            </div>
-
-          </div>
-
-        `;
-
-      })
-      .join("");
-
-  }
-
-
-  document.getElementById(
-    "modalContent"
-  ).innerHTML = html;
-
-
-  document.getElementById(
-    "sheet"
-  ).style.display =
-    "flex";
+document.getElementById(
+"sheet"
+).style.display="none";
 
 }
 
 
-function closeSheet(){
+function cashIn(){
 
-  document.getElementById(
-    "sheet"
-  ).style.display =
-    "none";
+openModal(`
+
+<h2>💰 Cash In</h2>
+
+<p class="muted">
+Add money to your RP GCash wallet.
+</p>
+
+<input
+id="cashAmount"
+class="input"
+type="number"
+placeholder="Amount">
+
+<button
+class="primary"
+onclick="doCashIn()">
+
+Add Money
+
+</button>
+
+<button
+class="secondary"
+onclick="closeModal()">
+
+Cancel
+
+</button>
+
+`);
+
+}
+
+
+function doCashIn(){
+
+const amount=
+Number(
+document.getElementById(
+"cashAmount"
+).value
+);
+
+const result=
+addMoney(
+"gcash",
+amount,
+"Cash In"
+);
+
+if(!result.success){
+
+alert(result.message);
+return;
+
+}
+
+closeModal();
+
+render();
+
+}
+
+
+function cashOut(){
+
+openModal(`
+
+<h2>💸 Cash Out</h2>
+
+<p class="muted">
+Remove money from your RP GCash wallet.
+</p>
+
+<input
+id="cashOutAmount"
+class="input"
+type="number"
+placeholder="Amount">
+
+<button
+class="primary"
+onclick="doCashOut()">
+
+Cash Out
+
+</button>
+
+<button
+class="secondary"
+onclick="closeModal()">
+
+Cancel
+
+</button>
+
+`);
+
+}
+
+
+function doCashOut(){
+
+const amount=
+Number(
+document.getElementById(
+"cashOutAmount"
+).value
+);
+
+const result=
+removeMoney(
+"gcash",
+amount
+);
+
+if(!result.success){
+
+alert(result.message);
+return;
+
+}
+
+closeModal();
+
+render();
+
+}
+
+
+function sendMoney(){
+
+openModal(`
+
+<h2>↗ Send Money</h2>
+
+<input
+id="recipient"
+class="input"
+placeholder="Recipient name">
+
+<input
+id="sendAmount"
+class="input"
+type="number"
+placeholder="Amount">
+
+<button
+class="primary"
+onclick="doSend()">
+
+Send Money
+
+</button>
+
+<button
+class="secondary"
+onclick="closeModal()">
+
+Cancel
+
+</button>
+
+`);
+
+}
+
+
+function doSend(){
+
+const recipient=
+document.getElementById(
+"recipient"
+).value.trim();
+
+const amount=
+Number(
+document.getElementById(
+"sendAmount"
+).value
+);
+
+if(!recipient){
+
+alert("Enter recipient name.");
+return;
+
+}
+
+const result=
+payRP(
+"gcash",
+amount,
+{
+name:"Send Money",
+description:
+"To "+recipient,
+icon:"↗"
+}
+);
+
+if(!result.success){
+
+alert(result.message);
+return;
+
+}
+
+closeModal();
+
+render();
+
+}
+
+
+function receiveMoneyUI(){
+
+openModal(`
+
+<h2>↓ Receive Money</h2>
+
+<input
+id="sender"
+class="input"
+placeholder="Sender name">
+
+<input
+id="receiveAmount"
+class="input"
+type="number"
+placeholder="Amount">
+
+<button
+class="primary"
+onclick="doReceive()">
+
+Receive Money
+
+</button>
+
+<button
+class="secondary"
+onclick="closeModal()">
+
+Cancel
+
+</button>
+
+`);
+
+}
+
+
+function doReceive(){
+
+const sender=
+document.getElementById(
+"sender"
+).value.trim();
+
+const amount=
+Number(
+document.getElementById(
+"receiveAmount"
+).value
+);
+
+if(!sender){
+
+alert("Enter sender name.");
+return;
+
+}
+
+const result=
+receiveMoney(
+"gcash",
+amount,
+"Received from "+sender
+);
+
+if(!result.success){
+
+alert(result.message);
+return;
+
+}
+
+closeModal();
+
+render();
+
+}
+
+
+function historyUI(){
+
+const data=loadRP();
+
+let html="<h2>📜 Transaction History</h2>";
+
+if(!data.gcash.transactions.length){
+
+html+=`
+<p class="muted">
+No transactions yet.
+</p>
+`;
+
+}else{
+
+html+=data.gcash.transactions.map(
+tx=>`
+
+<div class="tx">
+
+<div class="txicon">
+${tx.icon||"💳"}
+</div>
+
+<div class="txmain">
+
+<b>
+${esc(tx.name)}
+</b>
+
+<div class="muted">
+${esc(tx.description||"")}
+<br>
+${esc(tx.date||"")}
+</div>
+
+</div>
+
+<div class="amount ${
+Number(tx.amount)<0
+?"out":"in"
+}">
+
+${
+Number(tx.amount)<0
+?"−":"+"
+}
+
+${peso(Math.abs(tx.amount))}
+
+</div>
+
+</div>
+
+`
+).join("");
+
+}
+
+openModal(html);
+
+}
+
+
+function render(){
+
+const data=loadRP();
+
+document.getElementById(
+"balance"
+).textContent=
+peso(data.gcash.balance);
+
+
+const box=
+document.getElementById(
+"transactions"
+);
+
+
+if(!data.gcash.transactions.length){
+
+box.innerHTML=`
+<p class="muted">
+No transactions yet.
+</p>
+`;
+
+return;
+
+}
+
+
+box.innerHTML=
+data.gcash.transactions
+.slice(0,8)
+.map(tx=>`
+
+<div class="tx">
+
+<div class="txicon">
+${tx.icon||"💳"}
+</div>
+
+<div class="txmain">
+
+<b>
+${esc(tx.name)}
+</b>
+
+<div class="muted">
+${esc(tx.description||"")}
+<br>
+${esc(tx.date||"")}
+</div>
+
+</div>
+
+<div class="amount ${
+Number(tx.amount)<0
+?"out":"in"
+}">
+
+${
+Number(tx.amount)<0
+?"−":"+"
+}
+
+${peso(Math.abs(tx.amount))}
+
+</div>
+
+</div>
+
+`)
+.join("");
 
 }
 
