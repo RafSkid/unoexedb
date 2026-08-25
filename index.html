@@ -6,6 +6,8 @@
 
   <title>RP Phone</title>
 
+  <script src="rp-data.js"></script>
+
   <style>
     * {
       box-sizing: border-box;
@@ -87,8 +89,8 @@
       margin-bottom: 8px;
     }
 
-    .coming {
-      opacity: .5;
+    .app:active {
+      transform: scale(.97);
     }
   </style>
 </head>
@@ -114,12 +116,12 @@
         RP TOTAL BALANCE
       </div>
 
-      <div class="balance">
-        ₱15,571.25
+      <div class="balance" id="totalBalance">
+        ₱0.00
       </div>
 
-      <small>
-        💙 GCash · 🧡 MariBank
+      <small id="walletDetails">
+        Loading...
       </small>
     </div>
 
@@ -152,8 +154,7 @@
         Bills
       </button>
 
-      <button class="app coming">
-        ⚙️
+      <button class="app" onclick="openApp('settings.html')">
         <span class="icon">⚙️</span>
         Settings
       </button>
@@ -166,11 +167,36 @@
 
 <script>
 
+function peso(amount) {
+  return new Intl.NumberFormat("en-PH", {
+    style: "currency",
+    currency: "PHP"
+  }).format(amount);
+}
+
 function openApp(page) {
   window.location.href = page;
 }
 
+function updateBalance() {
+
+  const data = loadRP();
+
+  const total =
+    data.gcash.balance +
+    data.maribank.balance;
+
+  document.getElementById("totalBalance").textContent =
+    peso(total);
+
+  document.getElementById("walletDetails").textContent =
+    "💙 GCash " + peso(data.gcash.balance) +
+    " · 🧡 MariBank " + peso(data.maribank.balance);
+}
+
+updateBalance();
+
 </script>
 
 </body>
-        </html>
+</html>
