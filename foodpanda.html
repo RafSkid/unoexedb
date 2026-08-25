@@ -1,1294 +1,2573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>FoodDash RP</title>
+
+<script src="rp-data.js"></script>
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    background:#111827;
+    font-family:Arial,sans-serif;
+    color:#18202a;
+}
+
+button,
+input{
+    font-family:inherit;
+}
+
+.app{
+    max-width:480px;
+    min-height:100vh;
+    margin:auto;
+    background:#f7f8fa;
+    padding-bottom:85px;
+}
+
+/* HEADER */
+
+.header{
+    background:linear-gradient(145deg,#ff315b,#e91e48);
+    color:white;
+    padding:18px 17px 22px;
+    border-radius:0 0 28px 28px;
+}
+
+.top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    font-size:23px;
+    font-weight:900;
+}
+
+.cartBtn{
+    border:0;
+    background:#ffffff25;
+    color:white;
+    border-radius:14px;
+    padding:9px 12px;
+    font-size:18px;
+    cursor:pointer;
+}
+
+.search{
+    width:100%;
+    margin-top:15px;
+    border:0;
+    border-radius:15px;
+    padding:14px;
+    font-size:14px;
+    outline:none;
+}
+
+/* BODY */
+
+.body{
+    padding:15px;
+}
+
+.categories{
+    display:flex;
+    gap:8px;
+    overflow-x:auto;
+    padding-bottom:5px;
+}
+
+.categories::-webkit-scrollbar{
+    display:none;
+}
+
+.cat{
+    white-space:nowrap;
+    border:0;
+    background:white;
+    padding:10px 14px;
+    border-radius:20px;
+    box-shadow:0 2px 7px #0000000c;
+    cursor:pointer;
+}
+
+.cat.active{
+    background:#ff315b;
+    color:white;
+}
+
+.searchInfo{
+    margin-top:13px;
+    background:white;
+    border-radius:15px;
+    padding:12px;
+    font-size:11px;
+    color:#777;
+    display:none;
+}
+
+.section{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin:17px 2px 10px;
+}
+
+.section h3{
+    margin:0;
+    font-size:17px;
+}
+
+/* RESTAURANTS */
+
+.restaurant{
+    background:white;
+    border-radius:20px;
+    margin-bottom:13px;
+    overflow:hidden;
+    box-shadow:0 3px 12px #0000000b;
+}
+
+.restImage{
+    height:125px;
+    background:linear-gradient(135deg,#ffcf70,#ff7a59);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:55px;
+}
+
+.restBody{
+    padding:13px;
+}
+
+.restTop{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+}
+
+.restName{
+    font-weight:800;
+    font-size:16px;
+}
+
+.rating{
+    font-size:12px;
+    color:#e59600;
+    white-space:nowrap;
+}
+
+.meta{
+    color:#7c8490;
+    font-size:11px;
+    margin-top:5px;
+}
+
+.menuBtn{
+    width:100%;
+    border:0;
+    background:#fff0f3;
+    color:#e91e48;
+    padding:11px;
+    border-radius:12px;
+    margin-top:11px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.menu{
+    display:none;
+    padding:0 13px 13px;
+}
+
+.item{
+    display:flex;
+    gap:10px;
+    padding:12px 0;
+    border-top:1px solid #edf0f3;
+}
+
+.itemEmoji{
+    width:48px;
+    min-width:48px;
+    height:48px;
+    border-radius:13px;
+    background:#fff3e8;
+    display:grid;
+    place-items:center;
+    font-size:26px;
+}
+
+.itemMain{
+    flex:1;
+    min-width:0;
+}
+
+.itemName{
+    font-weight:bold;
+    font-size:13px;
+}
+
+.itemDesc{
+    color:#818995;
+    font-size:10px;
+    margin-top:4px;
+}
+
+.itemPrice{
+    margin-top:5px;
+    font-weight:800;
+    font-size:13px;
+}
+
+.add{
+    align-self:center;
+    border:0;
+    background:#ff315b;
+    color:white;
+    border-radius:11px;
+    width:34px;
+    height:34px;
+    font-size:20px;
+    cursor:pointer;
+}
+
+/* BOTTOM */
+
+.bottom{
+    position:fixed;
+    bottom:0;
+    left:50%;
+    transform:translateX(-50%);
+    width:min(480px,100%);
+    height:72px;
+    background:white;
+    border-top:1px solid #e4e8ed;
+    display:flex;
+    z-index:10;
+}
+
+.bottom button{
+    flex:1;
+    border:0;
+    background:none;
+    font-size:10px;
+    color:#7c8490;
+    cursor:pointer;
+}
+
+.bottom span{
+    display:block;
+    font-size:21px;
+    margin-bottom:3px;
+}
+
+/* MODAL */
+
+.modalBg{
+    position:fixed;
+    inset:0;
+    background:#0008;
+    display:none;
+    align-items:flex-end;
+    z-index:30;
+}
+
+.modal{
+    width:min(480px,100%);
+    max-height:90vh;
+    overflow:auto;
+    background:white;
+    border-radius:25px 25px 0 0;
+    padding:20px;
+}
+
+.close{
+    float:right;
+    border:0;
+    width:32px;
+    height:32px;
+    border-radius:50%;
+    background:#eef1f4;
+    font-size:18px;
+    cursor:pointer;
+}
+
+/* CART */
+
+.cartRow{
+    display:flex;
+    gap:10px;
+    padding:13px 0;
+    border-bottom:1px solid #eee;
+}
+
+.cartInfo{
+    flex:1;
+    min-width:0;
+}
+
+.qty{
+    display:flex;
+    gap:8px;
+    align-items:center;
+    margin-top:7px;
+}
+
+.qty button{
+    border:0;
+    width:28px;
+    height:28px;
+    border-radius:8px;
+    background:#f0f2f5;
+    cursor:pointer;
+}
+
+.checkout{
+    width:100%;
+    border:0;
+    padding:15px;
+    border-radius:14px;
+    background:#ff315b;
+    color:white;
+    font-weight:bold;
+    margin-top:12px;
+    cursor:pointer;
+}
+
+.secondary{
+    width:100%;
+    border:0;
+    padding:13px;
+    border-radius:14px;
+    background:#eef0f3;
+    margin-top:8px;
+    cursor:pointer;
+}
+
+/* PAYMENT */
+
+.payment{
+    display:grid;
+    gap:8px;
+    margin:12px 0;
+}
+
+.pay{
+    border:1px solid #ddd;
+    padding:13px;
+    border-radius:13px;
+    background:white;
+    text-align:left;
+    cursor:pointer;
+}
+
+.pay.selected{
+    border:2px solid #ff315b;
+    background:#fff3f5;
+}
+
+/* BALANCE */
+
+.balanceBox{
+    padding:14px;
+    border-radius:15px;
+    background:#f7f8fa;
+    margin-bottom:12px;
+}
+
+.balanceRow{
+    display:flex;
+    justify-content:space-between;
+    padding:7px 0;
+}
+
+/* EMPTY */
+
+.empty{
+    background:white;
+    padding:30px;
+    border-radius:20px;
+    text-align:center;
+    color:#777;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="app">
+
+<!-- HEADER -->
+
+<div class="header">
+
+    <div class="top">
+
+        <div class="logo">
+            🍔 FoodDash
+        </div>
+
+        <button
+            class="cartBtn"
+            onclick="openCart()">
+
+            🛒 <span id="cartCount">0</span>
+
+        </button>
+
+    </div>
+
+    <div style="
+        margin-top:15px;
+        font-size:11px;
+        opacity:.9">
+
+        📍 RP Home
+
+    </div>
+
+    <input
+        id="search"
+        class="search"
+        placeholder="Search food, restaurant, anything..."
+        oninput="searchFood()">
+
+</div>
+
+
+<!-- BODY -->
+
+<div class="body">
+
+    <div class="categories">
+
+        <button
+            class="cat active"
+            onclick="filterCategory('All',this)">
+
+            All
+
+        </button>
+
+        <button
+            class="cat"
+            onclick="filterCategory('Burgers',this)">
+
+            🍔 Burgers
+
+        </button>
+
+        <button
+            class="cat"
+            onclick="filterCategory('Pizza',this)">
+
+            🍕 Pizza
+
+        </button>
+
+        <button
+            class="cat"
+            onclick="filterCategory('Chicken',this)">
+
+            🍗 Chicken
+
+        </button>
+
+        <button
+            class="cat"
+            onclick="filterCategory('Asian',this)">
+
+            🍜 Asian
+
+        </button>
+
+        <button
+            class="cat"
+            onclick="filterCategory('Dessert',this)">
+
+            🍰 Dessert
+
+        </button>
+
+        <button
+            class="cat"
+            onclick="filterCategory('Drinks',this)">
+
+            🧋 Drinks
+
+        </button>
+
+    </div>
+
+
+    <div
+        id="searchInfo"
+        class="searchInfo">
+    </div>
+
+
+    <div class="section">
+
+        <h3>
+            Restaurants near you
+        </h3>
+
+        <span
+            id="resultCount"
+            style="font-size:10px;color:#888">
+        </span>
+
+    </div>
+
+
+    <div id="restaurants"></div>
+
+</div>
+
+
+<!-- BOTTOM -->
+
+<div class="bottom">
+
+    <button onclick="location.href='index.html'">
+
+        <span>⌂</span>
+        Home
+
+    </button>
+
+    <button onclick="showOrders()">
+
+        <span>📦</span>
+        Orders
+
+    </button>
+
+    <button onclick="openCart()">
+
+        <span>🛒</span>
+        Cart
+
+    </button>
+
+</div>
+
+</div>
+
+
+<!-- MODAL -->
+
+<div
+    class="modalBg"
+    id="modalBg">
+
+    <div class="modal">
+
+        <button
+            class="close"
+            onclick="closeModal()">
+
+            ×
+
+        </button>
+
+        <div id="modalContent"></div>
+
+    </div>
+
+</div>
+
+
 <script>
+
+/* =====================================================
+   BASE RESTAURANTS
+===================================================== */
 
 const restaurants=[
 
 {
-name:"Burger House",
-emoji:"🍔",
-category:"Burgers",
-rating:4.8,
-time:"20–30 min",
-delivery:39,
-items:[
-["Classic Cheeseburger","Juicy beef patty, cheese and sauce",159,"🍔"],
-["Double Burger","Two beef patties with cheese",229,"🍔"],
-["Crispy Chicken Burger","Crispy chicken and mayo",179,"🍗"],
-["Fries","Crispy salted fries",89,"🍟"]
-]
+    name:"Burger House",
+    emoji:"🍔",
+    category:"Burgers",
+    rating:4.8,
+    time:"20–30 min",
+    delivery:39,
+    items:[
+        ["Classic Cheeseburger","Juicy beef patty, cheese and sauce",159,"🍔"],
+        ["Double Burger","Two beef patties with cheese",229,"🍔"],
+        ["Crispy Chicken Burger","Crispy chicken and mayo",179,"🍗"],
+        ["Fries","Crispy salted fries",89,"🍟"],
+        ["Bacon Cheeseburger","Beef, bacon and melted cheese",249,"🥓"]
+    ]
 },
 
 {
-name:"Pizza Corner",
-emoji:"🍕",
-category:"Pizza",
-rating:4.7,
-time:"25–35 min",
-delivery:49,
-items:[
-["Pepperoni Pizza","Classic pepperoni and cheese",399,"🍕"],
-["Hawaiian Pizza","Ham, pineapple and cheese",389,"🍕"],
-["Four Cheese","Four-cheese blend",429,"🧀"],
-["Garlic Bread","Toasted garlic bread",129,"🥖"]
-]
+    name:"Pizza Corner",
+    emoji:"🍕",
+    category:"Pizza",
+    rating:4.7,
+    time:"25–35 min",
+    delivery:49,
+    items:[
+        ["Pepperoni Pizza","Classic pepperoni and cheese",399,"🍕"],
+        ["Hawaiian Pizza","Ham, pineapple and cheese",389,"🍕"],
+        ["Four Cheese","Four-cheese blend",429,"🧀"],
+        ["Garlic Bread","Toasted garlic bread",129,"🥖"],
+        ["Meat Lovers","Loaded meat and cheese",459,"🍕"]
+    ]
 },
 
 {
-name:"Chicken Republic",
-emoji:"🍗",
-category:"Chicken",
-rating:4.9,
-time:"20–30 min",
-delivery:35,
-items:[
-["2pc Fried Chicken","Crispy fried chicken",189,"🍗"],
-["Chicken Meal","Chicken, rice and drink",229,"🍗"],
-["Spicy Wings","Eight spicy wings",249,"🍗"],
-["Chicken Sandwich","Crispy chicken sandwich",169,"🥪"]
-]
+    name:"Chicken Republic",
+    emoji:"🍗",
+    category:"Chicken",
+    rating:4.9,
+    time:"20–30 min",
+    delivery:35,
+    items:[
+        ["2pc Fried Chicken","Crispy fried chicken",189,"🍗"],
+        ["Chicken Meal","Chicken, rice and drink",229,"🍗"],
+        ["Spicy Wings","Eight spicy wings",249,"🍗"],
+        ["Chicken Sandwich","Crispy chicken sandwich",169,"🥪"],
+        ["Chicken Bucket","Family chicken bucket",599,"🍗"]
+    ]
 },
 
 {
-name:"Tokyo Bowl",
-emoji:"🍜",
-category:"Asian",
-rating:4.8,
-time:"25–35 min",
-delivery:39,
-items:[
-["Beef Ramen","Rich broth and tender beef",299,"🍜"],
-["Chicken Ramen","Chicken ramen bowl",279,"🍜"],
-["Chicken Katsu","Rice, katsu and sauce",259,"🍱"],
-["Gyoza","Six-piece dumplings",149,"🥟"]
-]
+    name:"Tokyo Bowl",
+    emoji:"🍜",
+    category:"Asian",
+    rating:4.8,
+    time:"25–35 min",
+    delivery:39,
+    items:[
+        ["Beef Ramen","Rich broth and tender beef",299,"🍜"],
+        ["Chicken Ramen","Chicken ramen bowl",279,"🍜"],
+        ["Chicken Katsu","Rice, katsu and sauce",259,"🍱"],
+        ["Gyoza","Six-piece dumplings",149,"🥟"],
+        ["Beef Teriyaki","Rice and grilled beef",319,"🥩"]
+    ]
 },
 
 {
-name:"Sweet Lab",
-emoji:"🍰",
-category:"Dessert",
-rating:4.6,
-time:"15–25 min",
-delivery:29,
-items:[
-["Chocolate Cake","Rich chocolate cake",159,"🍰"],
-["Cheesecake","Creamy classic cheesecake",179,"🍰"],
-["Milk Tea","Brown sugar milk tea",119,"🧋"],
-["Ice Cream","Two scoops",129,"🍨"]
-]
+    name:"Sweet Lab",
+    emoji:"🍰",
+    category:"Dessert",
+    rating:4.6,
+    time:"15–25 min",
+    delivery:29,
+    items:[
+        ["Chocolate Cake","Rich chocolate cake",159,"🍰"],
+        ["Cheesecake","Creamy classic cheesecake",179,"🍰"],
+        ["Milk Tea","Brown sugar milk tea",119,"🧋"],
+        ["Ice Cream","Two scoops",129,"🍨"],
+        ["Brownie","Warm chocolate brownie",139,"🍫"]
+    ]
+},
+
+{
+    name:"Coffee District",
+    emoji:"☕",
+    category:"Drinks",
+    rating:4.7,
+    time:"10–20 min",
+    delivery:25,
+    items:[
+        ["Iced Coffee","Cold brewed coffee",129,"☕"],
+        ["Caramel Latte","Sweet caramel latte",159,"☕"],
+        ["Spanish Latte","Creamy Spanish latte",169,"☕"],
+        ["Matcha Latte","Creamy matcha drink",179,"🍵"],
+        ["Chocolate Frappe","Cold chocolate frappe",189,"🥤"]
+    ]
+},
+
+{
+    name:"Sushi Station",
+    emoji:"🍣",
+    category:"Asian",
+    rating:4.8,
+    time:"25–40 min",
+    delivery:45,
+    items:[
+        ["Salmon Sushi","Fresh salmon sushi",299,"🍣"],
+        ["California Roll","Crab, avocado and rice",249,"🍣"],
+        ["Tuna Roll","Tuna sushi roll",279,"🍣"],
+        ["Tempura","Crispy shrimp tempura",319,"🍤"],
+        ["Sushi Combo","Assorted sushi platter",499,"🍣"]
+    ]
 }
 
 ];
 
+
+/* =====================================================
+   STATE
+===================================================== */
+
 let currentCategory="All";
+
 let cart=[];
 
+let currentResults=[];
 
-/* =========================
-HELPERS
-========================= */
+let selectedPayment=null;
 
-function peso(n){
 
-return new Intl.NumberFormat(
-"en-PH",
-{
-style:"currency",
-currency:"PHP"
-}
-).format(Number(n)||0);
+/* =====================================================
+   HELPERS
+===================================================== */
+
+function peso(amount){
+
+    return new Intl.NumberFormat(
+        "en-PH",
+        {
+            style:"currency",
+            currency:"PHP"
+        }
+    ).format(Number(amount)||0);
 
 }
 
 
 function esc(text){
 
-return String(text)
-.replace(/&/g,"&amp;")
-.replace(/</g,"&lt;")
-.replace(/>/g,"&gt;")
-.replace(/"/g,"&quot;")
-.replace(/'/g,"&#039;");
+    return String(text)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
 
 }
 
 
-/* =========================
-AUTOMATIC RESTAURANT GENERATOR
-========================= */
+/* =====================================================
+   RANDOM GENERATOR
+===================================================== */
 
 function generateRestaurants(query){
 
-const q=
-query.trim() ||
-"Food";
+    let q=query.trim();
 
-const title=
-q
-.split(/\s+/)
-.map(x=>
-x.charAt(0).toUpperCase()+x.slice(1)
-)
-.join(" ");
+    if(!q){
+        q="Food";
+    }
 
+    const lower=q.toLowerCase();
 
-/* choose suitable emoji */
-
-let emoji="🍽️";
-
-const lower=q.toLowerCase();
-
-if(
-lower.includes("burger") ||
-lower.includes("mc") ||
-lower.includes("fast")
-) emoji="🍔";
-
-else if(
-lower.includes("pizza")
-) emoji="🍕";
-
-else if(
-lower.includes("chicken") ||
-lower.includes("fried")
-) emoji="🍗";
-
-else if(
-lower.includes("ramen") ||
-lower.includes("noodle") ||
-lower.includes("japan") ||
-lower.includes("asian")
-) emoji="🍜";
-
-else if(
-lower.includes("cake") ||
-lower.includes("dessert") ||
-lower.includes("ice cream") ||
-lower.includes("sweet")
-) emoji="🍰";
-
-else if(
-lower.includes("coffee") ||
-lower.includes("cafe")
-) emoji="☕";
-
-else if(
-lower.includes("milk tea") ||
-lower.includes("boba")
-) emoji="🧋";
+    const title=q
+        .split(/\s+/)
+        .map(word=>
+            word.charAt(0).toUpperCase()+
+            word.slice(1)
+        )
+        .join(" ");
 
 
-const restaurantNames=[
-`${title} House`,
-`${title} Kitchen`,
-`${title} Express`,
-`${title} Corner`,
-`${title} Hub`,
-`${title} Station`,
-`${title} Cafe`,
-`${title} Restaurant`,
-`${title} Grill`,
-`${title} Bistro`,
-`${title} Eats`,
-`${title} Place`
-];
+    let emoji="🍽️";
 
 
-const menuNames=[
-`${title} Special`,
-`${title} Meal`,
-`Classic ${title}`,
-`Premium ${title}`,
-`Loaded ${title}`,
-`Family ${title}`,
-`Regular ${title}`,
-`Large ${title}`,
-`Combo ${title}`,
-`Signature ${title}`
-];
+    if(
+        lower.includes("burger")||
+        lower.includes("hamburger")
+    ){
+        emoji="🍔";
+    }
+
+    else if(
+        lower.includes("pizza")
+    ){
+        emoji="🍕";
+    }
+
+    else if(
+        lower.includes("chicken")||
+        lower.includes("fried")
+    ){
+        emoji="🍗";
+    }
+
+    else if(
+        lower.includes("ramen")||
+        lower.includes("noodle")||
+        lower.includes("japan")||
+        lower.includes("asian")
+    ){
+        emoji="🍜";
+    }
+
+    else if(
+        lower.includes("sushi")||
+        lower.includes("salmon")
+    ){
+        emoji="🍣";
+    }
+
+    else if(
+        lower.includes("coffee")||
+        lower.includes("cafe")
+    ){
+        emoji="☕";
+    }
+
+    else if(
+        lower.includes("milk")||
+        lower.includes("boba")||
+        lower.includes("drink")
+    ){
+        emoji="🧋";
+    }
+
+    else if(
+        lower.includes("cake")||
+        lower.includes("dessert")||
+        lower.includes("sweet")||
+        lower.includes("ice cream")
+    ){
+        emoji="🍰";
+    }
+
+    else if(
+        lower.includes("fries")
+    ){
+        emoji="🍟";
+    }
 
 
-return restaurantNames.map(
-(name,i)=>{
+    const restaurantTypes=[
+        "House",
+        "Kitchen",
+        "Express",
+        "Corner",
+        "Hub",
+        "Station",
+        "Cafe",
+        "Restaurant",
+        "Grill",
+        "Bistro",
+        "Eats",
+        "Place",
+        "Kitchen & Grill",
+        "Food Hub",
+        "Diner",
+        "Central",
+        "Market"
+    ];
 
-const items=[];
 
-for(let x=0;x<5;x++){
+    const menuTypes=[
+        "Special",
+        "Classic",
+        "Premium",
+        "Deluxe",
+        "Signature",
+        "Best Seller",
+        "Combo",
+        "Large",
+        "Regular",
+        "Family Meal",
+        "Value Meal",
+        "Ultimate",
+        "Loaded",
+        "Original",
+        "Extra"
+    ];
 
-items.push([
 
-menuNames[
-(x+i)%menuNames.length
-],
+    const results=[];
 
-`Freshly prepared ${lower} meal. RP-generated menu item.`,
 
-99+
-((i*71+x*53)%700),
+    for(let i=0;i<18;i++){
 
-emoji
+        const restaurantName=
+            title+
+            " "+
+            restaurantTypes[
+                i%restaurantTypes.length
+            ];
 
-]);
+
+        const items=[];
+
+
+        for(let x=0;x<8;x++){
+
+            const menuName=
+                menuTypes[
+                    (x+i)%
+                    menuTypes.length
+                ]+
+                " "+
+                title;
+
+
+            const price=
+                79+
+                ((i*83+x*47)%720);
+
+
+            items.push([
+
+                menuName,
+
+                "Freshly prepared "+
+                lower+
+                " meal made for RP delivery.",
+
+                price,
+
+                emoji
+
+            ]);
+
+        }
+
+
+        results.push({
+
+            name:restaurantName,
+
+            emoji:emoji,
+
+            category:"Search",
+
+            rating:
+                (4.2+((i%8)*0.1))
+                .toFixed(1),
+
+            time:
+                (15+(i%6)*5)+
+                "–"+
+                (25+(i%6)*5)+
+                " min",
+
+            delivery:
+                25+(i%5)*10,
+
+            items:items
+
+        });
+
+    }
+
+
+    return results;
 
 }
 
 
-return {
-
-name:name,
-
-emoji:emoji,
-
-category:"Search",
-
-rating:(4.3+((i%6)*0.1))
-.toFixed(1),
-
-time:
-(15+(i%5)*5)+
-"–"+
-(25+(i%5)*5)+
-" min",
-
-delivery:
-29+(i%4)*10,
-
-items:items
-
-};
-
-});
-
-}
-
-
-/* =========================
-GET SEARCH RESULTS
-========================= */
+/* =====================================================
+   SEARCH RESULTS
+===================================================== */
 
 function getRestaurants(){
 
-const query=
-document
-.getElementById("search")
-.value
-.toLowerCase()
-.trim();
+    const input=
+        document.getElementById("search");
+
+    const query=
+        input
+        ? input.value.toLowerCase().trim()
+        :"";
 
 
-/*
-If there is no search:
-use the normal restaurants.
-*/
+    if(!query){
 
-if(!query){
+        return restaurants.filter(r=>
 
-return restaurants.filter(r=>
+            currentCategory==="All"||
+            r.category===currentCategory
 
-currentCategory==="All" ||
-r.category===currentCategory
+        );
 
-);
-
-}
+    }
 
 
-/*
-First search the built-in restaurants.
-*/
+    const exact=
+        restaurants.filter(r=>{
 
-const exact=
-restaurants.filter(r=>{
-
-const text=(
-r.name+
-" "+
-r.category+
-" "+
-r.items
-.map(x=>x[0])
-.join(" ")
-).toLowerCase();
-
-return text.includes(query);
-
-});
+            const text=(
+                r.name+
+                " "+
+                r.category+
+                " "+
+                r.items
+                    .map(item=>item[0])
+                    .join(" ")
+            ).toLowerCase();
 
 
-/*
-If search finds something:
-show those plus generated
-restaurants.
+            return text.includes(query);
 
-If nothing matches:
-generate everything.
-*/
+        });
 
-const generated=
-generateRestaurants(query);
 
-return [
-...exact,
-...generated
-];
+    /*
+       ALWAYS generate extra results
+       for searched terms.
+    */
+
+    const generated=
+        generateRestaurants(query);
+
+
+    return [
+        ...exact,
+        ...generated
+    ];
 
 }
 
 
-/* =========================
-RENDER
-========================= */
+/* =====================================================
+   RENDER
+===================================================== */
 
 function renderRestaurants(){
 
-const box=
-document.getElementById(
-"restaurants"
-);
+    const box=
+        document.getElementById(
+            "restaurants"
+        );
 
-const results=
-getRestaurants();
 
+    if(!box){
+        return;
+    }
 
-box.innerHTML=
-results.map(
-(r,index)=>{
 
-/*
-Generated restaurants aren't
-inside the original array.
+    currentResults=
+        getRestaurants();
 
-So store them temporarily.
-*/
 
-const id=
-"result-"+index;
+    const info=
+        document.getElementById(
+            "searchInfo"
+        );
 
-window.currentResults=
-results;
 
-return `
+    const search=
+        document.getElementById(
+            "search"
+        );
 
-<div class="restaurant">
 
-<div class="restImage">
+    if(search && info){
 
-${r.emoji}
+        if(search.value.trim()){
 
-</div>
+            info.style.display="block";
 
-<div class="restBody">
+            info.textContent=
+                "✨ RP search generated "+
+                currentResults.length+
+                " restaurants for “"+
+                search.value+
+                "”";
 
-<div class="restTop">
+        }
 
-<div class="restName">
+        else{
 
-${esc(r.name)}
+            info.style.display="none";
 
-</div>
+        }
 
-<div class="rating">
+    }
 
-⭐ ${r.rating}
 
-</div>
+    const count=
+        document.getElementById(
+            "resultCount"
+        );
 
-</div>
 
-<div class="meta">
+    if(count){
 
-${esc(r.category)}
-•
-${r.time}
-•
-Delivery
-${peso(r.delivery)}
+        count.textContent=
+            currentResults.length+
+            " results";
 
-</div>
+    }
 
-<button
-class="menuBtn"
-onclick="toggleMenu('${id}')">
 
-View Menu
+    box.innerHTML=
+        currentResults
+        .map((restaurant,index)=>{
 
-</button>
+            const menuId=
+                "menu-"+index;
 
-</div>
 
+            return `
 
-<div
-class="menu"
-id="menu-${id}">
+            <div class="restaurant">
 
-${r.items.map(
-(item,itemIndex)=>`
+                <div class="restImage">
 
-<div class="item">
+                    ${restaurant.emoji}
 
-<div class="itemEmoji">
+                </div>
 
-${item[3]}
 
-</div>
+                <div class="restBody">
 
-<div class="itemMain">
+                    <div class="restTop">
 
-<div class="itemName">
+                        <div class="restName">
 
-${esc(item[0])}
+                            ${esc(
+                                restaurant.name
+                            )}
 
-</div>
+                        </div>
 
-<div class="itemDesc">
+                        <div class="rating">
 
-${esc(item[1])}
+                            ⭐
+                            ${restaurant.rating}
 
-</div>
+                        </div>
 
-<div class="itemPrice">
+                    </div>
 
-${peso(item[2])}
 
-</div>
+                    <div class="meta">
 
-</div>
+                        ${esc(
+                            restaurant.category
+                        )}
 
-<button
-class="add"
-onclick="addGeneratedToCart(${index},${itemIndex})">
+                        •
+                        ${restaurant.time}
 
-+
+                        • Delivery
+                        ${peso(
+                            restaurant.delivery
+                        )}
 
-</button>
+                    </div>
 
-</div>
 
-`
-).join("")}
+                    <button
+                        class="menuBtn"
+                        onclick="
+                            toggleMenu(${index})
+                        ">
 
-</div>
+                        View Menu
 
-</div>
+                    </button>
 
-`;
+                </div>
 
-}).join("");
 
+                <div
+                    class="menu"
+                    id="${menuId}">
 
-if(!results.length){
+                    ${restaurant.items
+                        .map((item,itemIndex)=>`
 
-box.innerHTML=`
+                        <div class="item">
 
-<div style="
-background:white;
-padding:30px;
-border-radius:20px;
-text-align:center">
+                            <div class="itemEmoji">
 
-<h3>
-🍽️ Finding food...
-</h3>
+                                ${item[3]}
 
-<p style="
-color:#888;
-font-size:12px">
+                            </div>
 
-Try searching for a food,
-restaurant, cuisine or drink.
 
-</p>
+                            <div class="itemMain">
 
-</div>
+                                <div class="itemName">
 
-`;
+                                    ${esc(
+                                        item[0]
+                                    )}
+
+                                </div>
+
+
+                                <div class="itemDesc">
+
+                                    ${esc(
+                                        item[1]
+                                    )}
+
+                                </div>
+
+
+                                <div class="itemPrice">
+
+                                    ${peso(
+                                        item[2]
+                                    )}
+
+                                </div>
+
+                            </div>
+
+
+                            <button
+                                class="add"
+                                onclick="
+                                    addToCart(
+                                        ${index},
+                                        ${itemIndex}
+                                    )
+                                ">
+
+                                +
+
+                            </button>
+
+                        </div>
+
+                        `)
+                        .join("")}
+
+                </div>
+
+            </div>
+
+            `;
+
+        })
+        .join("");
+
+
+    if(!currentResults.length){
+
+        box.innerHTML=`
+
+        <div class="empty">
+
+            <div style="font-size:45px">
+                🍽️
+            </div>
+
+            <h3>
+                No restaurants found
+            </h3>
+
+            <p>
+                Try searching for anything.
+            </p>
+
+        </div>
+
+        `;
+
+    }
 
 }
 
+
+/* =====================================================
+   MENU
+===================================================== */
+
+function toggleMenu(index){
+
+    const menu=
+        document.getElementById(
+            "menu-"+index
+        );
+
+
+    if(!menu){
+        return;
+    }
+
+
+    menu.style.display=
+        menu.style.display==="block"
+        ?"none"
+        :"block";
+
 }
 
 
-/* =========================
-MENU
-========================= */
+/* =====================================================
+   ADD TO CART
+===================================================== */
 
-function toggleMenu(id){
-
-const menu=
-document.getElementById(
-"menu-"+id
-);
-
-if(!menu)return;
-
-menu.style.display=
-menu.style.display==="block"
-?"none"
-:"block";
-
-}
-
-
-/* =========================
-ADD GENERATED / NORMAL FOOD
-========================= */
-
-function addGeneratedToCart(
-restaurantIndex,
-itemIndex
+function addToCart(
+    restaurantIndex,
+    itemIndex
 ){
 
-const restaurant=
-window.currentResults[
-restaurantIndex
-];
-
-const item=
-restaurant.items[
-itemIndex
-];
+    const restaurant=
+        currentResults[
+            restaurantIndex
+        ];
 
 
-const existing=
-cart.find(x=>
-
-x.restaurant===restaurant.name &&
-x.name===item[0]
-
-);
+    if(!restaurant){
+        return;
+    }
 
 
-if(existing){
+    const item=
+        restaurant.items[
+            itemIndex
+        ];
 
-existing.qty++;
 
-}else{
+    if(!item){
+        return;
+    }
 
-cart.push({
 
-restaurant:restaurant.name,
+    const existing=
+        cart.find(x=>
 
-name:item[0],
+            x.restaurant===
+            restaurant.name&&
 
-description:item[1],
+            x.name===
+            item[0]
 
-price:Number(item[2]),
+        );
 
-emoji:item[3],
 
-qty:1,
+    if(existing){
 
-delivery:Number(
-restaurant.delivery
-)
+        existing.qty++;
 
-});
+    }
+
+    else{
+
+        cart.push({
+
+            restaurant:
+                restaurant.name,
+
+            name:
+                item[0],
+
+            description:
+                item[1],
+
+            price:
+                Number(item[2]),
+
+            emoji:
+                item[3],
+
+            qty:1,
+
+            delivery:
+                Number(
+                    restaurant.delivery
+                )
+
+        });
+
+    }
+
+
+    updateCart();
+
+
+    /*
+       Small visual confirmation.
+    */
+
+    showToast(
+        "Added to cart ✓"
+    );
 
 }
 
-updateCart();
 
-}
-
-
-/* =========================
-CART
-========================= */
+/* =====================================================
+   CART
+===================================================== */
 
 function updateCart(){
 
-const count=
-cart.reduce(
-(sum,x)=>sum+x.qty,
-0
-);
+    const count=
+        cart.reduce(
+            (sum,item)=>
+                sum+item.qty,
+            0
+        );
 
-document.getElementById(
-"cartCount"
-).textContent=count;
+
+    const element=
+        document.getElementById(
+            "cartCount"
+        );
+
+
+    if(element){
+
+        element.textContent=
+            count;
+
+    }
 
 }
 
 
 function cartTotal(){
 
-return cart.reduce(
-(sum,x)=>
-sum+(x.price*x.qty),
-0
-);
+    return cart.reduce(
+        (sum,item)=>
+            sum+
+            (
+                item.price*
+                item.qty
+            ),
+        0
+    );
 
 }
 
 
 function deliveryFee(){
 
-if(!cart.length)
-return 0;
+    if(!cart.length){
+        return 0;
+    }
 
-return Math.max(
-...cart.map(x=>x.delivery)
-);
+
+    return Math.max(
+        ...cart.map(
+            item=>
+                Number(
+                    item.delivery
+                )||0
+        )
+    );
 
 }
 
+
+/* =====================================================
+   OPEN CART
+===================================================== */
 
 function openCart(){
 
-if(!cart.length){
+    if(!cart.length){
 
-openModal(`
+        openModal(`
 
-<h2>🛒 Your Cart</h2>
+            <h2>
+                🛒 Your Cart
+            </h2>
 
-<p style="color:#888">
+            <div class="empty">
 
-Your cart is empty.
+                <div style="font-size:40px">
+                    🛒
+                </div>
 
-</p>
+                <p>
+                    Your cart is empty.
+                </p>
 
-`);
+            </div>
 
-return;
+        `);
+
+        return;
+
+    }
+
+
+    let html=`
+
+        <h2>
+            🛒 Your Cart
+        </h2>
+
+    `;
+
+
+    html+=cart.map(
+        (item,index)=>`
+
+        <div class="cartRow">
+
+            <div style="font-size:28px">
+
+                ${item.emoji}
+
+            </div>
+
+
+            <div class="cartInfo">
+
+                <b>
+                    ${esc(item.name)}
+                </b>
+
+                <div style="
+                    font-size:11px;
+                    color:#888;
+                    margin-top:3px">
+
+                    ${esc(
+                        item.restaurant
+                    )}
+
+                </div>
+
+
+                <div style="
+                    margin-top:5px">
+
+                    ${peso(item.price)}
+
+                </div>
+
+
+                <div class="qty">
+
+                    <button
+                        onclick="
+                            changeQty(
+                                ${index},
+                                -1
+                            )
+                        ">
+
+                        −
+
+                    </button>
+
+
+                    <b>
+                        ${item.qty}
+                    </b>
+
+
+                    <button
+                        onclick="
+                            changeQty(
+                                ${index},
+                                1
+                            )
+                        ">
+
+                        +
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div>
+
+                <b>
+                    ${peso(
+                        item.price*
+                        item.qty
+                    )}
+                </b>
+
+            </div>
+
+        </div>
+
+        `
+    ).join("");
+
+
+    const subtotal=
+        cartTotal();
+
+    const delivery=
+        deliveryFee();
+
+    const total=
+        subtotal+
+        delivery;
+
+
+    html+=`
+
+        <div style="
+            margin-top:15px">
+
+            <div class="balanceRow">
+
+                <span>
+                    Subtotal
+                </span>
+
+                <b>
+                    ${peso(subtotal)}
+                </b>
+
+            </div>
+
+
+            <div class="balanceRow">
+
+                <span>
+                    Delivery
+                </span>
+
+                <b>
+                    ${peso(delivery)}
+                </b>
+
+            </div>
+
+
+            <hr>
+
+
+            <div class="balanceRow"
+                style="font-size:18px">
+
+                <b>
+                    Total
+                </b>
+
+                <b>
+                    ${peso(total)}
+                </b>
+
+            </div>
+
+
+            <button
+                class="checkout"
+                onclick="checkout()">
+
+                Proceed to Checkout
+
+            </button>
+
+        </div>
+
+    `;
+
+
+    openModal(html);
 
 }
 
 
-let html=`
+/* =====================================================
+   CHANGE QUANTITY
+===================================================== */
 
-<h2>🛒 Your Cart</h2>
+function changeQty(
+    index,
+    amount
+){
 
-`;
-
-
-html+=cart.map(
-(item,index)=>`
-
-<div class="cartRow">
-
-<div style="font-size:28px">
-
-${item.emoji}
-
-</div>
-
-<div class="cartInfo">
-
-<b>
-${esc(item.name)}
-</b>
-
-<div style="
-font-size:11px;
-color:#888">
-
-${esc(item.restaurant)}
-
-</div>
-
-<div style="margin-top:5px">
-
-${peso(item.price)}
-
-</div>
-
-<div class="qty">
-
-<button
-onclick="changeQty(${index},-1)">
-
-−
-
-</button>
-
-<b>
-${item.qty}
-</b>
-
-<button
-onclick="changeQty(${index},1)">
-
-+
-
-</button>
-
-</div>
-
-</div>
-
-<div>
-
-${peso(item.price*item.qty)}
-
-</div>
-
-</div>
-
-`
-).join("");
+    if(!cart[index]){
+        return;
+    }
 
 
-const subtotal=
-cartTotal();
-
-const delivery=
-deliveryFee();
-
-const total=
-subtotal+delivery;
+    cart[index].qty+=
+        amount;
 
 
-html+=`
+    if(cart[index].qty<=0){
 
-<div style="margin-top:15px">
+        cart.splice(
+            index,
+            1
+        );
 
-<div style="
-display:flex;
-justify-content:space-between">
+    }
 
-<span>Subtotal</span>
 
-<b>
-${peso(subtotal)}
-</b>
+    updateCart();
 
-</div>
 
-<div style="
-display:flex;
-justify-content:space-between;
-margin-top:8px">
+    if(cart.length){
 
-<span>Delivery</span>
+        openCart();
 
-<b>
-${peso(delivery)}
-</b>
+    }
 
-</div>
+    else{
 
-<hr>
+        openCart();
 
-<div style="
-display:flex;
-justify-content:space-between;
-font-size:18px">
-
-<b>Total</b>
-
-<b>
-${peso(total)}
-</b>
-
-</div>
-
-<button
-class="checkout"
-onclick="checkout()">
-
-Proceed to Checkout
-
-</button>
-
-</div>
-
-`;
-
-openModal(html);
+    }
 
 }
 
 
-function changeQty(index,amount){
-
-cart[index].qty+=amount;
-
-if(cart[index].qty<=0){
-
-cart.splice(index,1);
-
-}
-
-updateCart();
-
-openCart();
-
-}
-
-
-/* =========================
-CHECKOUT
-========================= */
+/* =====================================================
+   CHECKOUT
+===================================================== */
 
 function checkout(){
 
-const subtotal=
-cartTotal();
+    if(!cart.length){
 
-const delivery=
-deliveryFee();
+        return;
 
-const total=
-subtotal+delivery;
+    }
 
 
-window.selectedPayment=null;
+    const subtotal=
+        cartTotal();
+
+    const delivery=
+        deliveryFee();
+
+    const total=
+        subtotal+
+        delivery;
 
 
-openModal(`
+    selectedPayment=
+        null;
 
-<h2>
-Checkout
-</h2>
 
-<div style="
-background:#f7f8fa;
-padding:14px;
-border-radius:14px">
+    openModal(`
 
-Subtotal:
-${peso(subtotal)}
+        <h2>
+            Checkout
+        </h2>
 
-<br><br>
 
-Delivery:
-${peso(delivery)}
+        <div style="
+            background:#f7f8fa;
+            padding:14px;
+            border-radius:14px">
 
-<hr>
+            <div class="balanceRow">
 
-<b>
-Total:
-${peso(total)}
-</b>
+                <span>
+                    Subtotal
+                </span>
 
-</div>
+                <b>
+                    ${peso(subtotal)}
+                </b>
 
-<h3>
-Payment Method
-</h3>
+            </div>
 
-<div class="payment">
 
-<button
-class="pay"
-onclick="selectPayment('gcash',this)">
+            <div class="balanceRow">
 
-💙 GCash
+                <span>
+                    Delivery
+                </span>
 
-</button>
+                <b>
+                    ${peso(delivery)}
+                </b>
 
-<button
-class="pay"
-onclick="selectPayment('maribank',this)">
+            </div>
 
-🧡 MariBank
 
-</button>
+            <hr>
 
-</div>
 
-<button
-class="checkout"
-onclick="placeOrder()">
+            <div class="balanceRow"
+                style="font-size:18px">
 
-Place Order
+                <b>
+                    Total
+                </b>
 
-</button>
+                <b>
+                    ${peso(total)}
+                </b>
 
-`);
+            </div>
+
+        </div>
+
+
+        <h3>
+            💳 Payment Method
+        </h3>
+
+
+        <div class="payment">
+
+            <button
+                class="pay"
+                onclick="
+                    selectPayment(
+                        'gcash',
+                        this
+                    )
+                ">
+
+                💙
+                <b>GCash</b>
+
+                <div style="
+                    font-size:10px;
+                    color:#888;
+                    margin-top:3px">
+
+                    Pay using your RP GCash balance
+
+                </div>
+
+            </button>
+
+
+            <button
+                class="pay"
+                onclick="
+                    selectPayment(
+                        'maribank',
+                        this
+                    )
+                ">
+
+                🧡
+                <b>MariBank</b>
+
+                <div style="
+                    font-size:10px;
+                    color:#888;
+                    margin-top:3px">
+
+                    Pay using your RP MariBank balance
+
+                </div>
+
+            </button>
+
+        </div>
+
+
+        <button
+            class="checkout"
+            onclick="placeOrder()">
+
+            🛵 Place Order
+
+        </button>
+
+    `);
 
 }
 
+
+/* =====================================================
+   SELECT PAYMENT
+===================================================== */
 
 function selectPayment(
-account,
-button
+    account,
+    button
 ){
 
-window.selectedPayment=
-account;
+    selectedPayment=
+        account;
 
-document
-.querySelectorAll(".pay")
-.forEach(
-b=>b.classList.remove("selected")
-);
 
-button.classList.add("selected");
+    document
+        .querySelectorAll(".pay")
+        .forEach(
+            element=>
+                element.classList
+                .remove("selected")
+        );
+
+
+    button.classList.add(
+        "selected"
+    );
 
 }
 
 
-/* =========================
-PLACE ORDER
-========================= */
+/* =====================================================
+   PLACE ORDER
+===================================================== */
 
 function placeOrder(){
 
-if(!window.selectedPayment){
+    if(!selectedPayment){
 
-alert(
-"Please select GCash or MariBank."
-);
+        alert(
+            "Please select GCash or MariBank."
+        );
 
-return;
+        return;
+
+    }
+
+
+    if(!cart.length){
+
+        alert(
+            "Your cart is empty."
+        );
+
+        return;
+
+    }
+
+
+    const subtotal=
+        cartTotal();
+
+    const delivery=
+        deliveryFee();
+
+    const total=
+        subtotal+
+        delivery;
+
+
+    /*
+       IMPORTANT:
+       This calls the shared RP
+       payment system from rp-data.js.
+    */
+
+    if(
+        typeof payRP!=="function"
+    ){
+
+        alert(
+            "rp-data.js is missing or failed to load."
+        );
+
+        return;
+
+    }
+
+
+    const payment=
+        payRP(
+            selectedPayment,
+            total,
+            {
+
+                name:
+                    "FoodDash Order",
+
+                description:
+                    cart.map(
+                        item=>
+                            item.qty+
+                            "× "+
+                            item.name
+                    ).join(", "),
+
+                icon:"🍔"
+
+            }
+        );
+
+
+    if(!payment.success){
+
+        alert(
+            payment.message
+        );
+
+        return;
+
+    }
+
+
+    const order={
+
+        id:
+            "FD"+
+            Date.now(),
+
+        restaurant:
+            cart[0].restaurant,
+
+        items:
+            cart.map(
+                item=>({
+
+                    name:
+                        item.name,
+
+                    qty:
+                        item.qty,
+
+                    price:
+                        item.price
+
+                })
+            ),
+
+        subtotal:
+            subtotal,
+
+        delivery:
+            delivery,
+
+        total:
+            total,
+
+        payment:
+            selectedPayment,
+
+        status:
+            "Preparing",
+
+        date:
+            new Date()
+            .toLocaleString(
+                "en-PH"
+            )
+
+    };
+
+
+    /*
+       Save using the shared
+       FoodDash order function.
+    */
+
+    if(
+        typeof addFoodpandaOrder===
+        "function"
+    ){
+
+        addFoodpandaOrder(
+            order
+        );
+
+    }
+
+    else{
+
+        /*
+           Direct fallback using
+           the same RP key.
+        */
+
+        const data=
+            loadRP();
+
+
+        if(
+            !Array.isArray(
+                data.foodpandaOrders
+            )
+        ){
+
+            data.foodpandaOrders=[];
+
+        }
+
+
+        data.foodpandaOrders
+            .unshift(order);
+
+
+        saveRP(data);
+
+    }
+
+
+    const paymentName=
+        selectedPayment===
+        "gcash"
+        ?"GCash"
+        :"MariBank";
+
+
+    cart=[];
+
+    updateCart();
+
+
+    openModal(`
+
+        <h2>
+            🎉 Order Placed!
+        </h2>
+
+
+        <p>
+
+            Your FoodDash order has
+            been successfully placed.
+
+        </p>
+
+
+        <div style="
+            background:#f7f8fa;
+            padding:14px;
+            border-radius:14px">
+
+            Order ID:
+
+            <br>
+
+            <strong>
+                ${order.id}
+            </strong>
+
+
+            <br><br>
+
+
+            Restaurant:
+
+            <br>
+
+            <strong>
+                ${esc(
+                    order.restaurant
+                )}
+            </strong>
+
+
+            <br><br>
+
+
+            Total Paid:
+
+            <br>
+
+            <strong>
+                ${peso(total)}
+            </strong>
+
+
+            <br><br>
+
+
+            Payment:
+
+            <br>
+
+            <strong>
+                ${paymentName}
+            </strong>
+
+
+            <br><br>
+
+
+            Status:
+
+            <br>
+
+            <strong
+                style="color:#e91e48">
+
+                Preparing
+
+            </strong>
+
+        </div>
+
+
+        <button
+            class="checkout"
+            onclick="closeModal()">
+
+            Done
+
+        </button>
+
+    `);
 
 }
 
 
-const subtotal=
-cartTotal();
-
-const delivery=
-deliveryFee();
-
-const total=
-subtotal+delivery;
-
-
-const payment=
-payRP(
-window.selectedPayment,
-total,
-{
-name:"FoodDash Order",
-
-description:
-cart.map(
-x=>
-x.qty+
-"× "+
-x.name
-).join(", "),
-
-icon:"🍔"
-
-}
-);
-
-
-if(!payment.success){
-
-alert(payment.message);
-
-return;
-
-}
-
-
-const order={
-
-id:"FD"+Date.now(),
-
-restaurant:
-cart[0].restaurant,
-
-items:
-cart.map(x=>({
-
-name:x.name,
-
-qty:x.qty,
-
-price:x.price
-
-})),
-
-subtotal:subtotal,
-
-delivery:delivery,
-
-total:total,
-
-payment:
-window.selectedPayment,
-
-status:"Preparing",
-
-date:
-new Date()
-.toLocaleString("en-PH")
-
-};
-
-
-if(typeof addFoodpandaOrder==="function"){
-
-addFoodpandaOrder(order);
-
-}else{
-
-/*
-Fallback for older rp-data.js.
-*/
-
-const data=
-loadRP();
-
-if(!data.foodpandaOrders)
-data.foodpandaOrders=[];
-
-data.foodpandaOrders.unshift(
-order
-);
-
-localStorage.setItem(
-"rpData",
-JSON.stringify(data)
-);
-
-}
-
-
-cart=[];
-
-updateCart();
-
-
-openModal(`
-
-<h2>
-🎉 Order Placed!
-</h2>
-
-<p>
-
-Your order from
-
-<strong>
-${esc(order.restaurant)}
-</strong>
-
-has been placed.
-
-</p>
-
-<div style="
-background:#f7f8fa;
-padding:14px;
-border-radius:14px">
-
-Order:
-<strong>
-${order.id}
-</strong>
-
-<br><br>
-
-Total:
-<strong>
-${peso(total)}
-</strong>
-
-<br><br>
-
-Payment:
-<strong>
-${
-window.selectedPayment==="gcash"
-?"GCash"
-:"MariBank"
-}
-</strong>
-
-<br><br>
-
-Status:
-<strong>
-Preparing
-</strong>
-
-</div>
-
-<button
-class="checkout"
-onclick="closeModal()">
-
-Done
-
-</button>
-
-`);
-
-}
-
-
-/* =========================
-ORDERS
-========================= */
+/* =====================================================
+   ORDERS
+===================================================== */
 
 function showOrders(){
 
-const data=
-loadRP();
+    if(
+        typeof loadRP!=="function"
+    ){
 
-const orders=
-data.foodpandaOrders||[];
+        openModal(`
 
-let html=
-"<h2>📦 Your Orders</h2>";
+            <h2>
+                📦 Orders
+            </h2>
+
+            <p>
+                rp-data.js failed to load.
+            </p>
+
+        `);
+
+        return;
+
+    }
 
 
-if(!orders.length){
+    const data=
+        loadRP();
 
-html+=`
 
-<p style="color:#888">
+    const orders=
+        Array.isArray(
+            data.foodpandaOrders
+        )
+        ?data.foodpandaOrders
+        :[];
 
-No orders yet.
 
-</p>
+    let html=`
 
-`;
+        <h2>
+            📦 FoodDash Orders
+        </h2>
 
-}else{
+    `;
 
-html+=orders.map(
-o=>`
 
-<div style="
-padding:14px 0;
-border-bottom:1px solid #eee">
+    if(!orders.length){
 
-<b>
-${esc(o.restaurant)}
-</b>
+        html+=`
 
-<div style="
-font-size:11px;
-color:#888;
-margin-top:5px">
+            <div class="empty">
 
-${o.items.map(
-x=>
-x.qty+
-"× "+
-esc(x.name)
-).join(", ")}
+                <div style="font-size:40px">
+                    📦
+                </div>
 
-</div>
+                <p>
+                    No FoodDash orders yet.
+                </p>
 
-<div style="
-margin-top:6px">
+            </div>
 
-<strong>
-${peso(o.total)}
-</strong>
+        `;
 
-</div>
+    }
 
-<div style="
-font-size:11px;
-color:#e91e48;
-margin-top:5px">
+    else{
 
-${esc(o.status)}
+        html+=orders.map(
+            order=>`
 
-</div>
+            <div style="
+                padding:15px 0;
+                border-bottom:1px solid #eee">
 
-<div style="
-font-size:10px;
-color:#999;
-margin-top:3px">
+                <div style="
+                    display:flex;
+                    justify-content:space-between">
 
-${esc(o.date)}
+                    <b>
+                        ${esc(
+                            order.restaurant
+                        )}
+                    </b>
 
-</div>
+                    <span style="
+                        color:#e91e48;
+                        font-size:11px">
 
-</div>
+                        ${esc(
+                            order.status||
+                            "Preparing"
+                        )}
 
-`
-).join("");
+                    </span>
+
+                </div>
+
+
+                <div style="
+                    font-size:11px;
+                    color:#777;
+                    margin-top:6px">
+
+                    ${Array.isArray(
+                        order.items
+                    )
+                    ?order.items.map(
+                        item=>
+                            item.qty+
+                            "× "+
+                            esc(item.name)
+                    ).join(", ")
+                    :"Order"}
+
+                </div>
+
+
+                <div style="
+                    margin-top:8px">
+
+                    <strong>
+                        ${peso(
+                            order.total
+                        )}
+                    </strong>
+
+                </div>
+
+
+                <div style="
+                    font-size:10px;
+                    color:#999;
+                    margin-top:5px">
+
+                    Paid via
+                    ${
+                        order.payment===
+                        "gcash"
+                        ?"GCash"
+                        :"MariBank"
+                    }
+
+                    <br>
+
+                    ${esc(
+                        order.date||
+                        ""
+                    )}
+
+                </div>
+
+            </div>
+
+            `
+        ).join("");
+
+    }
+
+
+    openModal(html);
 
 }
 
-openModal(html);
 
-}
-
-
-/* =========================
-SEARCH
-========================= */
+/* =====================================================
+   SEARCH
+===================================================== */
 
 function searchFood(){
 
-/*
-Every keystroke reruns the
-generator.
-
-Examples:
-
-burger
-pizza
-ramen
-sushi
-coffee
-milk tea
-jollibee
-vacuum
-random food
-*/
-
-renderRestaurants();
+    renderRestaurants();
 
 }
 
 
-/* =========================
-CATEGORY
-========================= */
+/* =====================================================
+   CATEGORY
+===================================================== */
 
 function filterCategory(
-category,
-button
+    category,
+    button
 ){
 
-currentCategory=
-category;
+    currentCategory=
+        category;
 
-document
-.querySelectorAll(".cat")
-.forEach(
-x=>x.classList.remove("active")
-);
 
-button.classList.add("active");
+    document
+        .querySelectorAll(".cat")
+        .forEach(
+            element=>
+                element.classList
+                .remove("active")
+        );
 
-renderRestaurants();
+
+    if(button){
+
+        button.classList.add(
+            "active"
+        );
+
+    }
+
+
+    /*
+       Clear search when selecting
+       a category.
+    */
+
+    const search=
+        document.getElementById(
+            "search"
+        );
+
+
+    if(search){
+
+        search.value="";
+
+    }
+
+
+    renderRestaurants();
 
 }
 
 
-/* =========================
-MODAL
-========================= */
+/* =====================================================
+   MODAL
+===================================================== */
 
 function openModal(html){
 
-document.getElementById(
-"modalContent"
-).innerHTML=html;
+    const content=
+        document.getElementById(
+            "modalContent"
+        );
 
-document.getElementById(
-"modalBg"
-).style.display="flex";
+
+    const bg=
+        document.getElementById(
+            "modalBg"
+        );
+
+
+    if(!content||!bg){
+
+        return;
+
+    }
+
+
+    content.innerHTML=
+        html;
+
+
+    bg.style.display=
+        "flex";
 
 }
 
 
 function closeModal(){
 
-document.getElementById(
-"modalBg"
-).style.display="none";
+    const bg=
+        document.getElementById(
+            "modalBg"
+        );
+
+
+    if(bg){
+
+        bg.style.display=
+            "none";
+
+    }
 
 }
 
 
-/* =========================
-START
-========================= */
+/* =====================================================
+   TOAST
+===================================================== */
 
-renderRestaurants();
+function showToast(message){
 
-  </script>
+    const old=
+        document.getElementById(
+            "rpToast"
+        );
+
+
+    if(old){
+
+        old.remove();
+
+    }
+
+
+    const toast=
+        document.createElement(
+            "div"
+        );
+
+
+    toast.id=
+        "rpToast";
+
+
+    toast.textContent=
+        message;
+
+
+    toast.style.cssText=`
+
+        position:fixed;
+        left:50%;
+        bottom:85px;
+        transform:translateX(-50%);
+        background:#222;
+        color:white;
+        padding:11px 17px;
+        border-radius:20px;
+        font-size:12px;
+        z-index:100;
+        box-shadow:0 5px 20px #0005;
+
+    `;
+
+
+    document.body.appendChild(
+        toast
+    );
+
+
+    setTimeout(
+        ()=>{
+            toast.remove();
+        },
+        1600
+    );
+
+}
+
+
+/* =====================================================
+   START
+===================================================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function(){
+
+        renderRestaurants();
+
+        updateCart();
+
+    }
+);
+
+</script>
+
+</body>
+</html>
