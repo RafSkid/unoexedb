@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ShopHub RP</title>
+<script src="rp-data.js"></script>
+
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#111827;font-family:Arial,sans-serif;color:#222}
+.app{max-width:480px;min-height:100vh;margin:auto;background:#f7f7f7;padding-bottom:80px}
+.header{background:linear-gradient(145deg,#ff5b18,#ed3210);color:white;padding:18px;border-radius:0 0 27px 27px}
+.top{display:flex;align-items:center;justify-content:space-between}
+.logo{font-size:24px;font-weight:900}
+.cart{border:0;background:#ffffff22;color:white;border-radius:13px;padding:10px 13px;font-size:18px}
+.search{width:100%;margin-top:15px;padding:14px;border:0;border-radius:14px;outline:none;font-size:14px}
+.body{padding:14px}
+.categories{display:flex;gap:8px;overflow:auto}
+.cat{white-space:nowrap;border:0;background:white;padding:10px 14px;border-radius:20px}
+.cat.active{background:#ff4b17;color:white}
+.banner{margin-top:13px;background:#fff0e8;padding:17px;border-radius:18px}
+.banner b{font-size:19px}
+.banner small{display:block;color:#777;margin-top:5px}
+.section{display:flex;justify-content:space-between;align-items:center;margin:17px 2px 10px}
+.section h3{margin:0;font-size:17px}
+.products{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.product{background:white;border-radius:17px;overflow:hidden;box-shadow:0 2px 9px #0000000c}
+.pic{height:130px;background:#f0f1f3;display:grid;place-items:center;font-size:55px}
+.info{padding:11px}
+.name{font-weight:bold;font-size:13px;min-height:32px}
+.price{color:#ed4215;font-size:16px;font-weight:900;margin-top:7px}
+.rating{font-size:10px;color:#d99400;margin-top:5px}
+.sold{font-size:9px;color:#888;margin-top:3px}
+.add{width:100%;border:0;background:#ff4b17;color:white;padding:10px;border-radius:10px;margin-top:8px;font-weight:bold}
+.bottom{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(480px,100%);height:70px;background:white;border-top:1px solid #ddd;display:flex;z-index:5}
+.bottom button{flex:1;border:0;background:none;color:#777;font-size:10px}
+.bottom span{display:block;font-size:21px;margin-bottom:4px}
+.modalBg{position:fixed;inset:0;background:#0008;display:none;align-items:flex-end;z-index:20}
+.modal{width:min(480px,100%);max-height:90vh;overflow:auto;background:white;border-radius:25px 25px 0 0;padding:20px}
+.close{float:right;border:0;width:32px;height:32px;border-radius:50%;background:#eee;font-size:18px}
+.cartRow{display:flex;gap:10px;padding:13px 0;border-bottom:1px solid #eee}
+.cartMain{flex:1}
+.qty{display:flex;gap:8px;align-items:center;margin-top:7px}
+.qty button{border:0;width:28px;height:28px;border-radius:8px;background:#eee}
+.primary{width:100%;border:0;padding:14px;border-radius:13px;background:#ff4b17;color:white;font-weight:bold;margin-top:10px}
+.secondary{width:100%;border:0;padding:13px;border-radius:13px;background:#eee;margin-top:8px}
+.pay{width:100%;padding:14px;border:1px solid #ddd;border-radius:13px;background:white;text-align:left;margin-top:8px}
+.pay.selected{border:2px solid #ff4b17;background:#fff1ec}
+.review{padding:11px 0;border-bottom:1px solid #eee;font-size:12px}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<div class="header">
+
+<div class="top">
+<div class="logo">🛍️ ShopHub</div>
+
+<button class="cart" onclick="openCart()">
+🛒 <span id="cartCount">0</span>
+</button>
+</div>
+
+<input
+id="search"
+class="search"
+placeholder="Search anything..."
+oninput="render()">
+
+</div>
+
+<div class="body">
+
+<div class="categories">
+
+<button class="cat active" onclick="category='All';setCat(this)">
+All
+</button>
+
+<button class="cat" onclick="category='Electronics';setCat(this)">
+📱 Electronics
+</button>
+
+<button class="cat" onclick="category='Home';setCat(this)">
+🏠 Home
+</button>
+
+<button class="cat" onclick="category='Fashion';setCat(this)">
+👕 Fashion
+</button>
+
+<button class="cat" onclick="category='Beauty';setCat(this)">
+💄 Beauty
+</button>
+
+<button class="cat" onclick="category='Food';setCat(this)">
+🍪 Food
+</button>
+
+</div>
+
+<div class="banner">
+<b>🔥 RP Mega Sale</b>
+<small>Thousands of simulated products • Free RP shipping</small>
+</div>
+
+<div class="section">
+<h3>Products For You</h3>
+<span id="count" style="font-size:10px;color:#888"></span>
+</div>
+
+<div class="products" id="products"></div>
+
+</div>
+
+<div class="bottom">
+
+<button onclick="location.href='index.html'">
+<span>⌂</span>Home
+</button>
+
+<button onclick="showOrders()">
+<span>📦</span>Orders
+</button>
+
+<button onclick="openCart()">
+<span>🛒</span>Cart
+</button>
+
+</div>
+
+</div>
+
+
+<div class="modalBg" id="modalBg">
+
+<div class="modal">
+
+<button class="close" onclick="closeModal()">×</button>
+
+<div id="modalContent"></div>
+
+</div>
+
+</div>
+
+
+<script>
+
+let category="All";
+let cart=[];
+let selectedPayment=null;
+
+
+/* ---------- PRODUCTS ---------- */
+
+const catalog=[
+
+["Phone Case","Electronics",199,"📱"],
+["Wireless Earbuds","Electronics",899,"🎧"],
+["Bluetooth Speaker","Electronics",699,"🔊"],
+["Mechanical Keyboard","Electronics",1499,"⌨️"],
+["Gaming Mouse","Electronics",799,"🖱️"],
+["Power Bank","Electronics",1099,"🔋"],
+["Smart Watch","Electronics",1299,"⌚"],
+["Phone Charger","Electronics",499,"🔌"],
+["Laptop Stand","Electronics",999,"💻"],
+["Webcam","Electronics",1199,"📷"],
+
+["Cordless Vacuum","Home",2499,"🧹"],
+["Robot Vacuum","Home",7999,"🤖"],
+["Electric Fan","Home",1899,"🌀"],
+["Air Fryer","Home",2999,"🍟"],
+["Rice Cooker","Home",1599,"🍚"],
+["Desk Lamp","Home",699,"💡"],
+["Storage Box","Home",399,"📦"],
+["Kitchen Organizer","Home",549,"🗄️"],
+
+["Oversized T-Shirt","Fashion",399,"👕"],
+["Hoodie","Fashion",899,"🧥"],
+["Cargo Pants","Fashion",799,"👖"],
+["Sneakers","Fashion",1599,"👟"],
+["Backpack","Fashion",999,"🎒"],
+["Sunglasses","Fashion",449,"🕶️"],
+["Baseball Cap","Fashion",299,"🧢"],
+
+["Facial Cleanser","Beauty",299,"🧴"],
+["Moisturizer","Beauty",499,"🧴"],
+["Sunscreen","Beauty",599,"☀️"],
+["Lip Tint","Beauty",249,"💄"],
+["Perfume","Beauty",899,"🌸"],
+["Hair Dryer","Beauty",1299,"💨"],
+
+["Chocolate Cookies","Food",149,"🍪"],
+["Potato Chips","Food",99,"🥔"],
+["Instant Coffee","Food",249,"☕"],
+["Milk Tea","Food",299,"🧋"],
+["Spicy Noodles","Food",179,"🍜"],
+["Candy Pack","Food",129,"🍬"]
+
+];
+
+
+/*
+Create multiple RP listings
+from each base product.
+*/
+
+let products=[];
+
+catalog.forEach((p,i)=>{
+
+const versions=[
+"",
+" Premium",
+" Official Store",
+" Pro",
+" Deluxe",
+" Best Seller"
+];
+
+versions.forEach((v,n)=>{
+
+products.push({
+
+id:i+"-"+n,
+
+name:p[0]+v,
+
+category:p[1],
+
+price:p[2]+n*137,
+
+emoji:p[3],
+
+rating:(4.3+(i+n)%7/10).toFixed(1),
+
+sold:100+(i*173)+(n*431),
+
+reviews:[
+"Good quality and exactly as described.",
+"Fast delivery. Recommended!",
+"Very worth the price.",
+"Item arrived safely.",
+"Would buy again."
+]
+
+});
+
+});
+
+});
+
+
+/* ---------- HELPERS ---------- */
+
+function peso(n){
+
+return new Intl.NumberFormat(
+"en-PH",
+{style:"currency",currency:"PHP"}
+).format(n);
+
+}
+
+function esc(s){
+
+return String(s).replace(
+/[&<>"']/g,
+m=>({
+"&":"&amp;",
+"<":"&lt;",
+">":"&gt;",
+'"':"&quot;",
+"'":"&#039;"
+}[m])
+);
+
+}
+
+
+/* ---------- SEARCH ---------- */
+
+function render(){
+
+const q=document
+.getElementById("search")
+.value
+.toLowerCase()
+.trim();
+
+let result=products.filter(p=>{
+
+const catOK=
+category==="All" ||
+p.category===category;
+
+const text=
+(p.name+" "+p.category)
+.toLowerCase();
+
+return catOK &&
+(!q || text.includes(q));
+
+});
+
+
+/*
+Automatic product generation
+for unknown searches.
+*/
+
+if(q && result.length===0){
+
+result=generate(q);
+
+}
+
+document.getElementById(
+"count"
+).textContent=result.length+" items";
+
+document.getElementById(
+"products"
+).innerHTML=
+result.map(productCard).join("");
+
+}
+
+
+function generate(q){
+
+const iconMap={
+phone:"📱",
+case:"📱",
+vacuum:"🧹",
+laptop:"💻",
+computer:"💻",
+keyboard:"⌨️",
+mouse:"🖱️",
+chair:"🪑",
+shoes:"👟",
+shirt:"👕",
+bag:"🎒",
+camera:"📷",
+watch:"⌚",
+fan:"🌀",
+speaker:"🔊",
+headphone:"🎧",
+makeup:"💄",
+bottle:"🍼",
+default:"🛍️"
+};
+
+let emoji=iconMap.default;
+
+for(const k in iconMap){
+
+if(q.includes(k)){
+emoji=iconMap[k];
+break;
+}
+
+}
+
+const title=
+q.charAt(0).toUpperCase()+
+q.slice(1);
+
+return Array.from({length:18},(_,i)=>({
+
+id:"search-"+q+"-"+i,
+
+name:title+" "+[
+"Premium",
+"Official Store",
+"Pro",
+"Deluxe",
+"2026 Edition",
+"Best Seller",
+"High Quality",
+"Value Pack",
+"Trending",
+"Classic",
+"Plus",
+"Max",
+"Ultra",
+"Standard",
+"Special",
+"Limited",
+"Popular",
+"New"
+][i],
+
+category:"Search",
+
+price:199+(i*173),
+
+emoji:emoji,
+
+rating:(4.3+(i%7)/10).toFixed(1),
+
+sold:150+i*421,
+
+reviews:[
+"Exactly what I expected.",
+"Good quality.",
+"Fast shipping.",
+"Very nice product.",
+"Recommended seller."
+]
+
+}));
+
+}
+
+
+function productCard(p){
+
+return `
+
+<div class="product">
+
+<div
+class="pic"
+onclick='viewProduct(${JSON.stringify(p)})'>
+
+${p.emoji}
+
+</div>
+
+<div class="info">
+
+<div
+class="name"
+onclick='viewProduct(${JSON.stringify(p)})'>
+
+${esc(p.name)}
+
+</div>
+
+<div class="price">
+${peso(p.price)}
+</div>
+
+<div class="rating">
+⭐ ${p.rating}
+</div>
+
+<div class="sold">
+${p.sold.toLocaleString()} sold
+</div>
+
+<button
+class="add"
+onclick='addToCart(${JSON.stringify(p)})'>
+
+Add to Cart
+
+</button>
+
+</div>
+
+</div>
+
+`;
+
+}
+
+
+/* ---------- PRODUCT PAGE ---------- */
+
+function viewProduct(p){
+
+openModal(`
+
+<h2>
+${p.emoji} ${esc(p.name)}
+</h2>
+
+<div style="
+font-size:25px;
+font-weight:900;
+color:#ed4215">
+
+${peso(p.price)}
+
+</div>
+
+<p>
+⭐ ${p.rating}
+&nbsp; • &nbsp;
+${p.sold.toLocaleString()} sold
+</p>
+
+<p style="font-size:12px;color:#777">
+
+🚚 Free RP shipping<br>
+🛡️ RP Buyer Protection<br>
+📦 Estimated delivery: 2–5 days
+
+</p>
+
+<h3>Customer Reviews</h3>
+
+${p.reviews.map(
+(r,i)=>`
+
+<div class="review">
+
+⭐ ${(4+(i%2)*.5).toFixed(1)}
+
+<br>
+
+"${esc(r)}"
+
+<br>
+
+<span style="color:#999;font-size:10px">
+Verified RP buyer
+</span>
+
+</div>
+
+`
+).join("")}
+
+<button
+class="primary"
+onclick='addToCart(${JSON.stringify(p)});closeModal()'>
+
+🛒 Add to Cart
+
+</button>
+
+`);
+
+}
+
+
+/* ---------- CART ---------- */
+
+function addToCart(p){
+
+const found=
+cart.find(x=>x.id===p.id);
+
+if(found){
+
+found.qty++;
+
+}else{
+
+cart.push({
+...p,
+qty:1
+});
+
+}
+
+updateCart();
+
+}
+
+
+function updateCart(){
+
+document.getElementById(
+"cartCount"
+).textContent=
+cart.reduce((a,x)=>a+x.qty,0);
+
+}
+
+
+function subtotal(){
+
+return cart.reduce(
+(a,x)=>a+x.price*x.qty,0
+);
+
+}
+
+
+function openCart(){
+
+if(!cart.length){
+
+openModal(`
+
+<h2>🛒 Cart</h2>
+
+<p style="color:#888">
+Your cart is empty.
+</p>
+
+`);
+
+return;
+
+}
+
+let html="<h2>🛒 Cart</h2>";
+
+html+=cart.map(
+(p,i)=>`
+
+<div class="cartRow">
+
+<div style="font-size:30px">
+${p.emoji}
+</div>
+
+<div class="cartMain">
+
+<b>${esc(p.name)}</b>
+
+<div>
+${peso(p.price)}
+</div>
+
+<div class="qty">
+
+<button onclick="qty(${i},-1)">
+−
+</button>
+
+<b>${p.qty}</b>
+
+<button onclick="qty(${i},1)">
++
+</button>
+
+</div>
+
+</div>
+
+<b>
+${peso(p.price*p.qty)}
+</b>
+
+</div>
+
+`
+).join("");
+
+const sub=subtotal();
+const shipping=sub>=1000?0:49;
+const total=sub+shipping;
+
+html+=`
+
+<hr>
+
+<div style="
+display:flex;
+justify-content:space-between">
+
+<span>Subtotal</span>
+<b>${peso(sub)}</b>
+
+</div>
+
+<div style="
+display:flex;
+justify-content:space-between;
+margin-top:7px">
+
+<span>Shipping</span>
+<b>${shipping?peso(shipping):"FREE"}</b>
+
+</div>
+
+<div style="
+display:flex;
+justify-content:space-between;
+font-size:19px;
+margin-top:12px">
+
+<b>Total</b>
+<b>${peso(total)}</b>
+
+</div>
+
+<button
+class="primary"
+onclick="checkout()">
+
+Checkout
+
+</button>
+
+`;
+
+openModal(html);
+
+}
+
+
+function qty(i,n){
+
+cart[i].qty+=n;
+
+if(cart[i].qty<=0)
+cart.splice(i,1);
+
+updateCart();
+openCart();
+
+}
+
+
+/* ---------- CHECKOUT ---------- */
+
+function checkout(){
+
+const sub=subtotal();
+const shipping=sub>=1000?0:49;
+const total=sub+shipping;
+
+selectedPayment=null;
+
+openModal(`
+
+<h2>Checkout</h2>
+
+<div style="
+background:#f6f7f8;
+padding:14px;
+border-radius:14px">
+
+Subtotal:
+${peso(sub)}
+
+<br>
+
+Shipping:
+${shipping?peso(shipping):"FREE"}
+
+<hr>
+
+<b>Total:
+${peso(total)}</b>
+
+</div>
+
+<h3>Payment</h3>
+
+<button
+class="pay"
+onclick="selectPay('gcash',this)">
+
+💙 GCash
+
+</button>
+
+<button
+class="pay"
+onclick="selectPay('maribank',this)">
+
+🧡 MariBank
+
+</button>
+
+<button
+class="primary"
+onclick="placeOrder()">
+
+🛍️ Place Order
+
+</button>
+
+`);
+
+}
+
+
+function selectPay(type,el){
+
+selectedPayment=type;
+
+document
+.querySelectorAll(".pay")
+.forEach(x=>
+x.classList.remove("selected")
+);
+
+el.classList.add("selected");
+
+}
+
+
+/* ---------- PAYMENT ---------- */
+
+function placeOrder(){
+
+if(!selectedPayment){
+
+alert(
+"Please choose GCash or MariBank."
+);
+
+return;
+
+}
+
+const sub=subtotal();
+const shipping=sub>=1000?0:49;
+const total=sub+shipping;
+
+
+/*
+Uses the SAME payment system
+as GCash/MariBank/Bills/FoodDash.
+*/
+
+const result=payRP(
+selectedPayment,
+total,
+{
+name:"ShopHub Purchase",
+description:cart.map(
+x=>x.qty+"× "+x.name
+).join(", "),
+icon:"🛍️"
+}
+);
+
+
+if(!result.success){
+
+alert(result.message);
+return;
+
+}
+
+
+const order={
+
+id:"SHOP"+Date.now(),
+
+items:cart.map(x=>({
+name:x.name,
+qty:x.qty,
+price:x.price
+})),
+
+subtotal:sub,
+shipping:shipping,
+total:total,
+
+payment:selectedPayment,
+
+status:"To Ship",
+
+date:new Date().toLocaleString("en-PH")
+
+};
+
+
+if(typeof addShopeeOrder==="function"){
+
+addShopeeOrder(order);
+
+}else{
+
+/*
+Fallback if old rp-data.js
+doesn't have order helper.
+*/
+
+const data=loadRP();
+
+if(!data.shopeeOrders)
+data.shopeeOrders=[];
+
+data.shopeeOrders.unshift(order);
+
+localStorage.setItem(
+"rpData",
+JSON.stringify(data)
+);
+
+}
+
+
+cart=[];
+updateCart();
+
+openModal(`
+
+<h2>🎉 Order Placed!</h2>
+
+<p>
+Your ShopHub order is confirmed.
+</p>
+
+<div style="
+background:#f6f7f8;
+padding:14px;
+border-radius:14px">
+
+Order:
+<b>${order.id}</b>
+
+<br><br>
+
+Paid:
+<b>${peso(total)}</b>
+
+<br>
+
+Payment:
+<b>
+${selectedPayment==="gcash"
+?"GCash"
+:"MariBank"}
+</b>
+
+<br><br>
+
+Status:
+<b style="color:#ed4215">
+To Ship
+</b>
+
+</div>
+
+<button
+class="primary"
+onclick="closeModal()">
+
+Done
+
+</button>
+
+`);
+
+}
+
+
+/* ---------- ORDERS ---------- */
+
+function showOrders(){
+
+const data=loadRP();
+
+const orders=data.shopeeOrders||[];
+
+let html="<h2>📦 ShopHub Orders</h2>";
+
+if(!orders.length){
+
+html+=`
+
+<p style="color:#888">
+No ShopHub orders yet.
+</p>
+
+`;
+
+}else{
+
+html+=orders.map(
+o=>`
+
+<div style="
+padding:14px 0;
+border-bottom:1px solid #eee">
+
+<b>
+${o.id}
+</b>
+
+<div style="
+font-size:11px;
+color:#777;
+margin-top:5px">
+
+${o.items.map(
+x=>x.qty+"× "+x.name
+).join(", ")}
+
+</div>
+
+<div style="margin-top:7px">
+<strong>${peso(o.total)}</strong>
+</div>
+
+<div style="
+font-size:10px;
+color:#ed4215;
+margin-top:5px">
+
+${o.status}
+
+</div>
+
+<div style="
+font-size:10px;
+color:#999">
+
+Paid via ${
+o.payment==="gcash"
+?"GCash"
+:"MariBank"
+}
+
+<br>
+
+${o.date}
+
+</div>
+
+</div>
+
+`
+).join("");
+
+}
+
+openModal(html);
+
+}
+
+
+/* ---------- UI ---------- */
+
+function setCat(el){
+
+document
+.querySelectorAll(".cat")
+.forEach(x=>
+x.classList.remove("active")
+);
+
+el.classList.add("active");
+
+render();
+
+}
+
+
+function openModal(html){
+
+document.getElementById(
+"modalContent"
+).innerHTML=html;
+
+document.getElementById(
+"modalBg"
+).style.display="flex";
+
+}
+
+
+function closeModal(){
+
+document.getElementById(
+"modalBg"
+).style.display="none";
+
+}
+
+render();
+
+</script>
+
+</body>
+  </html>
