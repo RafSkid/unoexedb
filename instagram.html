@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Instagram RP</title>
+<script src="rp-data.js"></script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#111827;font-family:Arial,sans-serif;color:#20252b}
+button,input,textarea{font-family:inherit}
+.app{max-width:480px;min-height:100vh;margin:auto;background:#f6f7f9;padding-bottom:78px}
+.header{color:white;padding:17px 16px 20px;border-radius:0 0 28px 28px}
+.header.instagram{background:linear-gradient(145deg,#833ab4,#fd1d1d,#fcb045)}
+.header.tiktok{background:linear-gradient(145deg,#111,#30343b)}
+.top{display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:23px;font-weight:900}
+.back{border:0;background:#ffffff22;color:white;border-radius:13px;padding:9px 12px}
+.profile{padding:18px 16px;background:white}
+.profileTop{display:flex;gap:14px;align-items:center}
+.avatar{width:66px;height:66px;border-radius:50%;display:grid;place-items:center;background:#eef1f6;font-size:34px}
+.name{font-size:19px;font-weight:900}
+.username{font-size:12px;color:#888;margin-top:3px}
+.bio{font-size:12px;color:#666;margin-top:10px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);text-align:center;margin-top:15px}
+.stats b{display:block;font-size:16px}
+.stats small{color:#888;font-size:10px}
+.follow{width:100%;margin-top:14px;border:0;border-radius:12px;padding:11px;background:#20252b;color:white;font-weight:800}
+.body{padding:12px}
+.compose{background:white;border-radius:18px;padding:14px;margin-bottom:12px;box-shadow:0 3px 12px #0000000b}
+.composeTitle{font-weight:800;font-size:13px;margin-bottom:8px}
+.compose input,.compose textarea{width:100%;border:1px solid #e3e5e8;border-radius:11px;padding:10px;outline:none;margin-bottom:8px}
+.compose textarea{resize:none;height:70px}
+.postBtn{width:100%;border:0;border-radius:11px;padding:11px;color:white;background:#222;font-weight:800}
+.post{background:white;border-radius:18px;margin-bottom:12px;overflow:hidden;box-shadow:0 3px 12px #0000000b}
+.postHead{padding:12px 14px;display:flex;align-items:center;gap:9px}
+.miniAvatar{width:35px;height:35px;border-radius:50%;display:grid;place-items:center;background:#eef1f6;font-size:19px}
+.postHead b{font-size:12px}
+.postHead small{display:block;color:#999;font-size:9px;margin-top:2px}
+.media{height:300px;display:grid;place-items:center;background:#e9edf2;font-size:100px}
+.tiktokMedia{background:#101114;color:white}
+.postBody{padding:12px 14px}
+.caption{font-size:13px;line-height:1.4}
+.actions{display:flex;gap:8px;margin-top:10px}
+.actionBtn{border:0;background:#f1f3f5;border-radius:10px;padding:9px 12px;font-size:11px}
+.comments{border-top:1px solid #edf0f2;margin-top:10px;padding-top:9px}
+.comment{font-size:11px;padding:4px 0}
+.comment b{margin-right:5px}
+.commentForm{display:flex;gap:6px;margin-top:8px}
+.commentForm input{flex:1;border:1px solid #ddd;border-radius:10px;padding:9px;font-size:11px;outline:none}
+.commentForm button{border:0;border-radius:10px;padding:0 11px;background:#222;color:white}
+.bottom{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(480px,100%);height:68px;background:white;border-top:1px solid #ddd;display:flex;z-index:5}
+.bottom button{flex:1;border:0;background:none;color:#777;font-size:10px}
+.bottom span{display:block;font-size:21px;margin-bottom:3px}
+.modal{display:none;position:fixed;inset:0;background:#0008;z-index:10;align-items:flex-end}
+.modalBox{width:min(480px,100%);background:white;border-radius:24px 24px 0 0;padding:18px}
+.modalBox h3{margin:0 0 12px}
+.modalBox input,.modalBox textarea{width:100%;padding:11px;border:1px solid #ddd;border-radius:11px;margin-bottom:8px}
+.close{width:100%;padding:11px;border:0;border-radius:11px;background:#eee;margin-top:7px}
+</style>
+</head>
+<body>
+<div class="app">
+<div class="header instagram">
+  <div class="top">
+    <button class="back" onclick="location.href='index.html'">← Home</button>
+    <div class="logo">📸 Instagram</div>
+    <button class="back" onclick="openComposer()">＋</button>
+  </div>
+</div>
+
+<div class="profile">
+  <div class="profileTop">
+    <div class="avatar">📸</div>
+    <div>
+      <div class="name" id="displayName">RP User</div>
+      <div class="username" id="username"></div>
+    </div>
+  </div>
+  <div class="bio" id="bio"></div>
+  <div class="stats">
+    <div><b id="count">0</b><small>posts</small></div>
+    <div><b id="followers">0</b><small>Followers</small></div>
+    <div><b id="following">0</b><small>Following</small></div>
+  </div>
+  <button class="follow" onclick="follow()">Follow</button>
+</div>
+
+<div class="body">
+<div class="compose">
+  <div class="composeTitle">Create post</div>
+  <button class="postBtn" onclick="openComposer()">＋ Create post</button>
+</div>
+<div id="feed"></div>
+</div>
+
+<div class="bottom">
+ <button onclick="location.href='index.html'"><span>⌂</span>Home</button>
+ <button onclick="window.scrollTo({top:0,behavior:'smooth'})"><span>📸</span>Instagram</button>
+ <button onclick="location.href='tiktok.html'"><span>🎵 </span>TikTok</button>
+</div>
+</div>
+
+<div class="modal" id="modal">
+ <div class="modalBox">
+  <h3>Create post</h3>
+  <input id="media" placeholder="Emoji or media label, e.g. 📸">
+  <textarea id="caption" placeholder="Write a caption..."></textarea>
+  <button class="postBtn" onclick="createItem()">Publish</button>
+  <button class="close" onclick="closeComposer()">Cancel</button>
+ </div>
+</div>
+
+<script>
+const PLATFORM="instagram";
+const ICON="📸";
+const DEFAULT_MEDIA="📷";
+function esc(v){return String(v??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;")}
+function getAccount(){return ensureSocialData()[PLATFORM]}
+function refresh(){
+ const a=getAccount();
+ document.getElementById("displayName").textContent=a.displayName;
+ document.getElementById("username").textContent=PLATFORM==="instagram"?"@"+a.username:a.username;
+ document.getElementById("bio").textContent=a.bio;
+ document.getElementById("followers").textContent=Number(a.followers||0).toLocaleString();
+ document.getElementById("following").textContent=Number(a.following||0).toLocaleString();
+ document.getElementById("count").textContent=(a["posts"]||[]).length;
+ const items=(a["posts"]||[]);
+ document.getElementById("feed").innerHTML=items.length?items.map(renderItem).join(""):`<div style="background:white;border-radius:18px;padding:25px;text-align:center;color:#888;font-size:12px">No posts yet.</div>`;
+}
+function renderItem(x){
+ const liked=(getAccount().liked||[]).includes(Number(x.id));
+ const comments=(x.comments||[]).slice(-4);
+ return `<div class="post">
+   <div class="postHead"><div class="miniAvatar">${ICON}</div><div><b>${esc(getAccount().displayName)}</b><small>${esc(x.date||"")}</small></div></div>
+   <div class="media ${PLATFORM==="tiktok"?"tiktokMedia":""}">${esc(x.video||x.image||DEFAULT_MEDIA)}</div>
+   <div class="postBody">
+    <div class="caption">${esc(x.caption||"")}</div>
+    <div class="actions">
+      <button class="actionBtn" onclick="likeItem(${x.id})">${liked?"❤️":"♡"} ${Number(x.likes||0)} Likes</button>
+      <button class="actionBtn" onclick="focusComment(${x.id})">💬 ${comments.length} Comments</button>
+    </div>
+    <div class="comments">
+      ${comments.map(c=>`<div class="comment"><b>RP User</b>${esc(c)}</div>`).join("")}
+      <div class="commentForm"><input id="comment-${x.id}" placeholder="Add a comment..."><button onclick="comment(${x.id})">Post</button></div>
+    </div>
+   </div>
+ </div>`;
+}
+function likeItem(id){toggleSocialLike(PLATFORM,id);refresh()}
+function comment(id){const input=document.getElementById("comment-"+id);addSocialComment(PLATFORM,id,input.value);input.value="";refresh()}
+function focusComment(id){const input=document.getElementById("comment-"+id);if(input){input.focus();input.scrollIntoView({behavior:"smooth",block:"center"})}}
+function openComposer(){document.getElementById("modal").style.display="flex"}
+function closeComposer(){document.getElementById("modal").style.display="none"}
+function createItem(){
+ const caption=document.getElementById("caption").value.trim();
+ const media=document.getElementById("media").value.trim()||DEFAULT_MEDIA;
+ if(!caption){alert("Write a caption first.");return}
+ if(PLATFORM==="instagram") addInstagramPost({image:media,caption:caption,likes:0,comments:[],date:now()});
+ else addTikTokVideo({video:media,caption:caption,likes:0,comments:[],date:now()});
+ document.getElementById("caption").value="";document.getElementById("media").value="";
+ closeComposer();refresh();
+}
+function follow(){
+ const a=getAccount();
+ if(!a._followed){a.followers=Number(a.followers||0)+1;a._followed=true;saveRP(ensureSocialData());refresh();}
+}
+refresh();
+</script>
+</body>
+</html>
